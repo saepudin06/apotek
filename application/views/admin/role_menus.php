@@ -38,7 +38,7 @@
             <div class="card-body">            
                 <!-- <h5 class="mb-4">Form Menu</h5> -->
                 <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-12">
 
                     <form method="post" id="form_data">
 
@@ -54,25 +54,27 @@
 
                         ?>
                         <?php foreach($items as $item):?>
-                            <p class="text-muted text-small"><?php echo $item['menu_title'];?></p>      
-                            <ul class="list-unstyled mb-5" style="padding-left: 20px;">
-                            <?php
-                                $ci = & get_instance();
-                                $ci->load->model('admin/sub_menus');
-                                $table2 = $ci->sub_menus;
-                                $subitems = $table2->getSubMenu($item['menu_id']);
+                            <p class="text-muted text-small"><?php echo $item['menu_title'];?></p>   
+                            <div class="form-row">   
+                                <ul class="list-unstyled mb-5" style="padding-left: 20px;">
+                                <?php
+                                    $ci = & get_instance();
+                                    $ci->load->model('admin/sub_menus');
+                                    $table2 = $ci->sub_menus;
+                                    $subitems = $table2->getSubMenu($item['menu_id']);
 
-                            ?>
+                                ?>
 
-                            <?php foreach($subitems as $subitem):?> 
-                                <li>
-                                    <div class="custom-control custom-checkbox mb-2">
-                                        <input type="checkbox" class="custom-control-input" name="submenu[]" id="<?php echo 'category'.$subitem['sub_menu_id'];?>" value="<?php echo $subitem['sub_menu_id'];?>">
-                                        <label class="custom-control-label" for="<?php echo 'category'.$subitem['sub_menu_id'];?>"><?php echo $subitem['sub_menu_title'];?></label>
-                                    </div>
-                                </li>                                     
-                            <?php endforeach; ?>
-                            </ul>
+                                <?php foreach($subitems as $subitem):?> 
+                                    <li>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="submenu[]" id="<?php echo 'category'.$subitem['sub_menu_id'];?>" value="<?php echo $subitem['sub_menu_id'];?>">
+                                            <label class="custom-control-label" for="<?php echo 'category'.$subitem['sub_menu_id'];?>"><?php echo $subitem['sub_menu_title'];?></label>
+                                        </div>
+                                    </li>                                     
+                                <?php endforeach; ?>
+                                </ul>
+                            </div>
                         <?php endforeach; ?>
                         
                         <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
@@ -107,7 +109,8 @@ $("#tab-1").on("click", function(event) {
             url: '<?php echo WS_JQGRID."admin.role_menus_controller/read"; ?>',
             data: {
                 role_id : '<?php echo $this->input->post('role_id');?>',
-                _search : ''
+                _search : '',
+                rows    : 100
             },
             success: function(data) {
                 
