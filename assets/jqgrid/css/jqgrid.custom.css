@@ -1,0 +1,407 @@
+.ui-jqgrid .table td {
+    font-size: 13px !important;
+}
+
+.ui-th-ltr, .ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr {
+  border-left: 0 none;
+}
+
+.ui-th-column, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column {
+    border-bottom: 1px solid #e1e1e1;
+    overflow: hidden;
+    text-align: center;
+    white-space: nowrap;
+}
+/*
+.FormError {
+    padding:5px !important;
+    margin-bottom: 5px;
+    border: 1px solid #ebccd1;
+    color: #a94442;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+*/
+.ui-dialog, .ui-jqdialog {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 0;
+    z-index: 1040 !important;
+}
+
+.ui-widget-overlay {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+/*
+.ui-jqgrid-titlebar {
+    background: #67809f;
+    color: #fff;
+    font-size: 15px;
+    height: 40px;
+    border-left: 0 none;
+    border-right: 0 none;
+    border-top: 0 none;
+    border-bottom: 0 none !important;
+    margin-right:0px !important;
+}
+*/
+.ui-jqgrid .ui-icon {
+    color: #307ecc;
+    float: none;
+    right: 2px;
+    text-indent: 0;
+}
+
+.ui-th-column {
+    /*background:#f1f1f1;*/
+    border: 1px solid rgb(215, 215, 215);
+}
+
+.ui-jqgrid-pager {
+    background:#eff3f8;
+}
+
+.ui-jqdialog-titlebar {
+    background:#f0f0f0;
+    background-image: linear-gradient(to bottom, #ffffff 0%, #eeeeee 100%);
+    background-repeat: repeat-x;
+    border-image: none;
+    min-height: 38px;
+}
+
+.ui-jqdialog-title {
+    color: #669fc7;
+}
+
+.jqResize {
+    display:none;
+}
+
+.ui-jqgrid .ui-jqgrid-titlebar-close {
+    border-radius: 4px;
+    height: auto;
+    margin: 2px 8px 0 0;
+    padding: 0;
+    text-align: center;
+    top: 10%;
+    text-decoration: none;
+}
+
+.ui-jqdialog-content input.FormElement {
+    width: auto !important;
+}
+
+.ui-state-success {
+    padding:5px !important;
+    margin-bottom: 5px;
+    background-color: #ddf2de;
+    border: 1px solid #ccecce;
+    color: #40ac43;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+
+th, td, .table-bordered {
+    border-radius: 0 !important;
+}
+
+.ui-jqgrid-btable .jqgrow {
+    background-color: #ffffff !important;
+}
+
+.ui-jqgrid-btable .ui-priority-secondary {
+    background-color: #f9f9f9 !important;
+    background-image: none;
+    opacity: 1;
+}
+
+.ui-jqgrid .ui-icon.ui-state-disabled {
+    color: #bbb;
+}
+
+.ui-jqgrid .ui-icon {
+    color: #307ecc;
+    float: none !important;
+    right: 2px !important;
+    text-indent: 0 !important;
+}
+
+.ui-jqgrid .ui-jqgrid-hdiv {
+    color: #777;
+    font-weight: bold;
+    line-height: 15px;
+    text-shadow: none;
+}
+
+th[aria-selected="true"] {
+    background-image: linear-gradient(to bottom, #eff3f8 0%, #e3e7ed 100%);
+    background-repeat: repeat-x;
+}
+
+th[aria-selected="true"] .ui-jqgrid-sortable {
+    color: #307ecc;
+}
+
+.ui-jqgrid .ui-jqgrid-labels th {
+    border-right: 1px solid #e1e1e1;
+    text-align: left !important;
+}
+
+
+.ui-jqgrid tr.ui-row-ltr td, .ui-jqgrid tr.ui-row-rtl td {
+    border-bottom: 1px solid #e1e1e1;
+    border-color: #e1e1e1;
+    border-right-style: solid;
+    border-right-width: 1px;
+    padding: 6px 4px;
+}
+
+.ui-jqgrid .ui-jqgrid-view, .ui-jqgrid .ui-paging-info, .ui-jqgrid .ui-pg-table, .ui-jqgrid .ui-pg-selbox {
+    font-size: .8rem;
+}
+
+.ui-jqgrid tr.ui-state-highlight.ui-row-ltr td {
+    border-right-color: #c7d3a9 !important;
+    background-color: #e3ebf7; /*#C6C6C6; selector asep*/
+}
+
+
+.ui-jqgrid .table > tbody > tr.success > td, .table > tbody > tr.success > th, .table > tbody > tr > td.success, .table > tbody > tr > th.success, .table > tfoot > tr.success > td, .table > tfoot > tr.success > th, .table > tfoot > tr > td.success, .table > tfoot > tr > th.success, .table > thead > tr.success > td, .table > thead > tr.success > th, .table > thead > tr > td.success, .table > thead > tr > th.success {
+    background-color: #e4efc9;
+}
+
+.ui-jqgrid tr.ui-row-ltr td, .ui-jqgrid tr.ui-row-rtl td {
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-color: #e1e1e1;
+    padding: 6px 4px;
+}
+
+.ui-jqgrid .ui-jqgrid-pager {
+    background-color: #fff !important;
+    border-bottom: none !important;
+    border-right: 1px solid rgb(215, 215, 215);
+    /*border-top: none !important;*/
+    padding-bottom: 5px !important;
+    padding-top: 3px !important;
+}
+
+#nData, #pData {
+    border-radius: 100%;
+    color: #669fc7;
+    padding: 4px 8px !important;
+}
+
+
+.ui-jqdialog.modal-content {
+    border-radius:0px !important;
+}
+
+.ui-jqdialog-content.modal-body {
+    padding-top:5px !important;
+    padding-right:0px !important;
+    padding-bottom:0px !important;
+    padding-left:0px !important;
+}
+
+.FormGrid .EditTable{
+    background:#ffffff !important;
+    padding:5px;
+    border-top:none !important;
+    margin-top:5px !important;
+}
+
+.EditTable {
+    background-color: #eff3f8;
+    border-top: 1px solid #d6e1ea !important;
+    padding: 8px;
+}
+
+.searchFilter .form-control {
+    border-radius:0px;
+}
+
+.FormGrid .form-control {
+    border-radius:0px;
+}
+
+.jqgrid-required {
+    background: #ffffa2 !important;
+    border: 1px solid #fad42e !important;
+    color: #363636 !important;
+}
+
+.fa.purple {
+    color: #a069c3 !important;
+}
+
+.fa.blue {
+    color: #478fca !important;
+}
+
+.fa.red {
+    color: #dd5a43 !important;
+}
+
+.fa.orange {
+    color: #ff892a !important;
+}
+
+.fa.green {
+    color: #69aa46 !important;
+}
+
+.orange {
+    color: #ff892a !important;
+}
+
+
+.bigger-110 {
+  font-size: 110% !important;
+}
+.bigger-120 {
+  font-size: 120% !important;
+}
+.bigger-130 {
+  font-size: 130% !important;
+}
+.bigger-140 {
+  font-size: 140% !important;
+}
+.bigger-150 {
+  font-size: 150% !important;
+}
+.bigger-160 {
+  font-size: 160% !important;
+}
+.bigger-170 {
+  font-size: 170% !important;
+}
+.bigger-180 {
+  font-size: 180% !important;
+}
+.bigger-190 {
+  font-size: 190% !important;
+}
+.bigger-200 {
+  font-size: 200% !important;
+}
+.bigger-210 {
+  font-size: 210% !important;
+}
+.bigger-220 {
+  font-size: 220% !important;
+}
+.bigger-230 {
+  font-size: 230% !important;
+}
+.bigger-240 {
+  font-size: 240% !important;
+}
+.bigger-250 {
+  font-size: 250% !important;
+}
+.bigger-260 {
+  font-size: 260% !important;
+}
+.bigger-270 {
+  font-size: 270% !important;
+}
+.bigger-280 {
+  font-size: 280% !important;
+}
+.bigger-290 {
+  font-size: 290% !important;
+}
+.bigger-300 {
+  font-size: 300% !important;
+}
+.bigger-115 {
+  font-size: 115% !important;
+}
+.bigger-125 {
+  font-size: 125% !important;
+}
+.bigger-175 {
+  font-size: 175% !important;
+}
+.bigger-225 {
+  font-size: 225% !important;
+}
+.bigger-275 {
+  font-size: 275% !important;
+}
+
+.ui-pg-div span {
+  width:12px;
+}
+
+.ui-pg-div:hover {
+  font-size: 140%;
+  transition: all 0.12s ease 0s;
+  opacity: 0.85;
+}
+
+.ui-jqgrid .ui-jqgrid-pager .ui-pg-button, .ui-jqgrid .ui-jqgrid-toppager .ui-pg-button {
+    cursor: pointer;
+    background: none !important;
+}
+
+.ui-jqdialog .ui-jqdialog-titlebar-close {
+    cursor: pointer;
+    margin: 3px 5px 0 0;
+    padding: 0px !important;
+    position: absolute;
+    top: 0;
+}
+
+.ui-jqgrid .ui-jqgrid-titlebar-close span {
+    display: block;
+    margin: 5px;
+}
+
+.ui-jqgrid .ui-jqgrid-htable .ui-th-div {
+    height: 25px;
+    padding: 5px !important;
+    /*margin-bottom: 2px;
+    margin-top: 2px !important;*/
+}
+
+.ui-jqgrid .table-responsive {
+  margin-bottom: 0px !important;
+}
+
+.ui-jqgrid-warning {
+  padding:5px;
+  color: #dd5a43;
+}
+
+.delmsg {
+  padding:5px;
+  color: #dd5a43;
+}
+
+
+/**
+ * for chrome
+ */
+div.ui-jqgrid-view table.ui-jqgrid-btable
+{
+    border-style:none;
+    border-top-style:none;
+    /*border-collapse:separate;*/
+}
+div.ui-jqgrid-view table.ui-jqgrid-btable td
+{
+    border-left-style:none
+}
+div.ui-jqgrid-view table.ui-jqgrid-htable
+{
+    border-style:none;
+    border-top-style:none;
+    /*border-collapse:separate;*/
+}
+div.ui-jqgrid-view table.ui-jqgrid-btable th
+{
+    border-left-style:none
+}
