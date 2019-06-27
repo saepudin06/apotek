@@ -150,7 +150,7 @@
             return false;
         }
 
-        loadContentWithParams("company.bunit", {
+        loadContentWithParams("admin.bunit", {
             company_id: company_id,
             company_name : company_name
         });
