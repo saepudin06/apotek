@@ -33,6 +33,18 @@
     <link href="<?php echo base_url(); ?>assets/jqgrid/css/jqgrid.custom.css" rel="stylesheet" type="text/css"/>
 
 
+    <style type="text/css">
+        .select2-container .select2-selection--single {
+            height: 41px !important;
+            padding-left: 12px;
+            padding-top: 8px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            top: 9px !important;
+            right: 3px !important;
+        }
+    </style>
 </head>
 
 <body id="app-container" class="menu-default show-spinner">
