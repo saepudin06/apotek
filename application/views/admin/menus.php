@@ -115,7 +115,7 @@ $("#tab-2").on("click", function(event) {
     menu_url = grid.jqGrid ('getCell', menu_id, 'menu_url');
 
     if(menu_id == null) {
-        swal('','Silahkan pilih salah satu menu','info');
+        swal('','Please select one row','info');
         return false;
     }
 

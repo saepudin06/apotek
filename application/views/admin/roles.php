@@ -86,7 +86,7 @@ $("#tab-2").on("click", function(event) {
     role_name = grid.jqGrid ('getCell', role_id, 'role_name');
 
     if(role_id == null) {
-        swal('','Silahkan pilih salah satu role','info');
+        swal('','Please select one row','info');
         return false;
     }
 
