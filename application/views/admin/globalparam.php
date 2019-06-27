@@ -284,7 +284,7 @@
                     var grid = $('#grid-table');
                     rowid = grid.jqGrid ('getGridParam', 'selrow');
                     if(rowid == null) {
-                        swal('','Silahkan pilih salah satu row','info');
+                        swal('','Please select one row','info');
                         return false;
                     }
 
@@ -306,7 +306,7 @@
                     var grid = $('#grid-table');
                     rowid = grid.jqGrid ('getGridParam', 'selrow');
                     if(rowid == null) {
-                        swal('','Silahkan pilih salah satu row','info');
+                        swal('','Please select one row','info');
                         return false;
                     }
                     delete_data(rowid);
