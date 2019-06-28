@@ -78,6 +78,7 @@
                         <?php endforeach; ?>
                         
                         <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
+                        <button class="btn btn-primary" type="button" id="btn-refresh">Refresh All</button>
                     </form>
                 </div>
 
@@ -166,5 +167,12 @@ $("#tab-1").on("click", function(event) {
         $("#btn-submit").removeAttr('disabled');
         return false;
     }));
+
+
+    /*refresh*/
+
+    $('#btn-refresh').on('click', function(){
+        location.reload();
+    });
 
 </script>
