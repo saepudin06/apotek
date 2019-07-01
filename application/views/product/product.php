@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item">
                     <a href="javascript:;">Product</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Product</li>
+                <li class="breadcrumb-item active" aria-current="page">Products</li>
             </ol>
         </nav>
         
@@ -28,7 +28,7 @@
             <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-6" role="tablist">
                 <li class="nav-item w-30 text-center">
                     <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Product</strong></a>
+                        aria-selected="true"><strong>Products</strong></a>
                 </li>
                 <li class="nav-item w-30 text-center">
                     <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Product Detail</strong></a>
@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Product</h5>
+                        <h5 class="mb-4">Form Products</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -161,7 +161,7 @@
                             </div>
 
                             <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-delete">Delete</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
 
                         </form>
                     </div>
@@ -178,17 +178,18 @@
     $("#tab-2").on("click", function(event) {
 
         event.stopPropagation();
-        product_id = $('#product_id').val(); 
-        product_name = $('#name').val(); 
+        var grid = $('#grid-table');
+        product_id = grid.jqGrid ('getGridParam', 'selrow');
+        name = grid.jqGrid ('getCell', product_id, 'name');
 
         if(product_id == null || product_id == '') {
-            swal('','Company not saved','info');
+            swal('','Please select one row','info');
             return false;
         }
 
         loadContentWithParams("product.productdetails", {
             product_id: product_id,
-            product_name : product_name
+            product_name : name
         });
     });
 </script>
@@ -255,7 +256,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."product.products_controller/crud"; ?>',
-            caption: "Product"
+            caption: "Products"
 
         });
 
