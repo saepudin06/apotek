@@ -1,28 +1,28 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
 * Json library
-* @class Productdetails_controller
+* @class Producttariffdetails_controller
 * @version 07/05/2015 12:18:00
 */
-class Productdetails_controller {
+class Producttariffdetails_controller {
 
     function read() {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','prd_details_id');
+        $sidx = getVarClean('sidx','str','prod_tariff_id');
         $sord = getVarClean('sord','str','asc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
         $i_search = getVarClean('i_search','str','');
-        $product_id = getVarClean('product_id','int',0);
+        $prd_details_id = getVarClean('prd_details_id','int',0);
 
         try {
 
             $ci = & get_instance();
-            $ci->load->model('product/productdetails');
-            $table = $ci->productdetails;
+            $ci->load->model('product/producttariffdetails');
+            $table = $ci->producttariffdetails;
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -40,11 +40,11 @@ class Productdetails_controller {
 
             // Filter Table
             $req_param['where'] = array();
-            $table->setCriteria("product_id=".$product_id);
-            
+            $table->setCriteria("prd_details_id=".$prd_details_id);
+
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(product_label) like upper('%".$i_search."%') OR
-                                       upper(product_name) like upper('%".$i_search."%') 
+                $table->setCriteria("( upper(price_note) like upper('%".$i_search."%') OR
+                                       upper(product_label) like upper('%".$i_search."%') 
                                      )");
             }
 
@@ -109,8 +109,8 @@ class Productdetails_controller {
 
 
         $ci = & get_instance();
-        $ci->load->model('product/productdetails');
-        $table = $ci->productdetails;
+        $ci->load->model('product/producttariffdetails');
+        $table = $ci->producttariffdetails;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -181,8 +181,8 @@ class Productdetails_controller {
     function update() {
 
         $ci = & get_instance();
-        $ci->load->model('product/productdetails');
-        $table = $ci->productdetails;
+        $ci->load->model('product/producttariffdetails');
+        $table = $ci->producttariffdetails;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -255,8 +255,8 @@ class Productdetails_controller {
     function destroy() {
 
         $ci = & get_instance();
-        $ci->load->model('product/productdetails');
-        $table = $ci->productdetails;
+        $ci->load->model('product/producttariffdetails');
+        $table = $ci->producttariffdetails;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -304,4 +304,4 @@ class Productdetails_controller {
 
 }
 
-/* End of file Productdetails_controller.php */
+/* End of file Producttariffdetails_controller.php */

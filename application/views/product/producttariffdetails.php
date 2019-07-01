@@ -31,10 +31,10 @@
                         aria-selected="true"><strong>Products</strong></a>
                 </li>
                 <li class="nav-item w-30 text-center">
-                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Product Detail</strong></a>
+                    <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Product Detail</strong></a>
                 </li>
                 <li class="nav-item w-30 text-center">
-                    <a class="nav-link" id="tab-3" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Tariff Product</strong></a>
+                    <a class="nav-link active" id="tab-3" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Tariff Product</strong></a>
                 </li>
             </ul>
             
@@ -48,42 +48,61 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Products Details(<?php echo $this->input->post('product_name','');?>)</h5>
+                        <h5 class="mb-4">Form Tariff Product(<?php echo $this->input->post('product_label','');?>)</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+                            <input type="hidden" id="product_id" name="product_id" value="<?php echo $this->input->post('product_id'); ?>">
+                            <input type="hidden" id="product_name" name="product_name" value="<?php echo $this->input->post('product_name'); ?>">
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="prd_details_id" name="prd_details_id" placeholder="" autocomplete="off" readonly="" />
+                                    <input class="form-control" id="prod_tariff_id" name="prod_tariff_id" placeholder="" autocomplete="off" readonly="" />
                                     <span>ID *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="product_id" name="product_id" value="<?php echo $this->input->post('product_id','');?>" placeholder="" autocomplete="off" readonly="" />
-                                    <span>Product ID *</span>
+                                    <input class="form-control" id="prd_details_id" name="prd_details_id" value="<?php echo $this->input->post('prd_details_id','');?>" placeholder="" autocomplete="off" readonly="" />
+                                    <span>Product Detail ID *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
-                                    <input class="form-control" id="product_label" name="product_label" placeholder="" autocomplete="off" autofocus="" />
+                                    <input class="form-control" id="product_label" name="product_label" value="<?php echo $this->input->post('product_label'); ?>" placeholder="" autocomplete="off" autofocus="" readonly="" />
                                     <span>Product Label *</span>
                                 </label>
                             </div>
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control datepicker" id="production_date" name="production_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Production Date *</span>
+                                    <input class="form-control numeric" id="basic_price" name="basic_price" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Basic Price *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control datepicker" id="sales_start_date" name="sales_start_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Sales Start Date *</span>
+                                    <input class="form-control numeric" id="sell_price" name="sell_price" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Sell Price *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control datepicker" id="sales_end_date" name="sales_end_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Sales End Date *</span>
+                                    <input class="form-control numeric" id="tax" name="tax" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Tax *</span>
+                                </label>
+                            </div>
+
+                            <div class="form-row">
+                                <label class="form-group has-float-label col-md-3">
+                                    <input class="form-control datepicker" id="start_date" name="start_date" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Start Date *</span>
+                                </label>
+
+                                <label class="form-group has-float-label col-md-3">
+                                    <input class="form-control datepicker" id="end_date" name="end_date" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>End Date *</span>
+                                </label>
+
+                                <label class="form-group has-float-label col-md-6">
+                                    <input class="form-control" id="price_note" name="price_note" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Price Note *</span>
                                 </label>
                             </div>
 
@@ -109,25 +128,20 @@
         loadContentWithParams("product.product", {});
     });
 
-    $("#tab-3").on("click", function(event) {
+    $("#tab-2").on("click", function(event) {
 
         event.stopPropagation();
-        var grid = $('#grid-table');
-        prd_details_id = grid.jqGrid ('getGridParam', 'selrow');
-        product_label = grid.jqGrid ('getCell', prd_details_id, 'product_label');
-        product_id = grid.jqGrid ('getCell', prd_details_id, 'product_id');
-        product_name = grid.jqGrid ('getCell', prd_details_id, 'product_name');
+        product_id = $('#product_id').val();
+        product_name = $('#product_name').val();
 
-        if(prd_details_id == null || prd_details_id == '') {
-            swal('','Please select one row','info');
+        if(product_id == null || product_id == '') {
+            swal('','Product ID is null','info');
             return false;
         }
 
-        loadContentWithParams("product.producttariffdetails", {
-            prd_details_id: prd_details_id,
-            product_label : product_label,
-            product_id : product_id,
-            product_name :product_name
+        loadContentWithParams("product.productdetails", {
+            product_id: product_id,
+            product_name : product_name
         });
     });
 </script>
@@ -139,19 +153,21 @@
         var pager_selector = "#grid-pager";
 
         jQuery("#grid-table").jqGrid({
-            url: '<?php echo WS_JQGRID."product.productdetails_controller/crud"; ?>',
-            postData: { product_id : '<?php echo $this->input->post('product_id'); ?>'},
+            url: '<?php echo WS_JQGRID."product.producttariffdetails_controller/crud"; ?>',
+            postData: { prd_details_id : '<?php echo $this->input->post('prd_details_id'); ?>'},
             datatype: "json",
             mtype: "POST",
             loadui: "disable",
             colModel: [
-                {label: 'ID', name: 'prd_details_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Product ID', name: 'product_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Product Name', name: 'product_name', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'ID', name: 'prod_tariff_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'Product Detail ID', name: 'prd_details_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Product Label', name: 'product_label', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Production Date', name: 'production_date', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Sales Start Date', name: 'sales_start_date', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Sales End Date', name: 'sales_end_date', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Sell Price', name: 'sell_price', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Basic Price', name: 'basic_price', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Tax', name: 'tax', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Start Date', name: 'start_date', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'End Date', name: 'end_date', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Price Note', name: 'price_note', width: 150, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -188,8 +204,8 @@
 
             },
             //memanggil controller jqgrid yang ada di controller crud
-            editurl: '<?php echo WS_JQGRID."product.productdetails_controller/crud"; ?>',
-            caption: "Product Details(<?php echo $this->input->post('product_name','');?>)"
+            editurl: '<?php echo WS_JQGRID."product.producttariffdetails_controller/crud"; ?>',
+            caption: "Product Details(<?php echo $this->input->post('product_label','');?>)"
 
         });
 
@@ -385,18 +401,24 @@
 
     function setData(rowid){
         
-        var product_id = $('#grid-table').jqGrid('getCell', rowid, 'product_id');
+        var prd_details_id = $('#grid-table').jqGrid('getCell', rowid, 'prd_details_id');
         var product_label = $('#grid-table').jqGrid('getCell', rowid, 'product_label');
-        var production_date = $('#grid-table').jqGrid('getCell', rowid, 'production_date');
-        var sales_start_date = $('#grid-table').jqGrid('getCell', rowid, 'sales_start_date');
-        var sales_end_date = $('#grid-table').jqGrid('getCell', rowid, 'sales_end_date');
+        var sell_price = $('#grid-table').jqGrid('getCell', rowid, 'sell_price');
+        var basic_price = $('#grid-table').jqGrid('getCell', rowid, 'basic_price');
+        var tax = $('#grid-table').jqGrid('getCell', rowid, 'tax');
+        var price_note = $('#grid-table').jqGrid('getCell', rowid, 'price_note');
+        var start_date = $('#grid-table').jqGrid('getCell', rowid, 'start_date');
+        var end_date = $('#grid-table').jqGrid('getCell', rowid, 'end_date');
         
-        $('#prd_details_id').val(rowid);
-        $('#product_id').val(product_id);
+        $('#prod_tariff_id').val(rowid);
+        $('#prd_details_id').val(prd_details_id);
         $('#product_label').val(product_label);
-        $('#production_date').val(production_date);
-        $('#sales_start_date').val(sales_start_date);
-        $('#sales_end_date').val(sales_end_date);   
+        $('#sell_price').val(sell_price);
+        $('#basic_price').val(basic_price);
+        $('#tax').val(tax);
+        $('#price_note').val(price_note);
+        $('#start_date').val(start_date);
+        $('#end_date').val(end_date);   
 
     }
 
@@ -421,7 +443,7 @@
                 itemJSON = JSON.stringify(del);
 
                 $.ajax({
-                    url: "<?php echo WS_JQGRID."product.productdetails_controller/crud"; ?>" ,
+                    url: "<?php echo WS_JQGRID."product.producttariffdetails_controller/crud"; ?>" ,
                     type: "POST",
                     dataType: "json",
                     data: {items:itemJSON, oper:'del'},
@@ -453,10 +475,10 @@
 
         var data = new FormData(this);
         // console.log(data);
-        var prd_details_id = $('#prd_details_id').val();
+        var prod_tariff_id = $('#prod_tariff_id').val();
             
-        var var_url = '<?php echo WS_JQGRID."product.productdetails_controller/create"; ?>';
-        if(prd_details_id) var_url = '<?php echo WS_JQGRID."product.productdetails_controller/update"; ?>';
+        var var_url = '<?php echo WS_JQGRID."product.producttariffdetails_controller/create"; ?>';
+        if(prod_tariff_id) var_url = '<?php echo WS_JQGRID."product.producttariffdetails_controller/update"; ?>';
         
         $.ajax({
             type: 'POST',
@@ -490,7 +512,7 @@
     function searchData(){
 
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."product.productdetails_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."product.producttariffdetails_controller/read"; ?>',
             postData: {
                 i_search : $('#search-data').val()
             }
@@ -504,7 +526,7 @@
         $('#form_data').trigger("reset");
         
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."product.productdetails_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."product.producttariffdetails_controller/read"; ?>',
             postData: {
                 i_search : ''
             }
