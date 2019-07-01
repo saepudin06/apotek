@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-12 list">
         <div class="float-sm-right text-zero">
-            <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+            <!-- <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                 <input onchange="searchData()" id="search-data" placeholder="Search...">
-            </div>
+            </div> -->
         </div>
 
         <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
@@ -12,9 +12,9 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">System</a>
+                    <a href="javascript:;">Product</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Reference</li>
+                <li class="breadcrumb-item active" aria-current="page">Product</li>
             </ol>
         </nav>
         
@@ -25,13 +25,16 @@
 <div class="row">    
     <div class="col-12">        
         <div class="card mb-4">
-            <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
-                <li class="nav-item w-50 text-center">
-                    <a class="nav-link" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Reference Type</strong></a>
+            <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-6" role="tablist">
+                <li class="nav-item w-30 text-center">
+                    <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
+                        aria-selected="true"><strong>Product</strong></a>
                 </li>
-                <li class="nav-item w-50 text-center">
-                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Reference List</strong></a>
+                <li class="nav-item w-30 text-center">
+                    <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Product Detail</strong></a>
+                </li>
+                <li class="nav-item w-30 text-center">
+                    <a class="nav-link" id="tab-3" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Tariff Product</strong></a>
                 </li>
             </ul>
             
@@ -45,20 +48,15 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Reference List (<?php echo $this->input->post('reference_type_code', ''); ?>)</h5>
+                        <h5 class="mb-4">Form Product</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="reference_list_id" name="reference_list_id" placeholder="" autocomplete="off" readonly="" />
+                                <label class="form-group has-float-label col-md-6">
+                                    <input class="form-control" id="product_id" name="product_id" placeholder="" autocomplete="off" readonly="" />
                                     <span>ID *</span>
-                                </label>
-
-                                <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="reference_type_id" name="reference_type_id" value="<?php echo $this->input->post('reference_type_id'); ?>" placeholder="" autocomplete="off" readonly="" />
-                                    <span>Reference Type ID *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
@@ -68,19 +66,102 @@
                             </div>
 
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-6">
-                                    <input class="form-control" id="val_1" name="val_1" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Value 1 *</span>
+                                <label class="form-group has-float-label col-md-4">
+                                    <select class="form-control select2-single" id="product_type_id">
+                                        <!-- <option label="&nbsp;">&nbsp;</option> -->
+                                        <?php
+                                            $ci = & get_instance();
+                                            $ci->load->model('product/producttype');
+                                            $table = $ci->producttype;
+
+                                            $items = $table->getAll(0,-1,'product_type_id','asc');
+
+                                        ?>
+                                        <option value=""> -- Choose Product Type -- </option>
+                                        <?php foreach($items as $item):?>
+                                            <option value="<?php echo $item['product_type_id'];?>"> <?php echo $item['name'];?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <span>Product Type *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-6">
-                                    <input class="form-control numeric" id="val_2" name="val_2" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Vaue 2 *</span>
+                                <label class="form-group has-float-label col-md-4">
+                                    <select class="form-control select2-single" id="bu_id">
+                                        <!-- <option label="&nbsp;">&nbsp;</option> -->
+                                        <?php
+                                            $ci = & get_instance();
+                                            $ci->load->model('admin/bunit');
+                                            $table = $ci->bunit;
+
+                                            $items = $table->getAll(0,-1,'bu_id','asc');
+
+                                        ?>
+                                        <option value=""> -- Choose Bussiness Unit -- </option>
+                                        <?php foreach($items as $item):?>
+                                            <option value="<?php echo $item['bu_id'];?>"> <?php echo $item['name'];?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <span>Bussiness Unit *</span>
+                                </label>
+
+                                <label class="form-group has-float-label col-md-4">
+                                    <select class="form-control select2-single" id="measure_type_id">
+                                        <!-- <option label="&nbsp;">&nbsp;</option> -->
+                                        <?php
+                                            $ci = & get_instance();
+                                            $ci->load->model('product/productmeasurement');
+                                            $table = $ci->productmeasurement;
+
+                                            $items = $table->getAll(0,-1,'measure_type_id','asc');
+
+                                        ?>
+                                        <option value=""> -- Choose Measure Type -- </option>
+                                        <?php foreach($items as $item):?>
+                                            <option value="<?php echo $item['measure_type_id'];?>"> <?php echo $item['name'];?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <span>Measure Type *</span>
+                                </label>
+                            </div>
+
+                            <div class="form-row">
+                                <label class="form-group has-float-label col-md-3">
+                                    <select class="form-control select2-single" id="package_type_id">
+                                        <!-- <option label="&nbsp;">&nbsp;</option> -->
+                                        <?php
+                                            $ci = & get_instance();
+                                            $ci->load->model('product/productpackagetype');
+                                            $table = $ci->productpackagetype;
+
+                                            $items = $table->getAll(0,-1,'package_type_id','asc');
+
+                                        ?>
+                                        <option value=""> -- Choose Package Type -- </option>
+                                        <?php foreach($items as $item):?>
+                                            <option value="<?php echo $item['package_type_id'];?>"> <?php echo $item['name'];?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <span>Package Type *</span>
+                                </label>
+
+                                <label class="form-group has-float-label col-md-3">
+                                    <input class="form-control numeric" id="package_val" name="package_val" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Package Value. *</span>
+                                </label>
+
+                                <label class="form-group has-float-label col-md-3">
+                                    <input class="form-control numeric" id="stock_min" name="stock_min" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Stock Min. *</span>
+                                </label>
+
+                                <label class="form-group has-float-label col-md-3">
+                                    <input class="form-control numeric" id="initial_stock" name="initial_stock" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Initial Stock *</span>
                                 </label>
                             </div>
 
                             <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-danger" type="button" id="btn-delete">Delete</button>
 
                         </form>
                     </div>
@@ -93,6 +174,25 @@
 </div>
 
 
+<script type="text/javascript">
+    $("#tab-2").on("click", function(event) {
+
+        event.stopPropagation();
+        product_id = $('#product_id').val(); 
+        product_name = $('#name').val(); 
+
+        if(product_id == null || product_id == '') {
+            swal('','Company not saved','info');
+            return false;
+        }
+
+        loadContentWithParams("product.productdetails", {
+            product_id: product_id,
+            product_name : product_name
+        });
+    });
+</script>
+
 <script>
     jQuery(function($) {
 
@@ -100,17 +200,24 @@
         var pager_selector = "#grid-pager";
 
         jQuery("#grid-table").jqGrid({
-            url: '<?php echo WS_JQGRID."admin.referencelist_controller/crud"; ?>',
+            url: '<?php echo WS_JQGRID."product.products_controller/crud"; ?>',
             datatype: "json",
             mtype: "POST",
             loadui: "disable",
             colModel: [
-                {label: 'ID', name: 'reference_list_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Reference Type ID', name: 'reference_type_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Reference Type', name: 'reference_type_code', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'ID', name: 'product_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'Product Type ID', name: 'product_type_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Bussiness Unit ID', name: 'bu_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Measure Type ID', name: 'measure_type_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Package Type ID', name: 'package_type_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Name', name: 'name', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Value 1', name: 'val_1', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Value 2', name: 'val_2', width: 220, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Product Type', name: 'product_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Bussiness Unit', name: 'bu_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Measure Type', name: 'measure_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Package Type', name: 'package_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Package Value', name: 'package_val', width: 150, align: "right", editable: false, search:false, sortable:false, hidden: false},
+                {label: 'Stock Min.', name: 'stock_min', width: 100, align: "right", editable: false, search:false, sortable:false, hidden: false},
+                {label: 'Initial Stock', name: 'initial_stock', width: 100, align: "right", editable: false, search:false, sortable:false, hidden: false},
                 
             ],
             // height: '100%',
@@ -147,8 +254,8 @@
 
             },
             //memanggil controller jqgrid yang ada di controller crud
-            editurl: '<?php echo WS_JQGRID."admin.referencelist_controller/crud"; ?>',
-            caption: "Reference List (<?php echo $this->input->post('reference_type_code', ''); ?>)"
+            editurl: '<?php echo WS_JQGRID."product.products_controller/crud"; ?>',
+            caption: "Product"
 
         });
 
@@ -283,6 +390,11 @@
                     $('#form-ui').slideDown( "slow" );
                     $('#form_data').trigger("reset");                    
                      //alert("Adding Row");
+
+                    $('#product_type_id').val(null).trigger('change');
+                    $('#bu_id').val(null).trigger('change');
+                    $('#measure_type_id').val(null).trigger('change');
+                    $('#package_type_id').val(null).trigger('change');
                 },
                 position: "last",
                 title: "Add",
@@ -340,31 +452,33 @@
 
 </script>
 
-
-<script type="text/javascript">
-    $("#tab-1").on("click", function(event) {
-
-        event.stopPropagation();
-        var grid = $('#grid-table');
-
-        loadContentWithParams("admin.referencetype", {});
-    });
-</script>
-
 <script type="text/javascript">
 
     function setData(rowid){
         
-        var reference_type_id = $('#grid-table').jqGrid('getCell', rowid, 'reference_type_id');
+        var product_type_id = $('#grid-table').jqGrid('getCell', rowid, 'product_type_id');
+        var bu_id = $('#grid-table').jqGrid('getCell', rowid, 'bu_id');
+        var measure_type_id = $('#grid-table').jqGrid('getCell', rowid, 'measure_type_id');
+        var package_type_id = $('#grid-table').jqGrid('getCell', rowid, 'package_type_id');
         var name = $('#grid-table').jqGrid('getCell', rowid, 'name');
-        var val_1 = $('#grid-table').jqGrid('getCell', rowid, 'val_1');
-        var val_2  = $('#grid-table').jqGrid('getCell', rowid, 'val_2');
+        var package_val = $('#grid-table').jqGrid('getCell', rowid, 'package_val');
+        var stock_min  = $('#grid-table').jqGrid('getCell', rowid, 'stock_min');
+        var initial_stock  = $('#grid-table').jqGrid('getCell', rowid, 'initial_stock');
         
-        $('#reference_list_id').val(rowid);
-        $('#reference_type_id').val(reference_type_id);
+        $('#product_id').val(rowid);
+        $('#product_type_id').val(product_type_id);
+        $('#bu_id').val(bu_id);
+        $('#measure_type_id').val(measure_type_id);
+        $('#package_type_id').val(package_type_id);
+        $('#product_type_id').trigger('change');
+        $('#bu_id').trigger('change');
+        $('#measure_type_id').trigger('change');
+        $('#package_type_id').trigger('change');
+
         $('#name').val(name);
-        $('#val_1').val(val_1);
-        $('#val_2').val(val_2);        
+        $('#package_val').val(package_val);
+        $('#stock_min').val(stock_min);        
+        $('#initial_stock').val(initial_stock);        
 
     }
 
@@ -389,7 +503,7 @@
                 itemJSON = JSON.stringify(del);
 
                 $.ajax({
-                    url: "<?php echo WS_JQGRID."admin.referencelist_controller/crud"; ?>" ,
+                    url: "<?php echo WS_JQGRID."product.products_controller/crud"; ?>" ,
                     type: "POST",
                     dataType: "json",
                     data: {items:itemJSON, oper:'del'},
@@ -418,11 +532,17 @@
     $("#form_data").on('submit', (function (e) {
 
         e.preventDefault(); 
+
         var data = new FormData(this);
-        var reference_list_id = $('#reference_list_id').val();
+        data.append("product_type_id", $("#product_type_id").val());
+        data.append("bu_id", $("#bu_id").val());
+        data.append("measure_type_id", $("#measure_type_id").val());
+        data.append("package_type_id", $("#package_type_id").val());
+        // console.log(data);
+        var product_id = $('#product_id').val();
             
-        var var_url = '<?php echo WS_JQGRID."admin.referencelist_controller/create"; ?>';
-        if(reference_list_id) var_url = '<?php echo WS_JQGRID."admin.referencelist_controller/update"; ?>';
+        var var_url = '<?php echo WS_JQGRID."product.products_controller/create"; ?>';
+        if(product_id) var_url = '<?php echo WS_JQGRID."product.products_controller/update"; ?>';
         
         $.ajax({
             type: 'POST',
@@ -451,11 +571,12 @@
     }));
 
 </script>
+
 <script type="text/javascript">
     function searchData(){
 
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."admin.referencelist_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."product.products_controller/read"; ?>',
             postData: {
                 i_search : $('#search-data').val()
             }
@@ -469,7 +590,7 @@
         $('#form_data').trigger("reset");
         
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."admin.referencelist_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."product.products_controller/read"; ?>',
             postData: {
                 i_search : ''
             }
@@ -478,17 +599,18 @@
         $("#grid-table").trigger("reloadGrid");
     }
 
-
-     $('.datepicker').datepicker({
+    $('.datepicker').datepicker({
         format: 'dd/mm/yyyy',
         todayHighlight:'TRUE',
         autoclose: true,
         orientation: 'bottom'
     });
 
-    $(".numeric").keypress(function(event) {
+    $(".numeric").keypress(function(e) {
         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
             return false;
         }
     });
+
+    $('.select2-single').select2();
 </script>
