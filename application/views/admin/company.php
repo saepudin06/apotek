@@ -53,8 +53,8 @@
                                 </label>
                             </div>
 
-                            <div class="form-row" id="logo-2" style="display: none;">
-                                <label class="form-group col-md-2" style="font-weight: bold;" id="logo-label"></label>
+                            <div class="form-row" id="logo-2" style="display: none; margin-bottom: 10px;">
+                                <label class="form-group col-md-2" style="font-weight: bold; padding-left: 10px;" id="logo-label"></label>
                                 <button class="btn btn-danger btn-xs default mb-1" type="button" id="btn-remove">Remove Image</button>
                             </div>
 
@@ -131,6 +131,7 @@
 
                             <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
                             <button class="btn btn-danger" type="button" id="btn-delete">Delete</button>
+                            <button class="btn btn-primary" type="button" id="btn-refresh">Refresh All</button>
 
                         </form>
                     </div>
@@ -370,6 +371,11 @@
         todayHighlight:'TRUE',
         autoclose: true,
         orientation: 'bottom'
+    });
+
+    /*refresh*/
+    $('#btn-refresh').on('click', function(){
+        location.reload();
     });
 
 </script>
