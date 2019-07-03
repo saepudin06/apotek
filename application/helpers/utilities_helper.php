@@ -25,86 +25,42 @@ function html_spaces($number=1) {
     return $result;
 }
 
-function breadCrumbs($menu_id) {
+function getCompany(){
+    $ci = & get_instance();
+    $ci->load->model('admin/company');
+    $table = $ci->company;
 
-    $ci =& get_instance();
-    $sql = "WITH qs(menu_id, parent_id, menu_title) AS
-            (
-                SELECT menu_id, parent_id, menu_title
-                FROM menus m
-                WHERE parent_id is null
-                UNION ALL
-                SELECT child.menu_id, child.parent_id, (qs.menu_title ||'>'|| child.menu_title) as menu_title
-                FROM menus child
-                INNER JOIN qs
-                ON qs.menu_id = child.parent_id
-            )
-            SELECT *
-            FROM qs
-            where qs.menu_id = ?";
+    $sql = "SELECT   company_id, name, address, no_telp, no_hp, email, website, registration_num, subtitle, logo, tax_num, city, created_date, update_date, created_by, update_by, to_char(since_date, 'dd/mm/yyyy') since_date
+                      FROM   company WHERE rownum = 1";
 
-    $query = $ci->db->query($sql, array($menu_id));
-    $item = $query->row_array();
+    $result = $table->db->query($sql);
+    $rows = $result->row_array();
 
-    $crumbsstr = $item['menu_title'];
-    $crumbs = explode('>', $crumbsstr);
-
-    $output = '
-    <ul class="page-breadcrumb">
-    <li>
-        <a href="'.base_url().'">Home</a>
-        <i class="fa fa-circle"></i>
-    </li>';
-
-    for($i = 0; $i < count($crumbs); $i++) {
-
-        if($i == count($crumbs) - 1) {
-            $output .= '<li>
-                <span>'.$crumbs[$i].'</span>
-            </li>';
-        }else {
-            $output .= '<li>
-                <a href="javascript:;">'.$crumbs[$i].'</a>
-                <i class="fa fa-circle"></i>
-            </li>';
-        }
+    if(count($rows) == 0){
+        $row['company_id'] = '0';
+        $row['name'] = 'PT. Xxxxxxxx Xxxxx';
+        $row['address'] = 'Jln. Xxxxxxxx Xxxxxxxx';
+        $row['no_telp'] = '-';
+        $row['no_hp'] = '-';
+        $row['email'] = '-';
+        $row['website'] = '-';
+        $row['registration_num'] = '-';
+        $row['subtitle'] = 'PT. Xxxxxxxx Xxxxx';
+        $row['logo'] = '-';
+        $row['tax_num'] = '-';
+        $row['city'] = '-';
+        $row['created_date'] = '-';
+        $row['update_date'] = '-';
+        $row['created_by'] = '-';
+        $row['update_by'] = '-';
+        $row['since_date'] = '-';
+    }else{
+        if($rows['logo'] == ""){
+            $rows['logo'] = 'upload/default-logo.PNG';
+        }        
     }
 
-    $output .= '</ul>';
-
-    return $output;
+    return $rows;
 }
 
-/**
- * compareDate
- *
- * Melakukan perbandingan dua tanggal
- *
- * @param string $from_date : batas tanggal awal dalam format yyyy-mm-dd
- * @param string $to_date   : batas tanggal akhir dalam format yyyy-mm-dd
- * @return 1 jika from_date < to_date, 2 jika from_date > to_date, 3 jika from_date = to_date
- */
-function compareDate($from_date, $to_date) {
-    $from_date = trim($from_date);
-    $to_date = trim($to_date);
-
-    if ($from_date == $to_date){
-        return 3;
-    }
-
-    $waktu_awal = explode("-",$from_date);
-    $waktu_akhir = explode("-",$to_date);
-    if ($waktu_awal[0] > $waktu_akhir[0]){
-        return 2;
-    }else if ($waktu_awal[0] == $waktu_akhir[0]){
-        if ($waktu_awal[1] > $waktu_akhir[1]){
-            return 2;
-        }else if ($waktu_awal[1] == $waktu_akhir[1]){
-            if ($waktu_awal[2] > $waktu_akhir[2]){
-                return 2;
-            }
-        }
-    }
-    return 1;
-}
 ?>

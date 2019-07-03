@@ -45,12 +45,17 @@
                         <form method="post" id="form_data" enctype="multipart/form-data" accept-charset="utf-8">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
-                            <div class="form-row">
+                            <div class="form-row" id="logo-1">
                                 <!-- <input class="form-control" name="file" type="file" /> -->
                                 <label class="form-group has-float-label col-md-12">
                                     <input class="form-control" type="file" id="logo" name="logo" placeholder="" autocomplete="off" />
                                     <span>Logo *</span>
                                 </label>
+                            </div>
+
+                            <div class="form-row" id="logo-2" style="display: none;">
+                                <label class="form-group col-md-2" style="font-weight: bold;" id="logo-label"></label>
+                                <button class="btn btn-danger btn-xs default mb-1" type="button" id="btn-remove">Remove Image</button>
                             </div>
 
                             <div class="form-row">
@@ -182,6 +187,7 @@
                         var website = data.rows.website;
                         var tax_num = data.rows.tax_num;
                         var since_date = data.rows.since_date;
+                        var logo = data.rows.logo;
                         
                         $('#company_id').val(company_id);
                         $('#registration_num').val(registration_num);
@@ -195,6 +201,16 @@
                         $('#website').val(website);        
                         $('#tax_num').val(tax_num);        
                         $('#since_date').val(since_date);   
+
+                        if(logo == "" || logo == null){
+                            $('#logo-1').show();
+                            $('#logo-2').hide();
+                            $('#logo').val('');
+                        }else{
+                            $('#logo-1').hide();
+                            $('#logo-2').show();
+                            $('#logo-label').text(logo.replace("upload/", "Logo Image : "));                           
+                        }
                     }else{
                         $('#company_id').val('');
                         $('#registration_num').val('');
@@ -208,6 +224,9 @@
                         $('#website').val('');
                         $('#tax_num').val('');
                         $('#since_date').val('');
+                        $('#logo-1').show();
+                        $('#logo-2').hide();
+                        $('#logo').val('');
                     }
                 },
                 error: function (xhr, status, error) {
@@ -216,6 +235,47 @@
             });
 
     }
+
+    $('#btn-remove').on('click',function(){
+        company_id = $('#company_id').val();  
+
+        if(company_id == null || company_id == '') {
+            swal('','Company not saved','info');
+            return false;
+        }   
+
+        swal({
+              title: "",
+              text: "Do you want to remove this image?",
+              showCancelButton: true,
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Yes!",
+              closeOnConfirm: true
+            },
+            function(){
+
+                $.ajax({
+                    url: "<?php echo WS_JQGRID."admin.company_controller/remove_img"; ?>" ,
+                    type: "POST",
+                    dataType: "json",
+                    data: {company_id:company_id},
+                    success: function (data) {
+                        if (data.success){
+                            swal("", data.message, "success");
+                            setData();
+                        }else{
+                            swal("", data.message, "warning");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+                    }
+                });
+
+                
+                return false;
+            });     
+    });
 
     $('#btn-delete').on('click',function(){
 

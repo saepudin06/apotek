@@ -375,6 +375,30 @@ class Company_controller {
 
     }
 
+    function remove_img() {
+        $data = array('rows' => array(), 'success' => false, 'message' => '');
+
+        $ci = & get_instance();
+        $ci->load->model('admin/company');
+        $table = $ci->company;
+
+        $company_id = getVarClean('company_id', 'int', 0);
+
+        $sql = "UPDATE company SET
+                logo = ''
+                WHERE company_id = ?";
+
+        $table->db->query($sql, array($company_id));
+        
+
+        $data['success'] = true;
+        $data['message'] = 'sukses';
+      
+        echo json_encode($data);
+        exit;
+        
+    }
+
 }
 
 /* End of file Company_controller.php */

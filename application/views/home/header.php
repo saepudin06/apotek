@@ -1,9 +1,13 @@
+<?php
+    $items = getCompany();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Apotek Test</title>
+    <title><?php echo $items['subtitle'];?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/font/font.css" />
@@ -80,9 +84,17 @@
         </div>
 
 
-        <a class="navbar-logo" href="Dashboard.Default.html">
-            <span class="logo d-none d-xs-block"></span>
-            <span class="logo-mobile d-block d-xs-none"></span>
+        <a class="navbar-logo" href="javascript:;">
+            <!-- <span class="logo d-none d-xs-block"></span> -->
+            <!-- <span class="logo-mobile d-block d-xs-none"></span> -->
+            <div class="d-none d-lg-block">
+            <img src="<?php echo base_url().$items['logo'];?>" alt="logo" width="40" height="40">
+            <span style="font-weight: bold; font-size: 18px; margin-left: 5px; margin-top: 20px;"><?php echo $items['name'];?></span> 
+            </div>
+
+            <img class="d-none d-block d-lg-none" src="<?php echo base_url().$items['logo'];?>" alt="logo" width="40" height="40">
+            
+
         </a>
 
         <div class="navbar-right">
