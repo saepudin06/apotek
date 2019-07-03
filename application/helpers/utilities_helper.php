@@ -46,7 +46,7 @@ function getCompany(){
         $rows['website'] = '-';
         $rows['registration_num'] = '-';
         $rows['subtitle'] = 'PT. Xxxxxxxx Xxxxx';
-        $rows['logo'] = '-';
+        $rows['logo'] = '';
         $rows['tax_num'] = '-';
         $rows['city'] = '-';
         $rows['created_date'] = '-';
