@@ -37,24 +37,24 @@ function getCompany(){
     $rows = $result->row_array();
 
     if(count($rows) == 0){
-        $row['company_id'] = '0';
-        $row['name'] = 'PT. Xxxxxxxx Xxxxx';
-        $row['address'] = 'Jln. Xxxxxxxx Xxxxxxxx';
-        $row['no_telp'] = '-';
-        $row['no_hp'] = '-';
-        $row['email'] = '-';
-        $row['website'] = '-';
-        $row['registration_num'] = '-';
-        $row['subtitle'] = 'PT. Xxxxxxxx Xxxxx';
-        $row['logo'] = '-';
-        $row['tax_num'] = '-';
-        $row['city'] = '-';
-        $row['created_date'] = '-';
-        $row['update_date'] = '-';
-        $row['created_by'] = '-';
-        $row['update_by'] = '-';
-        $row['since_date'] = '-';
-        
+        $rows['company_id'] = '0';
+        $rows['name'] = 'PT. Xxxxxxxx Xxxxx';
+        $rows['address'] = 'Jln. Xxxxxxxx Xxxxxxxx';
+        $rows['no_telp'] = '-';
+        $rows['no_hp'] = '-';
+        $rows['email'] = '-';
+        $rows['website'] = '-';
+        $rows['registration_num'] = '-';
+        $rows['subtitle'] = 'PT. Xxxxxxxx Xxxxx';
+        $rows['logo'] = '-';
+        $rows['tax_num'] = '-';
+        $rows['city'] = '-';
+        $rows['created_date'] = '-';
+        $rows['update_date'] = '-';
+        $rows['created_by'] = '-';
+        $rows['update_by'] = '-';
+        $rows['since_date'] = '-';
+
         if($rows['logo'] == ""){
             $rows['logo'] = 'upload/default-logo.PNG';
         } 
