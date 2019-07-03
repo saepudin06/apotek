@@ -54,6 +54,10 @@ function getCompany(){
         $row['created_by'] = '-';
         $row['update_by'] = '-';
         $row['since_date'] = '-';
+        
+        if($rows['logo'] == ""){
+            $rows['logo'] = 'upload/default-logo.PNG';
+        } 
     }else{
         if($rows['logo'] == ""){
             $rows['logo'] = 'upload/default-logo.PNG';
