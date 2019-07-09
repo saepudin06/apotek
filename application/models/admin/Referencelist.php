@@ -13,9 +13,9 @@ class Referencelist extends Abstract_model {
     public $fields          = array(
                                 'reference_list_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Reference List ID'),
                                 'reference_type_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Reference Type ID'),
-                                'name'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Name'),                                
-                                'val_1'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Value 1'),                                
-                                'val_2'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Value 2'),    
+                                'name'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Name'),                                
+                                'val_1'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Value 1'),                                
+                                'val_2'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Value 2'),    
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),

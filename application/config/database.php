@@ -75,33 +75,33 @@ $query_builder = TRUE;
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] ='
-(DESCRIPTION=
-    (ADDRESS=
-      (PROTOCOL=TCP)
-      (HOST=127.0.0.1)
-      (PORT=1521)
-    )
-    (CONNECT_DATA=
-      (SERVER=dedicated)
-      (SERVICE_NAME=XE)
-    )
-  )';
-
-
-/*global dev*/ 
 // $db['default']['hostname'] ='
 // (DESCRIPTION=
 //     (ADDRESS=
 //       (PROTOCOL=TCP)
-//       (HOST=10.62.185.22)
+//       (HOST=127.0.0.1)
 //       (PORT=1521)
 //     )
 //     (CONNECT_DATA=
 //       (SERVER=dedicated)
-//       (SERVICE_NAME=tibsdev)
+//       (SERVICE_NAME=XE)
 //     )
-//   )'; 
+//   )';
+
+
+/*global dev*/ 
+$db['default']['hostname'] ='
+(DESCRIPTION=
+    (ADDRESS=
+      (PROTOCOL=TCP)
+      (HOST=10.62.185.22)
+      (PORT=1521)
+    )
+    (CONNECT_DATA=
+      (SERVER=dedicated)
+      (SERVICE_NAME=tibsdev)
+    )
+  )'; 
 
 $db['default']['username'] = 'APOTEK';
 $db['default']['password'] = 'APOTEK';
