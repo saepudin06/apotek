@@ -101,6 +101,7 @@
 
         jQuery("#grid-table").jqGrid({
             url: '<?php echo WS_JQGRID."admin.referencelist_controller/crud"; ?>',
+            postData: { reference_type_id : '<?php echo $this->input->post('reference_type_id'); ?>'},
             datatype: "json",
             mtype: "POST",
             loadui: "disable",

@@ -16,7 +16,8 @@ class Financeperiod_controller {
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
         $i_search = getVarClean('i_search','str','');
-
+        $year_period_id = getVarClean('year_period_id','int',0);
+        
         try {
 
             $ci = & get_instance();
@@ -39,6 +40,9 @@ class Financeperiod_controller {
 
             // Filter Table
             $req_param['where'] = array();
+
+            $table->setCriteria("year_period_id=".$year_period_id);
+
             if(!empty($i_search)) {
                 $table->setCriteria("( upper(code) like upper('%".$i_search."%') OR 
                                        upper(description) like upper('%".$i_search."%')

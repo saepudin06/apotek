@@ -101,6 +101,7 @@
 
         jQuery("#grid-table").jqGrid({
             url: '<?php echo WS_JQGRID."admin.financeperiod_controller/crud"; ?>',
+            postData: { year_period_id : '<?php echo $this->input->post('year_period_id'); ?>'},
             datatype: "json",
             mtype: "POST",
             loadui: "disable",

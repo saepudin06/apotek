@@ -16,6 +16,8 @@ class Referencelist_controller {
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
         $i_search = getVarClean('i_search','str','');
+        $reference_type_id = getVarClean('reference_type_id','int',0);
+        
 
         try {
 
@@ -39,6 +41,8 @@ class Referencelist_controller {
 
             // Filter Table
             $req_param['where'] = array();
+
+            $table->setCriteria("reference_type_id=".$reference_type_id);
             if(!empty($i_search)) {
                 $table->setCriteria("( upper(name) like upper('%".$i_search."%') OR 
                                        upper(val_1) like upper('%".$i_search."%') OR

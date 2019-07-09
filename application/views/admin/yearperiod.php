@@ -339,14 +339,15 @@
 
         event.stopPropagation();
         var grid = $('#grid-table');
-        year_period_id = grid.jqGrid ('getGridParam', 'selrow');
-        code = grid.jqGrid ('getCell', year_period_id, 'code');
+        year_period_id = grid.jqGrid('getGridParam', 'selrow');
+        code = grid.jqGrid('getCell', year_period_id, 'code');
 
         if(year_period_id == null) {
             swal('','Please select one row','info');
             return false;
         }
 
+        
         loadContentWithParams("admin.financeperiod", {
             year_period_id: year_period_id,
             year_code : code

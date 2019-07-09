@@ -88,8 +88,23 @@ $db['default']['hostname'] ='
     )
   )';
 
-$db['default']['username'] = 'apotek';
-$db['default']['password'] = 'apotek';
+
+/*global dev*/ 
+// $db['default']['hostname'] ='
+// (DESCRIPTION=
+//     (ADDRESS=
+//       (PROTOCOL=TCP)
+//       (HOST=10.62.185.22)
+//       (PORT=1521)
+//     )
+//     (CONNECT_DATA=
+//       (SERVER=dedicated)
+//       (SERVICE_NAME=tibsdev)
+//     )
+//   )'; 
+
+$db['default']['username'] = 'APOTEK';
+$db['default']['password'] = 'APOTEK';
 $db['default']['database'] = 'orcl';
 $db['default']['dbdriver'] = 'oci8';
 $db['default']['dbprefix'] = '';
