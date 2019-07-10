@@ -50,9 +50,11 @@
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
+                            <input type="hidden" class="form-control" id="finance_period_id" name="finance_period_id" placeholder="" autocomplete="off" />
+
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="finance_period_id" name="finance_period_id" placeholder="" autocomplete="off" readonly="" />
+                                    <input class="form-control" id="finance_period_id_new" name="finance_period_id_new" placeholder="" autocomplete="off" />
                                     <span>ID *</span>
                                 </label>
 
@@ -106,7 +108,7 @@
             mtype: "POST",
             loadui: "disable",
             colModel: [
-                {label: 'ID', name: 'finance_period_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'Finance Period', name: 'finance_period_id', key: true, width: 100, sorttype: 'number', editable: true, hidden: false},
                 {label: 'Year Period ID', name: 'year_period_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Year Period', name: 'year_code', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Code', name: 'code', width: 100, align: "left", editable: false, search:false, sortable:false},
@@ -282,7 +284,9 @@
                 onClickButton: function(){ 
                     $('#grid-ui').hide();
                     $('#form-ui').slideDown( "slow" );
-                    $('#form_data').trigger("reset");                    
+                    $('#form_data').trigger("reset");  
+
+                    $('#finance_period_id').val("");                   
                      //alert("Adding Row");
                 },
                 position: "last",
@@ -362,6 +366,7 @@
         var description  = $('#grid-table').jqGrid('getCell', rowid, 'description');
         
         $('#finance_period_id').val(rowid);
+        $('#finance_period_id_new').val(rowid);
         $('#year_period_id').val(year_period_id);
         $('#code').val(code);
         $('#production_date').val(production_date);
@@ -425,6 +430,9 @@
         var var_url = '<?php echo WS_JQGRID."admin.financeperiod_controller/create"; ?>';
         if(finance_period_id) var_url = '<?php echo WS_JQGRID."admin.financeperiod_controller/update"; ?>';
         
+        data.append("finance_period_id", $("#finance_period_id_new").val());
+        data.delete("finance_period_id_new");
+
         $.ajax({
             type: 'POST',
             dataType: "json",

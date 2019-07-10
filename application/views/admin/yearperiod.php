@@ -50,14 +50,16 @@
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
+                            <input type="hidden" class="form-control" id="year_period_id" name="year_period_id" placeholder="" autocomplete="off" />
+
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-6">
-                                    <input class="form-control" id="year_period_id" name="year_period_id" placeholder="" autocomplete="off" readonly="" />
+                                    <input class="form-control" id="year_period_id_new" name="year_period_id_new" placeholder="" autocomplete="off" maxlength="10" />
                                     <span>ID *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
-                                    <input class="form-control" id="code" name="code" placeholder="" autocomplete="off" autofocus="" />
+                                    <input class="form-control" id="code" name="code" placeholder="" maxlength="10" autocomplete="off" autofocus="" />
                                     <span>Code *</span>
                                 </label>
                             </div>
@@ -275,6 +277,7 @@
                     $('#grid-ui').hide();
                     $('#form-ui').slideDown( "slow" );
                     $('#form_data').trigger("reset");                    
+                    $('#year_period_id').val("");                    
                      //alert("Adding Row");
                 },
                 position: "last",
@@ -364,6 +367,7 @@
         var description  = $('#grid-table').jqGrid('getCell', rowid, 'description');
         
         $('#year_period_id').val(rowid);
+        $('#year_period_id_new').val(rowid);
         $('#code').val(code);
         $('#production_date').val(production_date);
         $('#description').val(description);        
@@ -422,10 +426,14 @@
         e.preventDefault(); 
         var data = new FormData(this);
         var year_period_id = $('#year_period_id').val();
+
             
         var var_url = '<?php echo WS_JQGRID."admin.yearperiod_controller/create"; ?>';
         if(year_period_id) var_url = '<?php echo WS_JQGRID."admin.yearperiod_controller/update"; ?>';
         
+        data.append("year_period_id", $("#year_period_id_new").val());
+        data.delete("year_period_id_new");
+
         $.ajax({
             type: 'POST',
             dataType: "json",

@@ -145,17 +145,17 @@
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control numeric" id="package_val" name="package_val" placeholder="" autocomplete="off" autofocus="" />
+                                    <input class="form-control" onkeypress="return isNumberKey(event)" id="package_val" name="package_val" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Package Value. *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control numeric" id="stock_min" name="stock_min" placeholder="" autocomplete="off" autofocus="" />
+                                    <input class="form-control" onkeypress="return isNumberKey(event)" id="stock_min" name="stock_min" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Stock Min. *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control numeric" id="initial_stock" name="initial_stock" placeholder="" autocomplete="off" autofocus="" />
+                                    <input class="form-control" onkeypress="return isNumberKey(event)" id="initial_stock" name="initial_stock" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Initial Stock *</span>
                                 </label>
                             </div>
@@ -607,11 +607,13 @@
         orientation: 'bottom'
     });
 
-    $(".numeric").keypress(function(e) {
-        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
             return false;
-        }
-    });
+
+        return true;
+    }
 
     $('.select2-single').select2();
 </script>

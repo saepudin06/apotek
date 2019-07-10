@@ -95,6 +95,7 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'purchase_request_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'Created By', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Date', name: 'pr_date', width: 500, align: "left", editable: false, search:false, sortable:false},
                 {label: 'amount', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
                 

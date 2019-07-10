@@ -74,17 +74,17 @@
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control numeric" id="basic_price" name="basic_price" placeholder="" autocomplete="off" autofocus="" />
+                                    <input class="form-control" onkeypress="return isNumberKey(event)" id="basic_price" name="basic_price" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Basic Price *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control numeric" id="sell_price" name="sell_price" placeholder="" autocomplete="off" autofocus="" />
+                                    <input class="form-control" onkeypress="return isNumberKey(event)" id="sell_price" name="sell_price" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Sell Price *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control numeric" id="tax" name="tax" placeholder="" autocomplete="off" autofocus="" />
+                                    <input class="form-control" onkeypress="return isNumberKey(event)" id="tax" name="tax" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Tax *</span>
                                 </label>
                             </div>
@@ -205,7 +205,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."product.producttariffdetails_controller/crud"; ?>',
-            caption: "Product Details(<?php echo $this->input->post('product_label','');?>)"
+            caption: "Tariff Product(<?php echo $this->input->post('product_label','');?>)"
 
         });
 
@@ -542,11 +542,13 @@
         orientation: 'bottom'
     });
 
-    $(".numeric").keypress(function(e) {
-        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
             return false;
-        }
-    });
+
+        return true;
+    }
 
     $('.select2-single').select2();
 </script>

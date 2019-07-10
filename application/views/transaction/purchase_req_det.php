@@ -76,12 +76,12 @@
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control numeric" onkeyup="sumamout()" id="basic_price" name="basic_price" placeholder="" autocomplete="off" autofocus="" />
+                                    <input class="form-control" onkeypress="return isNumberKey(event)" onkeyup="sumamout()" id="basic_price" name="basic_price" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Basic Price *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control numeric" onkeyup="sumamout()" id="qty" name="qty" placeholder="" autocomplete="off" autofocus="" />
+                                    <input class="form-control" onkeypress="return isNumberKey(event)" onkeyup="sumamout()" id="qty" name="qty" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Qty *</span>
                                 </label>
 
@@ -542,9 +542,11 @@
         orientation: 'bottom'
     });
 
-    $(".numeric").keypress(function(event) {
-        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
             return false;
-        }
-    });
+
+        return true;
+    }
 </script>
