@@ -11,7 +11,7 @@ class Yearperiod extends Abstract_model {
     public $alias           = "";
 
     public $fields          = array(
-                                'year_period_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Year Period ID'),
+                                'year_period_id'       => array('pkey' => true, 'type' => 'str', 'nullable' => true, 'unique' => true, 'display' => 'Year Period ID'),
                                 'code'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Code'),
                                 'production_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Production Date'),
                                 'description'      => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Description'),
@@ -22,7 +22,7 @@ class Yearperiod extends Abstract_model {
 
                             );
 
-    public $selectClause    = "year_period_id, code, to_char(production_date, 'dd/mm/yyyy') production_date, description, created_date, created_by, update_date, update_by";
+    public $selectClause    = "trim(year_period_id) year_period_id, code, to_char(production_date, 'dd/mm/yyyy') production_date, description, created_date, created_by, update_date, update_by";
     public $fromClause      = "yearperiod";
 
     public $refs            = array();
@@ -48,9 +48,6 @@ class Yearperiod extends Abstract_model {
             $this->db->set('production_date',"to_date('".$this->record['production_date']."','dd/mm/yyyy')",false);
             unset($this->record['production_date']);
 
-            $this->record[$this->pkey] = $this->generate_id($this->table, $this->pkey);
-
-          
         }else {
             //do something
             //example:
