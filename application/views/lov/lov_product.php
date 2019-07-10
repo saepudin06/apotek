@@ -130,6 +130,11 @@
                     swal({title: 'Attention', text: response.message, html: true, type: "warning"});
                 }
 
+                setTimeout(function(){
+                      $("#grid-table-lov_product").setSelection($("#grid-table-lov_product").getDataIDs()[0],true);
+                      $("#grid-table-lov_product").focus();
+                },500);
+
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."product.products_controller/crud"; ?>',
