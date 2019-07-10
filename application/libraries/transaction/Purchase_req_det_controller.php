@@ -318,7 +318,8 @@ class Purchase_req_det_controller {
             
         }catch (Exception $e) {
             $data['message'] = $e->getMessage();
-            $data['rows'] = $items;
+            $data['rows'] = array();
+            $data['total'] = 0;
         }
         return $data;
     }

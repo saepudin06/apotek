@@ -118,59 +118,54 @@ class Yearperiod_controller {
             return $data;
         }
 
+        $userdata = $ci->session->userdata;
+        $action = 'I';
+        try{
 
-        $table->actionType = 'CREATE';
-        $errors = array();
+            $sql = "BEGIN "
+                    . " P_CRUD_YEARPERIOD("
+                    . " :i_action, "
+                    . " :i_year_period_id,"
+                    . " :i_code,"
+                    . " :i_production_date,"
+                    . " :i_description,"
+                    . " :i_user,"
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
 
-        if (isset($items[0])){
-            $numItems = count($items);
-            for($i=0; $i < $numItems; $i++){
-                try{
+            $stmt = oci_parse($table->db->conn_id, $sql);
 
-                    $table->db->trans_begin(); //Begin Trans
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_action', $action);
+            oci_bind_by_name($stmt, ':i_year_period_id', $items['year_period_id']);
+            oci_bind_by_name($stmt, ':i_code', $items['code']);
+            oci_bind_by_name($stmt, ':i_production_date', $items['production_date']);
+            oci_bind_by_name($stmt, ':i_description', $items['description']);
+            oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
 
-                        $table->setRecord($items[$i]);
-                        $table->create();
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
 
-                    $table->db->trans_commit(); //Commit Trans
 
-                }catch(Exception $e){
+            ociexecute($stmt);
 
-                    $table->db->trans_rollback(); //Rollback Trans
-                    $errors[] = $e->getMessage();
-                }
-            }
-
-            $numErrors = count($errors);
-            if ($numErrors > 0){
-                $data['message'] = $numErrors." from ".$numItems." record(s) failed to be saved.<br/><br/><b>System Response:</b><br/>- ".implode("<br/>- ", $errors)."";
-            }else{
-                $data['success'] = true;
-                $data['message'] = 'Data added successfully';
-            }
-            $data['rows'] =$items;
-        }else {
-
-            try{
-                $table->db->trans_begin(); //Begin Trans
-
-                    $table->setRecord($items);
-                    $table->create();
-
-                $table->db->trans_commit(); //Commit Trans
-
-                $data['success'] = true;
-                $data['message'] = 'Data added successfully';
-                
-
-            }catch (Exception $e) {
-                $table->db->trans_rollback(); //Rollback Trans
-
-                $data['message'] = $e->getMessage();
+            if($o_msg_code == 0){
                 $data['rows'] = $items;
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+            }else{
+                $data['rows'] = $items;
+                $data['success'] = false;
+                $data['message'] = $o_msg;
             }
 
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+            $data['rows'] = $items;
         }
+
         return $data;
 
     }
@@ -190,61 +185,54 @@ class Yearperiod_controller {
             return $data;
         }
 
-        //exit;
+        $userdata = $ci->session->userdata;
+        $action = 'U';
+        try{
 
-        $table->actionType = 'UPDATE';
+            $sql = "BEGIN "
+                    . " P_CRUD_YEARPERIOD("
+                    . " :i_action, "
+                    . " :i_year_period_id,"
+                    . " :i_code,"
+                    . " :i_production_date,"
+                    . " :i_description,"
+                    . " :i_user,"
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
 
-        if (isset($items[0])){
-            
-            $errors = array();
-            $numItems = count($items);
-            for($i=0; $i < $numItems; $i++){
-                try{
-                    $table->db->trans_begin(); //Begin Trans
+            $stmt = oci_parse($table->db->conn_id, $sql);
 
-                        $table->setRecord($items[$i]);
-                        $table->update();
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_action', $action);
+            oci_bind_by_name($stmt, ':i_year_period_id', $items['year_period_id']);
+            oci_bind_by_name($stmt, ':i_code', $items['code']);
+            oci_bind_by_name($stmt, ':i_production_date', $items['production_date']);
+            oci_bind_by_name($stmt, ':i_description', $items['description']);
+            oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
 
-                    $table->db->trans_commit(); //Commit Trans
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
 
-                    $items[$i] = $table->get($items[$i][$table->pkey]);
-                }catch(Exception $e){
-                    $table->db->trans_rollback(); //Rollback Trans
 
-                    $errors[] = $e->getMessage();
-                }
-            }
+            ociexecute($stmt);
 
-            $numErrors = count($errors);
-            if ($numErrors > 0){
-                $data['message'] = $numErrors." from ".$numItems." record(s) failed to be saved.<br/><br/><b>System Response:</b><br/>- ".implode("<br/>- ", $errors)."";
-            }else{
-                $data['success'] = true;
-                $data['message'] = 'Data update successfully';
-            }
-            $data['rows'] =$items;
-        }else {
-            
-            try{
-                $table->db->trans_begin(); //Begin Trans
-
-                    $table->setRecord($items);
-                    $table->update();
-
-                $table->db->trans_commit(); //Commit Trans
-
-                $data['success'] = true;
-                $data['message'] = 'Data update successfully';
-                
-                $data['rows'] = $table->get($items[$table->pkey]);
-            }catch (Exception $e) {
-                $table->db->trans_rollback(); //Rollback Trans
-
-                $data['message'] = $e->getMessage();
+            if($o_msg_code == 0){
                 $data['rows'] = $items;
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+            }else{
+                $data['rows'] = $items;
+                $data['success'] = false;
+                $data['message'] = $o_msg;
             }
 
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+            $data['rows'] = $items;
         }
+
         return $data;
 
     }
@@ -262,40 +250,63 @@ class Yearperiod_controller {
 
         $items = $data["id_"];
 
+        $userdata = $ci->session->userdata;
+        $action = 'D';
+        $null = null;
+
         try{
-            $table->db->trans_begin(); //Begin Trans
 
-            $total = 0;
-            if (is_array($items)){
-                foreach ($items as $key => $value){
-                    if (empty($value)) throw new Exception('Empty parameter');
-                    $table->remove($value);
-                    $data['rows'][] = array($table->pkey => $value);
-                    $total++;
-                }
+            $sql = "BEGIN "
+                    . " P_CRUD_YEARPERIOD("
+                    . " :i_action, "
+                    . " :i_year_period_id,"
+                    . " :i_code,"
+                    . " :i_production_date,"
+                    . " :i_description,"
+                    . " :i_user,"
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
+
+            $stmt = oci_parse($table->db->conn_id, $sql);
+
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_action', $action);
+            oci_bind_by_name($stmt, ':i_year_period_id', $items);
+            oci_bind_by_name($stmt, ':i_code', $null);
+            oci_bind_by_name($stmt, ':i_production_date', $null);
+            oci_bind_by_name($stmt, ':i_description', $null);
+            oci_bind_by_name($stmt, ':i_user', $null);
+
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
+
+
+            ociexecute($stmt);
+
+            if($o_msg_code == 0){
+                $data['rows'] = $items;
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+                $data['total'] = 1;
+                $data['records'] = 0;
+                $data['page'] = 1;
             }else{
-                $items = (int) $items;
-                if (empty($items)){
-                    throw new Exception('Empty parameter');
-                }
-                $table->remove($items);
-                $data['rows'][] = array($table->pkey => $items);
-                $data['total'] = $total = 1;
+                $data['rows'] = $items;
+                $data['success'] = false;
+                $data['message'] = $o_msg;
+                $data['total'] = 1;
+                $data['records'] = 0;
+                $data['page'] = 1;
             }
-
-            $data['records'] = 0;
-            $data['page'] = 1;
-            $data['success'] = true;
-            $data['message'] = $total.' Data deleted successfully';
             
-            $table->db->trans_commit(); //Commit Trans
-
         }catch (Exception $e) {
-            $table->db->trans_rollback(); //Rollback Trans
             $data['message'] = $e->getMessage();
             $data['rows'] = array();
             $data['total'] = 0;
         }
+
         return $data;
     }
 
