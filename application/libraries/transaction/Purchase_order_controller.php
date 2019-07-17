@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
 * Json library
-* @class Purchase_request_controller
+* @class Purchase_order_controller
 * @version 07/05/2015 12:18:00
 */
-class Purchase_request_controller {
+class Purchase_order_controller {
 
     function read() {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','pr_date');
+        $sidx = getVarClean('sidx','str','po_date');
         $sord = getVarClean('sord','str','desc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
@@ -20,8 +20,8 @@ class Purchase_request_controller {
         try {
 
             $ci = & get_instance();
-            $ci->load->model('transaction/purchase_request');
-            $table = $ci->purchase_request;
+            $ci->load->model('transaction/purchase_order');
+            $table = $ci->purchase_order;
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -40,8 +40,9 @@ class Purchase_request_controller {
             // Filter Table
             $req_param['where'] = array();
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(pr_date) like upper('%".$i_search."%') OR
-                                       upper(code) like upper('%".$i_search."%')
+                $table->setCriteria("( upper(invoice_num_ref) like upper('%".$i_search."%') OR
+                                       upper(purchase_request) like upper('%".$i_search."%') OR
+                                       upper(supplier_name) like upper('%".$i_search."%') 
                                      )");
             }
 
@@ -106,8 +107,8 @@ class Purchase_request_controller {
 
 
         $ci = & get_instance();
-        $ci->load->model('transaction/purchase_request');
-        $table = $ci->purchase_request;
+        $ci->load->model('transaction/purchase_order');
+        $table = $ci->purchase_order;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -178,8 +179,8 @@ class Purchase_request_controller {
     function update() {
 
         $ci = & get_instance();
-        $ci->load->model('transaction/purchase_request');
-        $table = $ci->purchase_request;
+        $ci->load->model('transaction/purchase_order');
+        $table = $ci->purchase_order;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -252,8 +253,8 @@ class Purchase_request_controller {
     function destroy() {
 
         $ci = & get_instance();
-        $ci->load->model('transaction/purchase_request');
-        $table = $ci->purchase_request;
+        $ci->load->model('transaction/purchase_order');
+        $table = $ci->purchase_order;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -301,4 +302,4 @@ class Purchase_request_controller {
 
 }
 
-/* End of file Purchase_request_controller.php */
+/* End of file Purchase_order_controller.php */
