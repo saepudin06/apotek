@@ -120,8 +120,8 @@
             height: 200,
             autowidth: true,
             viewrecords: true,
-            rowNum: 10,
-            rowList: [10,20,30],
+            rowNum: 12,
+            rowList: [12,20,30],
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,

@@ -59,7 +59,7 @@
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
-                                    <input class="form-control" id="code" name="code" placeholder="" maxlength="10" autocomplete="off" autofocus="" />
+                                    <input class="form-control" id="code" name="code" placeholder="" maxlength="30" autocomplete="off" autofocus="" />
                                     <span>Code *</span>
                                 </label>
                             </div>
