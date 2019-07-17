@@ -29,7 +29,6 @@
                     </li>
                     <?php } ?>
                     <?php endforeach; ?>   
-                    
                 </ul>
             </div>
         </div>
