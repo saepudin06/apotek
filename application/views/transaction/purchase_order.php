@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item">
                     <a href="javascript:;">Transaction</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Purchase Request</li>
+                <li class="breadcrumb-item active" aria-current="page">Purchase Order</li>
             </ol>
         </nav>
         
@@ -25,15 +25,15 @@
 <div class="row">    
     <div class="col-12">        
         <div class="card mb-4">
-            <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
+            <!-- <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Purchase Request</strong></a>
+                        aria-selected="true"><strong>Purchase Order</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
                 </li>
-            </ul>
+            </ul> -->
             
             <div class="separator mb-2"></div>
             <div class="card-body">            
@@ -45,33 +45,63 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Purchase Request</h5>
+                        <h5 class="mb-4">Form Purchase Order</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="purchase_request_id" name="purchase_request_id" placeholder="" autocomplete="off" readonly="" />
+                                <label class="form-group has-float-label col-md-4">
+                                    <input class="form-control" id="purchase_order_id" name="purchase_order_id" placeholder="" autocomplete="off" readonly="" />
                                     <span>ID *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="code" name="code" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Code *</span>
+                                <label class="form-group has-float-label col-md-4">
+                                    <input class="form-control" id="invoice_num_ref" name="invoice_num_ref" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Invoice Num *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control datepicker" id="pr_date" name="pr_date" placeholder="" autocomplete="off" autofocus="" />
+                                <label class="form-group has-float-label col-md-4">
+                                    <input class="form-control datepicker" id="po_date" name="po_date" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Date *</span>
-                                </label>
-
-                                <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control numeric" id="amount" name="amount" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Amount </span>
-                                </label>
+                                </label>                                
                             </div>
 
+                            <div class="form-row">
+                                <label class="form-group has-float-label col-md-4">
+                                    <input class="form-control datepicker" id="due_date_payment" name="due_date_payment" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Due Date Payment *</span>
+                                </label>  
+
+                                <label class="form-group has-float-label col-md-3">
+                                    <input class="form-control" id="supplier_name" name="supplier_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <span>Supplier *</span>
+                                </label>
+
+                                <div class="col-md-1">
+                                    <button class="btn btn-primary default" type="button" onclick="search_supplier('supplier_id', 'supplier_name')">Search</button>
+                                </div>
+
+                                <input class="form-control" type="hidden" id="supplier_id" name="supplier_id" placeholder="" autocomplete="off" readonly="" />
+
+                                <label class="form-group has-float-label col-md-3">
+                                    <input class="form-control" id="purchase_request" name="purchase_request" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <span>Purchase Request *</span>
+                                </label>
+
+                                <div class="col-md-1">
+                                    <button class="btn btn-primary default" type="button" onclick="search_pr('purchase_request_id', 'purchase_request')">Search</button>
+                                </div>
+
+                                <input class="form-control" type="hidden" id="purchase_request_id" name="purchase_request_id" placeholder="" autocomplete="off" readonly="" />
+
+                                <!-- <label class="form-group has-float-label col-md-3">
+                                    <input class="form-control numeric" id="amount" name="amount" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <span>Amount *</span>
+                                </label> -->
+
+                            </div>
+                            
 
                             <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
                             <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
@@ -86,6 +116,18 @@
     </div>
 </div>
 
+<?php $this->load->view('lov/lov_supplier'); ?>
+<?php $this->load->view('lov/lov_purchase_request'); ?>
+
+<script type="text/javascript">
+    function search_supplier(id, code){
+        modal_lov_supplier_show(id, code);
+    }
+
+    function search_pr(id, code){
+       modal_lov_purchase_request_show(id, code);
+    }
+</script>
 
 <script>
     jQuery(function($) {
@@ -94,16 +136,27 @@
         var pager_selector = "#grid-pager";
 
         jQuery("#grid-table").jqGrid({
-            url: '<?php echo WS_JQGRID."transaction.purchase_request_controller/crud"; ?>',
+            url: '<?php echo WS_JQGRID."transaction.purchase_order_controller/crud"; ?>',
             datatype: "json",
             mtype: "POST",
             loadui: "disable",
             colModel: [
-                {label: 'ID', name: 'purchase_request_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Code', name: 'code', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Created By', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Date', name: 'pr_date', width: 500, align: "left", editable: false, search:false, sortable:false},
-                {label: 'amount', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'ID', name: 'purchase_order_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'Invoice Num', name: 'invoice_num_ref', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Supplier Id', name: 'supplier_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
+                {label: 'Supplier', name: 'supplier_name', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Purchase Request ID', name: 'purchase_request_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
+                {label: 'Purchase Request', name: 'purchase_request', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'PO Date', name: 'po_date', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Due Date Payment', name: 'due_date_payment', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Amount', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: '<center>#</center>',width: 100,align: "center",
+                    formatter:function(cellvalue, options, rowObject) {
+                        var purchase_order_id = rowObject['purchase_order_id'];
+                        
+                        return '<button type="button" class="btn btn-outline-info btn-xs mb-1" onclick="goto_detail(\''+purchase_order_id+'\')">Detail</button>';
+                    }
+                },
                 
             ],
             // height: '100%',
@@ -117,6 +170,8 @@
             altRows: true,
             shrinkToFit: true,
             multiboxonly: true,
+            // multiselect: true,
+            // multiPageSelection: true,
             onSelectRow: function (rowid) {
                 /*do something when selected*/
                 // setData(rowid);
@@ -140,8 +195,8 @@
 
             },
             //memanggil controller jqgrid yang ada di controller crud
-            editurl: '<?php echo WS_JQGRID."transaction.purchase_request_controller/crud"; ?>',
-            caption: "Purchase Request"
+            editurl: '<?php echo WS_JQGRID."transaction.purchase_order_controller/crud"; ?>',
+            caption: "Purchase Order"
 
         });
 
@@ -157,7 +212,7 @@
                 searchicon: 'simple-icon-magnifier',
                 refresh: true,
                 afterRefresh: function () {
-                    // some code here
+                    // some invoice_num_ref here
                     // jQuery("#detailsPlaceholder").hide();
                 },
 
@@ -335,38 +390,45 @@
 
 
 <script type="text/javascript">
-    $("#tab-2").on("click", function(event) {
 
-        event.stopPropagation();
-        var grid = $('#grid-table');
-        purchase_request_id = grid.jqGrid('getGridParam', 'selrow');
-        pr_date = grid.jqGrid('getCell', purchase_request_id, 'pr_date');
-
-        if(purchase_request_id == null) {
+    function goto_detail(purchase_order_id){
+        
+        if(purchase_order_id == null) {
             swal('','Please select one row','info');
             return false;
         }
 
-        
-        loadContentWithParams("transaction.purchase_req_det", {
-            purchase_request_id: purchase_request_id,
-            pr_date : pr_date
+        loadContentWithParams("transaction.purchase_order_det", {
+            purchase_order_id: purchase_order_id,
+            orderby: '',
+            search: ''
         });
-    });
+    }
+
 </script>
 
 <script type="text/javascript">
 
     function setData(rowid){
         
-        var pr_date = $('#grid-table').jqGrid('getCell', rowid, 'pr_date');
+        var po_date = $('#grid-table').jqGrid('getCell', rowid, 'po_date');
         var amount  = $('#grid-table').jqGrid('getCell', rowid, 'amount');
-        var code  = $('#grid-table').jqGrid('getCell', rowid, 'code');
+        var invoice_num_ref  = $('#grid-table').jqGrid('getCell', rowid, 'invoice_num_ref');
+        var supplier_id  = $('#grid-table').jqGrid('getCell', rowid, 'supplier_id');
+        var supplier_name  = $('#grid-table').jqGrid('getCell', rowid, 'supplier_name');
+        var purchase_request  = $('#grid-table').jqGrid('getCell', rowid, 'purchase_request');
+        var purchase_request_id  = $('#grid-table').jqGrid('getCell', rowid, 'purchase_request_id');
+        var due_date_payment  = $('#grid-table').jqGrid('getCell', rowid, 'due_date_payment');
         
-        $('#purchase_request_id').val(rowid);
-        $('#pr_date').val(pr_date);
+        $('#purchase_order_id').val(rowid);
+        $('#po_date').val(po_date);
         $('#amount').val(amount);        
-        $('#code').val(code);        
+        $('#invoice_num_ref').val(invoice_num_ref);        
+        $('#supplier_id').val(supplier_id);        
+        $('#supplier_name').val(supplier_name);        
+        $('#purchase_request').val(purchase_request);        
+        $('#purchase_request_id').val(purchase_request_id);        
+        $('#due_date_payment').val(due_date_payment);        
 
     }
 
@@ -391,7 +453,7 @@
                 itemJSON = JSON.stringify(del);
 
                 $.ajax({
-                    url: "<?php echo WS_JQGRID."transaction.purchase_request_controller/crud"; ?>" ,
+                    url: "<?php echo WS_JQGRID."transaction.purchase_order_controller/crud"; ?>" ,
                     type: "POST",
                     dataType: "json",
                     data: {items:itemJSON, oper:'del'},
@@ -421,10 +483,10 @@
 
         e.preventDefault(); 
         var data = new FormData(this);
-        var purchase_request_id = $('#purchase_request_id').val();
+        var purchase_order_id = $('#purchase_order_id').val();
             
-        var var_url = '<?php echo WS_JQGRID."transaction.purchase_request_controller/create"; ?>';
-        if(purchase_request_id) var_url = '<?php echo WS_JQGRID."transaction.purchase_request_controller/update"; ?>';
+        var var_url = '<?php echo WS_JQGRID."transaction.purchase_order_controller/create"; ?>';
+        if(purchase_order_id) var_url = '<?php echo WS_JQGRID."transaction.purchase_order_controller/update"; ?>';
         
         $.ajax({
             type: 'POST',
@@ -457,7 +519,7 @@
     function searchData(){
 
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."transaction.purchase_request_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."transaction.purchase_order_controller/read"; ?>',
             postData: {
                 i_search : $('#search-data').val()
             }
@@ -471,7 +533,7 @@
         $('#form_data').trigger("reset");
         
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."transaction.purchase_request_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."transaction.purchase_order_controller/read"; ?>',
             postData: {
                 i_search : ''
             }
