@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-5">
                         <label class="form-group has-float-label">
-                            <input class="form-control" id="product_label" name="product_label" placeholder="" autocomplete="off" onkeyup="addprod()" />
+                            <input class="form-control" id="product_label" name="product_label" placeholder="" autocomplete="off" onkeyup="addprod()" onchange="addprod()" />
                             <span>Product Label *</span>
                         </label>
                     </div>   
@@ -41,6 +41,7 @@
 <?php $this->load->view('lov/lov_help'); ?>
 <?php $this->load->view('lov/lov_secret_key'); ?>
 <?php $this->load->view('lov/lov_payment'); ?>
+<?php $this->load->view('lov/lov_product_search'); ?>
 
 <script type="text/javascript">
 
@@ -95,6 +96,7 @@
                         $("#grid-table").trigger("reloadGrid");
                         $('#product_label').val('');
                         $('#qty').val(1);
+                        $('#product_label').focus();
 
                     }
 
@@ -329,7 +331,7 @@
 
 <script type="text/javascript">
     function myFunction(event){
-        // console.log(event.keyCode);
+        console.log(event.keyCode);
         /* tombol F1 */
         if(event.keyCode == 112) {
             event.preventDefault();
@@ -342,6 +344,12 @@
             event.preventDefault();
             $("#grid-table").setSelection($("#grid-table").getDataIDs()[0],true);
             $("#grid-table").focus();
+        }
+
+        /* tombol F9 */
+        if(event.keyCode == 120) {
+            event.preventDefault();
+            modal_lov_product_search_show('product_label');
         }
 
         /* tombol Esc */
@@ -423,6 +431,21 @@
             // $("#product_label").focus();
         }
 
+
+        /* tombol shift */
+        if(event.keyCode == 16) {
+            event.preventDefault();
+            $("#grid-table-lov_product_search").setSelection($("#grid-table-lov_product_search").getDataIDs()[0],true);
+            $("#grid-table-lov_product_search").focus();
+            
+        }
+
+        /* tombol ctrl */
+        if(event.keyCode == 17) {
+            event.preventDefault();
+            $("#i_search_lov_product_search").focus();
+            
+        }
 
     }
 </script>

@@ -14,7 +14,7 @@
                     <label class="control-label col-md-8">*  : Multiplication</label>
                     <label class="control-label col-md-8">F2  : Payment</label>
                     <label class="control-label col-md-8">F4     : Select Grid</label>
-                    <label class="control-label col-md-8">F3     : Search Product</label>
+                    <label class="control-label col-md-8">F9     : Search Product</label>
                     <label class="control-label col-md-8">F11    : Full Screen</label>
                     <label class="control-label col-md-8">Delete : Remove </label>               
                 </div>

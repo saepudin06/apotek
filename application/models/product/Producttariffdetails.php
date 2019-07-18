@@ -39,9 +39,12 @@ class Producttariffdetails extends Abstract_model {
                                        a.price_note, 
                                        to_char(a.start_date, 'dd/mm/yyyy') start_date, 
                                        to_char(a.end_date, 'dd/mm/yyyy') end_date, 
-                                       b.product_label
+                                       b.product_id,
+                                       b.product_label,
+                                       c.name product_name
                                        from producttariffdetails a 
-                                left join productdetails b on a.prd_details_id=b.prd_details_id)";
+                                left join productdetails b on a.prd_details_id=b.prd_details_id
+                                left join products c on b.product_id=c.product_id )";
 
     public $refs            = array();
 

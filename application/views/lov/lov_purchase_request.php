@@ -13,7 +13,7 @@
             <!-- modal body -->
             <div class="modal-body">
                 <div>
-                  <button type="button" class="btn btn-sm btn-success default" id="modal_lov_icon_btn_blank">
+                  <button type="button" class="btn btn-sm btn-success default" id="modal_lov_purchase_request_btn_blank">
                       Blank
                   </button>
 
