@@ -11,9 +11,11 @@
             <!-- modal body -->
             <div class="modal-body">
                 <div class="row">
-                    <label class="control-label col-md-8">Enter  : Pay</label>
+                    <label class="control-label col-md-8">*  : Multiplication</label>
+                    <label class="control-label col-md-8">F2  : Payment</label>
                     <label class="control-label col-md-8">F4     : Select Grid</label>
-                    <label class="control-label col-md-8">F5     : Search Product</label>
+                    <label class="control-label col-md-8">F3     : Search Product</label>
+                    <label class="control-label col-md-8">F11    : Full Screen</label>
                     <label class="control-label col-md-8">Delete : Remove </label>               
                 </div>
             </div>

@@ -67,4 +67,18 @@ function getCompany(){
     return $rows;
 }
 
+function getSecretKey(){
+    $ci = & get_instance();
+    $ci->load->model('admin/globalparam');
+    $table = $ci->globalparam;
+
+    $sql = "SELECT   value
+            FROM   globalparam WHERE code = 'SECRET_KEY' and rownum = 1";
+
+    $result = $table->db->query($sql);
+    $rows = $result->row_array();
+
+    return $rows;
+}
+
 ?>

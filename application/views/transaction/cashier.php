@@ -13,12 +13,17 @@
                             <span>Product Label *</span>
                         </label>
                     </div>   
-                    <div class="col-md-3">
+                    <div class="col-md-1">
                         <label class="form-group has-float-label">
-                            <input class="form-control" type="number" id="qty" name="qty" min="1" value="1" autocomplete="off" placeholder="" />
+                            <input class="form-control" id="qty" name="qty" min="1" value="1" autocomplete="off" placeholder="" readonly="" />
                             <span>Qty *</span>
                         </label>
                     </div> 
+                    <div class="col-md-6" style="text-align: right;">
+                        <input type="hidden" name="total_qty" id="total_qty" value="0" />
+                        <input type="hidden" name="subtotal" id="subtotal" value="0" />
+                        <h1><label class="control-label" id="sub-total">Sub Total : 0 </label></h1>
+                    </div>
                     <div class="col-md-12" id="grid-ui">         
                         <table id="grid-table"></table>
                         <div id="grid-pager"></div>
@@ -34,6 +39,8 @@
 </div>
 
 <?php $this->load->view('lov/lov_help'); ?>
+<?php $this->load->view('lov/lov_secret_key'); ?>
+<?php $this->load->view('lov/lov_payment'); ?>
 
 <script type="text/javascript">
 
@@ -78,7 +85,7 @@
                     if (res.total > 1){
                         var grid_id = obj_id+1;
                         // console.log(grid_id)
-                         data.rows[obj_id] = new Product(grid_id, res.rows.product_id, product_label, res.rows.product_name, qty, res.rows.sell_price);
+                         data.rows[obj_id] = new Product(grid_id, res.rows.product_id, product_label, res.rows.product_name, qty, res.rows.sell_price, res.rows.basic_price);
                         
                         jQuery("#grid-table").jqGrid('setGridParam',{
                             datatype: 'jsonstring',
@@ -150,17 +157,21 @@
                     swal({title: 'Attention', text: response.message, html: true, type: "warning"});
                 }
 
-                // var rowData = jQuery("#grid-table").getDataIDs();
-                // var total_amount = 0;
+                var rowData = jQuery("#grid-table").getDataIDs();
+                var total_amount = 0;
+                var total_qty = 0;
                 
-                // for (var i = 0; i < rowData.length; i++) {
-                //     var total = jQuery("#grid-table").jqGrid('getCell', rowData[i], 'total');
-                //     total_amount = total_amount + parseFloat(total);
-                // }
+                for (var i = 0; i < rowData.length; i++) {
+                    var total = jQuery("#grid-table").jqGrid('getCell', rowData[i], 'total');
+                    var qty = jQuery("#grid-table").jqGrid('getCell', rowData[i], 'qty');
+                    total_amount = total_amount + parseFloat(total);
+                    total_qty = total_qty + parseFloat(qty);
+                }
 
                 // $('#total').text(total_amount);
-                // $('#potongan').text(0);
-                // $('#sub-total').text(total_amount);
+                $('#total_qty').val(total_qty);
+                $('#subtotal').val(total_amount);
+                $('#sub-total').text('Sub Total : '+total_amount);
                 
 
             },
@@ -318,7 +329,7 @@
 
 <script type="text/javascript">
     function myFunction(event){
-        console.log(event.keyCode);
+        // console.log(event.keyCode);
         /* tombol F1 */
         if(event.keyCode == 112) {
             event.preventDefault();
@@ -342,14 +353,19 @@
         /* tombol Delete */
         if(event.keyCode == 46) {
             event.preventDefault();
-            alert('remove');
-            // $("#product_label").focus();
+
+            modal_secret_key_show();
+            
+            
         }
 
-        /* tombol Enter */
-        if(event.keyCode == 13) {
+        /* tombol F2 */
+        if(event.keyCode == 113) {
             event.preventDefault();
-            alert('enter');
+            var subtot = $('#subtotal').val();
+            if(subtot > 0){
+                modal_payment_show(subtot);
+            }
             // $("#product_label").focus();
         }
 
@@ -364,6 +380,47 @@
                 $('#product_label').focus();
             }
             
+        }
+
+        /* tombol Enter */
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            var cash = $('#cash').val();
+            var subtotal = $('#subtotal').val();
+            var total_qty = $('#total_qty').val();
+
+            if(cash > 0){
+                // alert(cash);
+                // console.log(data.rows);
+                var var_url = '<?php echo WS_JQGRID."transaction.cashier_controller/insertTrans"; ?>';
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: "json",
+                    url: var_url,
+                    data: {
+                        details : data.rows,
+                        cash : cash,
+                        subtotal : subtotal,
+                        total_qty : total_qty
+                    },
+                    success: function(data) {
+                       if(data.success){
+                           $('#modal_payment').modal('toggle');
+                           setTimeout(function() {
+                                loadContentWithParams("transaction.payment", {
+                                    transactionorder_id : data.transactionorder_id
+                                });
+                            }, 1000);
+                       }
+                       
+                    }
+                });
+
+                
+            }
+            
+            // $("#product_label").focus();
         }
 
 
