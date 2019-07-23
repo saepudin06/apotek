@@ -15,7 +15,7 @@
                     </div>   
                     <div class="col-md-1">
                         <label class="form-group has-float-label">
-                            <input class="form-control" id="qty" name="qty" min="1" value="1" autocomplete="off" placeholder="" readonly="" />
+                            <input class="form-control" id="qty" name="qty" value="1" autocomplete="off" placeholder="" readonly="" />
                             <span>Qty *</span>
                         </label>
                     </div> 
@@ -70,6 +70,7 @@
         var obj_id = data.rows.length;
         // var id = obj_id + 1;
         var product_label = $('#product_label').val();
+        
         var qty = $('#qty').val();
 
         if(product_label.length > 5){
@@ -85,7 +86,8 @@
                     // console.log(res.rows.product_id);
                     if (res.total > 1){
                         var grid_id = obj_id+1;
-                        // console.log(grid_id)
+                        // console.log($('#qty').val());
+                        // var qty = $('#qty').val();
                          data.rows[obj_id] = new Product(grid_id, res.rows.product_id, product_label, res.rows.product_name, qty, res.rows.sell_price, res.rows.basic_price);
                         
                         jQuery("#grid-table").jqGrid('setGridParam',{
@@ -97,7 +99,7 @@
                         $('#product_label').val('');
                         $('#qty').val(1);
                         $('#product_label').focus();
-
+                        return false;
                     }
 
                 },
@@ -331,7 +333,7 @@
 
 <script type="text/javascript">
     function myFunction(event){
-        console.log(event.keyCode);
+        // console.log(event.keyCode);
         /* tombol F1 */
         if(event.keyCode == 112) {
             event.preventDefault();
@@ -416,9 +418,7 @@
                        if(data.success){
                            $('#modal_payment').modal('toggle');
                            setTimeout(function() {
-                                loadContentWithParams("transaction.payment", {
-                                    transactionorder_id : data.transactionorder_id
-                                });
+                                loadContentWithParams("transaction.cashier", {});
                             }, 1000);
                        }
                        

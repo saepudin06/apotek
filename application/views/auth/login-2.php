@@ -1,9 +1,13 @@
+<?php
+    $items = getCompany();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Apotek Test</title>
+    <title><?php echo $items['subtitle'];?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/font/font.css" />
@@ -24,17 +28,18 @@
                     <div class="card auth-card">
                         <div class="position-relative image-side ">
 
-                            <p class=" text-white h2">APOTEK TEST</p>
+                            <p class=" text-white h2"><?php echo $items['name'];?></p>
 
                             <p class="white mb-0">
-                                This Application for drug purchase and sale
-                                <br>Please use your credentials to login.
+                                <?php echo $items['address'];?>
+                                <br><?php echo "Email : ".$items['email'];?>
                             </p>
                         </div>
                         <div class="form-side">
-                            <a href="Dashboard.Default.html">
-                                <span class="logo-single"></span>
-                            </a>
+                            <!-- <a href="javascript:;"> -->
+                                <!-- <span class="logo-single"></span> -->
+                                <!-- <img src="<?php echo base_url().$items['logo'];?>" alt="logo" width="40" height="40"> -->
+                            <!-- </a> -->
                             <h6 class="mb-4">Login</h6>
                             <?php if($this->session->flashdata('error_message') != ""): ?>
                             <div class="alert alert-danger" role="alert">
@@ -56,7 +61,7 @@
                                     <span>Password</span>
                                 </label>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <a href="#">Forget password?</a>
+                                    <a href="javascript:;">&nbsp;</a>
                                     <button class="btn btn-primary btn-lg btn-shadow" type="submit">LOGIN</button>
                                 </div>
                             </form>
