@@ -26,7 +26,10 @@ class Purchase_order_det extends Abstract_model {
                             );
 
     public $selectClause    = "*";
-    public $fromClause      = "purchase_order_det";
+    public $fromClause      = "(SELECT a.*, c.name product_name
+                                FROM purchase_order_det a
+                                LEFT JOIN purchase_req_det b ON a.purchase_req_det_id = b.purchase_req_det_id
+                                LEFT JOIN products c ON b.product_id = c.product_id)";
 
     public $refs            = array();
 
