@@ -27,11 +27,11 @@
         <div class="card mb-4">
             <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
                 <li class="nav-item w-50 text-center">
-                    <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
+                    <a class="nav-link" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
                         aria-selected="true"><strong>Goods Recieve Note</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
-                    <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
+                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
                 </li>
             </ul>
             
@@ -45,43 +45,64 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Goods Recieve Note</h5>
+                        <h5 class="mb-4">Form Detail</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+                            <input type="hidden" name="purchase_order_id" id="purchase_order_id" value="<?php echo $this->input->post('purchase_order_id'); ?>">
 
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control" id="goods_recieve_nt" name="goods_recieve_nt" placeholder="" autocomplete="off" readonly="" />
+                                <label class="form-group has-float-label col-md-6">
+                                    <input class="form-control" id="good_rcv_nt_dt_id" name="good_rcv_nt_dt_id" placeholder="" autocomplete="off" readonly="" />
                                     <span>ID *</span>
                                 </label>
-                                
-                                <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control datepicker" id="grn_date" name="grn_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Date *</span>
-                                </label>
 
-                                <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="invoice_num_ref" name="invoice_num_ref" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Invoice Num *</span>
-                                </label>
-
-                                <div class="col-md-1">
-                                    <button class="btn btn-primary default" type="button" onclick="search_po('purchase_order_id', 'invoice_num_ref')">Search</button>
-                                </div>
-                                
-                                <input class="form-control" type="hidden" id="purchase_order_id" name="purchase_order_id" placeholder="" autocomplete="off" readonly="" />
-
-                            </div>
-
-                            <div class="form-row">
-                                <label class="form-group has-float-label col-md-12">
-                                    <input class="form-control" id="notes" name="notes" placeholder="" autocomplete="off" autofocus=""  />
-                                    <span>Notes</span>
+                                <label class="form-group has-float-label col-md-6">
+                                    <input class="form-control" id="goods_recieve_nt" name="goods_recieve_nt" value="<?php echo $this->input->post('goods_recieve_nt'); ?>" placeholder="" autocomplete="off" readonly="" />
+                                    <span>Goods Recieve Note ID *</span>
                                 </label>
 
                             </div>
                             
+                            <div class="form-row">
+
+                                <label class="form-group has-float-label col-md-6">
+                                    <input class="form-control" id="invoice_num_ref" name="invoice_num_ref" value="<?php echo $this->input->post('invoice_num_ref'); ?>" placeholder="" autocomplete="off" readonly="" />
+                                    <span>Invoice Num *</span>
+                                </label>
+
+                                <label class="form-group has-float-label col-md-5">
+                                    <input class="form-control" id="product_name" name="product_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <span>Product *</span>
+                                </label>
+
+                                <div class="col-md-1">
+                                    <button class="btn btn-primary default" type="button" onclick="search_po_det('purchase_order_det_id', 'product_name', 'qty', 'basic_price')">Search</button>
+                                </div>
+                                
+                                <input class="form-control" type="hidden" id="purchase_order_det_id" name="purchase_order_det_id" placeholder="" autocomplete="off" readonly="" />
+                            </div>
+
+                            <div class="form-row">
+
+                                <label class="form-group has-float-label col-md-4">
+                                    <input class="form-control" onkeypress="return isNumberKey(event)" id="qty" name="qty" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Qty *</span>
+                                </label>
+
+                                <label class="form-group has-float-label col-md-4">
+                                    <input class="form-control" onkeypress="return isNumberKey(event)" id="basic_price" name="basic_price" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Basic Price *</span>
+                                </label>
+
+                                <label class="form-group has-float-label col-md-4">
+                                    <select class="form-control" id="status">
+                                        <option value="1">Active</option>
+                                        <option value="2">Not Active</option>
+                                    </select>
+                                    <span>Status *</span>
+                                </label>
+                            </div>
 
                             <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
                             <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
@@ -96,13 +117,13 @@
     </div>
 </div>
 
-<?php $this->load->view('lov/lov_purchase_order'); ?>
+<?php $this->load->view('lov/lov_purchase_order_det'); ?>
 
 <script type="text/javascript">
-    function search_po(id, code){
-        modal_lov_purchase_order_show(id, code);
+    function search_po_det(id, code, qty, basic_price){
+        var purchase_order_id = $('#purchase_order_id').val();
+        modal_lov_purchase_order_det_show(id, code, qty, basic_price, purchase_order_id);
     }
-
 </script>
 
 <script>
@@ -112,18 +133,20 @@
         var pager_selector = "#grid-pager";
 
         jQuery("#grid-table").jqGrid({
-            url: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/crud"; ?>',
+            url: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_dt_controller/crud"; ?>',
+            postData: { goods_recieve_nt : '<?php echo $this->input->post('goods_recieve_nt'); ?>'},
             datatype: "json",
             mtype: "POST",
             loadui: "disable",
             colModel: [
-                {label: 'ID', name: 'goods_recieve_nt', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Purchase Order ID', name: 'purchase_order_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
-                {label: 'Date', name: 'grn_date', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Invoice Num', name: 'invoice_num_ref', width: 100, align: "left", editable: false, search:false, sortable:false},    
-                {label: 'Qty', name: 'qty', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Amount', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
-                {label: 'Notes', name: 'notes', width: 300, align: "left", editable: false, search:false, sortable:false},
+                {label: 'ID', name: 'good_rcv_nt_dt_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'Goods Recieve Note ID', name: 'goods_recieve_nt', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Purchase Order Det ID', name: 'purchase_order_det_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Invoice Num', name: 'invoice_num_ref', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Product', name: 'product_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Basic Price', name: 'basic_price', width: 100, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Qty', name: 'qty', width: 100, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Status', name: 'status', width: 100, align: "right", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -137,8 +160,6 @@
             altRows: true,
             shrinkToFit: true,
             multiboxonly: true,
-            // multiselect: true,
-            // multiPageSelection: true,
             onSelectRow: function (rowid) {
                 /*do something when selected*/
                 // setData(rowid);
@@ -162,8 +183,8 @@
 
             },
             //memanggil controller jqgrid yang ada di controller crud
-            editurl: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/crud"; ?>',
-            caption: "Goods Recieve Note"
+            editurl: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_dt_controller/crud"; ?>',
+            caption: "Detail"
 
         });
 
@@ -179,7 +200,7 @@
                 searchicon: 'simple-icon-magnifier',
                 refresh: true,
                 afterRefresh: function () {
-                    // some invoice_num_ref here
+                    // some code here
                     // jQuery("#detailsPlaceholder").hide();
                 },
 
@@ -298,6 +319,7 @@
                     $('#form-ui').slideDown( "slow" );
                     $('#form_data').trigger("reset");                    
                      //alert("Adding Row");
+                    // $('#status').val('1').trigger('change');
                 },
                 position: "last",
                 title: "Add",
@@ -359,44 +381,38 @@
 
 </script>
 
+
 <script type="text/javascript">
-    $("#tab-2").on("click", function(event) {
+    $("#tab-1").on("click", function(event) {
 
         event.stopPropagation();
         var grid = $('#grid-table');
-        goods_recieve_nt = grid.jqGrid('getGridParam', 'selrow');
-        invoice_num_ref = grid.jqGrid('getCell', goods_recieve_nt, 'invoice_num_ref');
-        purchase_order_id = grid.jqGrid('getCell', goods_recieve_nt, 'purchase_order_id');
 
-        if(goods_recieve_nt == null) {
-            swal('','Please select one row','info');
-            return false;
-        }
-
-        
-        loadContentWithParams("transaction.goods_recieve_nt_dt", {
-            goods_recieve_nt: goods_recieve_nt,
-            invoice_num_ref : invoice_num_ref,
-            purchase_order_id : purchase_order_id
-        });
+        loadContentWithParams("transaction.goods_recieve_nt", {});
     });
 </script>
-
 
 <script type="text/javascript">
 
     function setData(rowid){
         
-        var grn_date = $('#grid-table').jqGrid('getCell', rowid, 'grn_date');
-        var invoice_num_ref  = $('#grid-table').jqGrid('getCell', rowid, 'invoice_num_ref');
-        var purchase_order_id  = $('#grid-table').jqGrid('getCell', rowid, 'purchase_order_id');
-        var notes  = $('#grid-table').jqGrid('getCell', rowid, 'notes');
+        var goods_recieve_nt = $('#grid-table').jqGrid('getCell', rowid, 'goods_recieve_nt');
+        var purchase_order_det_id = $('#grid-table').jqGrid('getCell', rowid, 'purchase_order_det_id');
+        var status = $('#grid-table').jqGrid('getCell', rowid, 'status');
+        var basic_price  = $('#grid-table').jqGrid('getCell', rowid, 'basic_price');
+        var qty  = $('#grid-table').jqGrid('getCell', rowid, 'qty');
+        var status  = $('#grid-table').jqGrid('getCell', rowid, 'status');
+        // var status  = $('#grid-table').jqGrid('getCell', rowid, 'status');
         
-        $('#goods_recieve_nt').val(rowid);
-        $('#purchase_order_id').val(purchase_order_id);
-        $('#grn_date').val(grn_date);
-        $('#notes').val(notes);         
-        $('#invoice_num_ref').val(invoice_num_ref);         
+        $('#good_rcv_nt_dt_id').val(rowid);
+        $('#goods_recieve_nt').val(goods_recieve_nt);
+        $('#purchase_order_det_id').val(purchase_order_det_id);
+        $('#status').val(status);
+        $('#basic_price').val(basic_price);        
+        $('#qty').val(qty);        
+        $('#status').val(status);        
+        // $('#status').val(status); 
+        // $('#status').trigger('change');        
 
     }
 
@@ -407,6 +423,8 @@
 
     /*delete*/
     function delete_data(rowid){
+        var purchase_request_id = $('#grid-table').jqGrid('getCell', rowid, 'purchase_request_id');
+
         swal({
               title: "",
               text: "Do you want to delete this Data?",
@@ -417,11 +435,11 @@
             },
             function(){
 
-                var del = { id_ : rowid };
+                var del = { id_ : rowid, purchase_request_id : purchase_request_id };
                 itemJSON = JSON.stringify(del);
 
                 $.ajax({
-                    url: "<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/crud"; ?>" ,
+                    url: "<?php echo WS_JQGRID."transaction.goods_recieve_nt_dt_controller/crud"; ?>" ,
                     type: "POST",
                     dataType: "json",
                     data: {items:itemJSON, oper:'del'},
@@ -451,10 +469,10 @@
 
         e.preventDefault(); 
         var data = new FormData(this);
-        var goods_recieve_nt = $('#goods_recieve_nt').val();
+        var good_rcv_nt_dt_id = $('#good_rcv_nt_dt_id').val();
             
-        var var_url = '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/create"; ?>';
-        if(goods_recieve_nt) var_url = '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/update"; ?>';
+        var var_url = '<?php echo WS_JQGRID."transaction.goods_recieve_nt_dt_controller/create"; ?>';
+        if(good_rcv_nt_dt_id) var_url = '<?php echo WS_JQGRID."transaction.goods_recieve_nt_dt_controller/update"; ?>';
         
         $.ajax({
             type: 'POST',
@@ -487,7 +505,7 @@
     function searchData(){
 
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_dt_controller/read"; ?>',
             postData: {
                 i_search : $('#search-data').val()
             }
@@ -501,7 +519,7 @@
         $('#form_data').trigger("reset");
         
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_dt_controller/read"; ?>',
             postData: {
                 i_search : ''
             }
@@ -518,9 +536,11 @@
         orientation: 'bottom'
     });
 
-    $(".numeric").keypress(function(e) {
-        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
             return false;
-        }
-    });
+
+        return true;
+    }
 </script>
