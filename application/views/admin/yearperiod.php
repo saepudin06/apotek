@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item">
                     <a href="javascript:;">System</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Period</li>
+                <li class="breadcrumb-item active" aria-current="page">Periode</li>
             </ol>
         </nav>
         
@@ -28,10 +28,10 @@
             <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Year Period</strong></a>
+                        aria-selected="true"><strong>Periode Tahun</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
-                    <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Finance Period</strong></a>
+                    <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Periode Keuangan</strong></a>
                 </li>
             </ul>
             
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Year Period</h5>
+                        <h5 class="mb-4">Form Periode Tahun</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -60,19 +60,19 @@
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="code" name="code" placeholder="" maxlength="30" autocomplete="off" autofocus="" />
-                                    <span>Code *</span>
+                                    <span>Tahun *</span>
                                 </label>
                             </div>
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control datepicker" id="production_date" name="production_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Production Date *</span>
+                                    <span>Tanggal Dibuat *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="description" name="description" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Description *</span>
+                                    <span>Keterangan *</span>
                                 </label>
                             </div>
 
@@ -103,9 +103,9 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'year_period_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Code', name: 'code', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Production Date', name: 'production_date', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Description', name: 'description', width: 220, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tahun', name: 'code', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tanggal Dibuat', name: 'production_date', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Keterangan', name: 'description', width: 220, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -143,7 +143,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."admin.yearperiod_controller/crud"; ?>',
-            caption: "Year Period"
+            caption: "Periode Tahun"
 
         });
 
@@ -329,10 +329,14 @@
     function responsive_jqgrid(grid_selector, pager_selector) {
 
         var parent_column = $(grid_selector).closest('[class*="col-"]');
-        $(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width() );
+        $(grid_selector).jqGrid( 'setGridWidth', $("#grid-ui").width() );
         $(pager_selector).jqGrid( 'setGridWidth', parent_column.width() );
 
     }
+
+    $(window).bind('resize', function() {
+        responsive_jqgrid('#grid-table', '#grid-pager');    
+    }).trigger('resize');
 
 </script>
 

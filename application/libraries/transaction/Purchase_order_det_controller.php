@@ -91,7 +91,7 @@ class Purchase_order_det_controller {
         }
 
         // print_r($items); exit;
-        $table->actionType = 'CREATE';
+        
         $errors = array();
 
         try {
@@ -112,18 +112,34 @@ class Purchase_order_det_controller {
                         if(isset($items['check'][$purchase_req_det_id])){
 
                             // $table->deleteItem($purchase_order_det_id);
-                            $table->setRecord(
-                                array('purchase_req_det_id' => $purchase_req_det_id,
-                                       'basic_price' => $basic_price,
-                                       'purchase_order_id' => $purchase_order_id,
-                                       'qty' => $qty,
-                                       'status_id' => 2
-                                   )
-                            );
+                            
 
                             if($purchase_order_det_id > 0){
+                                $table->actionType = 'UPDATE';
+
+                                $table->setRecord(
+                                    array('purchase_req_det_id' => $purchase_req_det_id,
+                                           'basic_price' => $basic_price,
+                                           'purchase_order_id' => $purchase_order_id,
+                                           'purchase_order_det_id' => $purchase_order_det_id,
+                                           'qty' => $qty,
+                                           'status_id' => 2
+                                       )
+                                );
+
                                 $table->update();
+                            
                             }else{
+                                $table->actionType = 'CREATE';
+
+                                $table->setRecord(
+                                    array('purchase_req_det_id' => $purchase_req_det_id,
+                                           'basic_price' => $basic_price,
+                                           'purchase_order_id' => $purchase_order_id,
+                                           'qty' => $qty,
+                                           'status_id' => 2
+                                       )
+                                );
                                 $table->create();
                             }
                             
@@ -136,6 +152,8 @@ class Purchase_order_det_controller {
                         }
                     
                     }
+
+                    $table->updatePO($items['purchase_order_id']);
 
                 $table->db->trans_commit(); //Commit Trans
             // }

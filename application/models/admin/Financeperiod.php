@@ -11,11 +11,11 @@ class Financeperiod extends Abstract_model {
     public $alias           = "";
 
     public $fields          = array(
-                                'finance_period_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Finance Period ID'),
-                                'year_period_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Year Period ID'),
-                                'code'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Code'),
-                                'production_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Production Date'),
-                                'description'      => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Description'),
+                                'finance_period_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'ID'),
+                                'year_period_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Periode Tahun ID'),
+                                'code'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Periode Keuangan'),
+                                'production_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Tanggal Dibuat'),
+                                'description'      => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Keterangan'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),

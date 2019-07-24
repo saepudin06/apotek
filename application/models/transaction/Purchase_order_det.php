@@ -95,6 +95,21 @@ class Purchase_order_det extends Abstract_model {
         $this->db->query($sql, array($purchase_order_det_id));
 
     }
+
+    public function updatePO($purchase_order_id) {
+        $item = array();
+        $sqlselect = "select nvl(sum(qty*basic_price),0) total
+                        from purchase_order_det 
+                        where purchase_order_id = 2";
+        $q = $this->db->query($sqlselect, array($purchase_order_id));
+        $item = $q->row_array();
+        
+        $sql = "update purchase_order set 
+                amount = ?
+                where purchase_order_id = ?";
+        $this->db->query($sql, array($item['total'], $purchase_order_id));
+
+    }
 }
 
 /* End of file Roles.php */

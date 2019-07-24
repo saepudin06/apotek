@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item">
                     <a href="javascript:;">System</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Company</li>
+                <li class="breadcrumb-item active" aria-current="page">Perusahaan</li>
             </ol>
         </nav>
         
@@ -28,10 +28,10 @@
             <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Company</strong></a>
+                        aria-selected="true"><strong>Perusahaan</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
-                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>BUnit</strong></a>
+                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Unit Bisnis</strong></a>
                 </li>
             </ul>
             
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Bussiness Unit (<?php echo $this->input->post('company_name', ''); ?>)</h5>
+                        <h5 class="mb-4">Form Unit Bisnis (<?php echo $this->input->post('company_name', ''); ?>)</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -58,36 +58,36 @@
 
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" id="company_id" name="company_id" value="<?php echo $this->input->post('company_id'); ?>" placeholder="" autocomplete="off" readonly="" />
-                                    <span>Company ID *</span>
+                                    <span>Perusahaan ID *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="registration_num" name="registration_num" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Registration No. *</span>
+                                    <span>No. Registrasi *</span>
                                 </label>
                             </div>
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="name" name="name" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Name *</span>
+                                    <span>Nama Unit Bisinis *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="subtitle" name="subtitle" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Subtitle *</span>
+                                    <span>Subtitle</span>
                                 </label>
                             </div>
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="tax_num" name="tax_num" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Tax Num *</span>
+                                    <span>NPWP</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="city" name="city" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>City *</span>
+                                    <span>Kabupaten/Kota *</span>
                                 </label>
                             </div>
 
@@ -95,34 +95,34 @@
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" id="no_telp" name="no_telp" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Telphone *</span>
+                                    <span>Telphone</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" id="no_hp" name="no_hp" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Handphone *</span>
+                                    <span>Handphone</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" id="email" name="email" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Email *</span>
+                                    <span>Email</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" id="website" name="website" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Website *</span>
+                                    <span>Website</span>
                                 </label>
                             </div>
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-12">
                                     <input class="form-control" id="address" name="address" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Address *</span>
+                                    <span>Alamat *</span>
                                 </label>
                             </div>
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -147,17 +147,17 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'bu_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Company ID', name: 'company_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Registration Num', name: 'registration_num', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Name', name: 'name', width: 200, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Perusahaan ID', name: 'company_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'No. Registrasi', name: 'registration_num', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Nama Unit Bisnis', name: 'name', width: 200, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Email', name: 'email', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Website', name: 'website', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Telphone', name: 'no_telp', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Handphone', name: 'no_hp', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Subtitle', name: 'subtitle', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Tax Num', name: 'tax_num', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'City', name: 'city', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Address', name: 'address', width: 300, align: "left", editable: false, search:false, sortable:false},
+                {label: 'NPWP', name: 'tax_num', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Kabupaten/Kota', name: 'city', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Alamat', name: 'address', width: 300, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -195,7 +195,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."admin.bunit_controller/crud"; ?>',
-            caption: "Bussiness Unit (<?php echo $this->input->post('company_name', ''); ?>)"
+            caption: "Unit Bisnis (<?php echo $this->input->post('company_name', ''); ?>)"
 
         });
 
@@ -380,10 +380,14 @@
     function responsive_jqgrid(grid_selector, pager_selector) {
 
         var parent_column = $(grid_selector).closest('[class*="col-"]');
-        $(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width() );
+        $(grid_selector).jqGrid( 'setGridWidth', $("#grid-ui").width() );
         $(pager_selector).jqGrid( 'setGridWidth', parent_column.width() );
 
     }
+
+    $(window).bind('resize', function() {
+        responsive_jqgrid('#grid-table', '#grid-pager');    
+    }).trigger('resize');
 
 </script>
 

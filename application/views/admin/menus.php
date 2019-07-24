@@ -328,10 +328,14 @@ $("#tab-2").on("click", function(event) {
     function responsive_jqgrid(grid_selector, pager_selector) {
 
         var parent_column = $(grid_selector).closest('[class*="col-"]');
-        $(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width() );
+        $(grid_selector).jqGrid( 'setGridWidth', $("#grid-ui").width() );
         $(pager_selector).jqGrid( 'setGridWidth', parent_column.width() );
 
     }
+
+    $(window).bind('resize', function() {
+        responsive_jqgrid('#grid-table', '#grid-pager');    
+    }).trigger('resize');
 
 </script>
 

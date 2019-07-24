@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item">
                     <a href="javascript:;">System</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Company</li>
+                <li class="breadcrumb-item active" aria-current="page">Perusahaan</li>
             </ol>
         </nav>
         
@@ -28,10 +28,10 @@
             <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Company</strong></a>
+                        aria-selected="true"><strong>Perusahaan</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
-                    <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>BUnit</strong></a>
+                    <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Unit Bisnis</strong></a>
                 </li>
             </ul>
             
@@ -40,7 +40,7 @@
                 
                 <div class="row">
                     <div class="col-md-12" id="form-ui">    
-                        <h5 class="mb-4">Form Company</h5>
+                        <h5 class="mb-4">Form Perusahaan</h5>
 
                         <form method="post" id="form_data" enctype="multipart/form-data" accept-charset="utf-8">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -66,14 +66,14 @@
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="registration_num" name="registration_num" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Registration No. *</span>
+                                    <span>No. Registrasi *</span>
                                 </label>
                             </div>
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="name" name="name" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Name *</span>
+                                    <span>Nama *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
@@ -85,12 +85,12 @@
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-8">
                                     <input class="form-control" id="address" name="address" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Address *</span>
+                                    <span>Alamat *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
                                     <input class="form-control" id="city" name="city" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>City *</span>
+                                    <span>Kabupaten/Kota *</span>
                                 </label>
                             </div>
 
@@ -120,18 +120,18 @@
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="tax_num" name="tax_num" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Tax Num *</span>
+                                    <span>NPWP *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control datepicker" id="since_date" name="since_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Since Date *</span>
+                                    <span>Tanggal Didirikan *</span>
                                 </label>
                             </div>
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-delete">Delete</button>
-                            <button class="btn btn-primary" type="button" id="btn-refresh">Refresh All</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-delete">Hapus</button>
+                            <button class="btn btn-primary" type="button" id="btn-refresh">Refresh Semua</button>
 
                         </form>
                     </div>

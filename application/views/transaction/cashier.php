@@ -126,10 +126,10 @@
             colModel: [
                 {label: 'ID', name: 'idd', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Product ID', name: 'product_id', width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Product Label', name: 'product_label', width: 120, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Product', name: 'product_name', width: 120, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Barcode', name: 'product_label', width: 120, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Nama Produk', name: 'product_name', width: 120, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Qty', name: 'qty', width: 120, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Price', name: 'product_price', width: 120, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Harga', name: 'product_price', width: 120, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Total', name: 'total', width: 120, align: "left", editable: false, search:false, sortable:false},
                 
             ],
@@ -324,10 +324,14 @@
     function responsive_jqgrid(grid_selector, pager_selector) {
 
         var parent_column = $(grid_selector).closest('[class*="col-"]');
-        $(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width() );
+        $(grid_selector).jqGrid( 'setGridWidth', $("#grid-ui").width() );
         $(pager_selector).jqGrid( 'setGridWidth', parent_column.width() );
 
     }
+
+    $(window).bind('resize', function() {
+        responsive_jqgrid('#grid-table', '#grid-pager');    
+    }).trigger('resize');
 
 </script>
 

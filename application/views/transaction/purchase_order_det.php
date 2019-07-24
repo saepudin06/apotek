@@ -52,7 +52,10 @@
                 </div>
                 <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                     <input id="search-data" value="<?php echo $this->input->post("search","");?>" onchange="searchData()" placeholder="Search...">
-                </div>                
+                </div>  
+                <div class="float-md-left mr-1 mb-1">
+                    <button type="button" onclick="backtopage()" class="btn btn-outline-secondary btn-xs mb-1">Kembali</button>
+                </div>              
             </div>
         </div>
     </div>
@@ -95,12 +98,12 @@
                         <p class="mb-1 text-muted text-small w-15 w-xs-100">Basic Price : <?php echo $item['basic_price'];?></p>
                         <div class="w-10 w-xs-100">
                             <div class="form-group">
-                                <input type="text" name="qty[]" value="<?php echo $item['po_qty'];?>" class="form-control" style="font-size: 11px !important" placeholder="Qty">
+                                <input type="text" name="qty[]" onkeypress="return isNumberKey(event)" value="<?php echo $item['po_qty'];?>" class="form-control" style="font-size: 11px !important" placeholder="Qty">
                             </div>
                         </div>
                         <div class="w-20 w-xs-100">
                             <div class="form-group">
-                                <input type="text" name="basic_price[]" value="<?php echo $item['po_basic_price'];?>" class="form-control" style="font-size: 11px !important" placeholder="Basic Price">
+                                <input type="text" name="basic_price[]" onkeypress="return isNumberKey(event)" value="<?php echo $item['po_basic_price'];?>" class="form-control" style="font-size: 11px !important" placeholder="Basic Price">
                             </div>
                         </div>
                         <div class="w-10 w-xs-100">
@@ -224,4 +227,16 @@
             
         
     });
+
+    function backtopage(){
+        loadContentWithParams("transaction.purchase_order", {});
+    }
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
 </script>

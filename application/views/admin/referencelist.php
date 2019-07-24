@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item">
                     <a href="javascript:;">System</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Reference</li>
+                <li class="breadcrumb-item active" aria-current="page">Referensi</li>
             </ol>
         </nav>
         
@@ -28,10 +28,10 @@
             <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Reference Type</strong></a>
+                        aria-selected="true"><strong>Tipe Referensi</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
-                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Reference List</strong></a>
+                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Daftar Referensi</strong></a>
                 </li>
             </ul>
             
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Reference List (<?php echo $this->input->post('reference_type_code', ''); ?>)</h5>
+                        <h5 class="mb-4">Form Daftar Referensi (<?php echo $this->input->post('reference_type_code', ''); ?>)</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -58,29 +58,29 @@
 
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" id="reference_type_id" name="reference_type_id" value="<?php echo $this->input->post('reference_type_id'); ?>" placeholder="" autocomplete="off" readonly="" />
-                                    <span>Reference Type ID *</span>
+                                    <span>Tipe Referensi ID *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="name" name="name" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Name *</span>
+                                    <span>Nama Referensi *</span>
                                 </label>
                             </div>
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="val_1" name="val_1" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Value 1 *</span>
+                                    <span>Nilai 1 *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" onkeypress="return isNumberKey(event)" id="val_2" name="val_2" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Vaue 2 *</span>
+                                    <span>Nilai 2 *</span>
                                 </label>
                             </div>
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -107,11 +107,11 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'reference_list_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Reference Type ID', name: 'reference_type_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Reference Type', name: 'reference_type_code', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Name', name: 'name', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Value 1', name: 'val_1', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Value 2', name: 'val_2', width: 220, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tipe Referensi ID', name: 'reference_type_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Tipe Referensi', name: 'reference_type_code', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Nama Referensi', name: 'name', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Nilai 1', name: 'val_1', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Nilai 2', name: 'val_2', width: 220, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -149,7 +149,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."admin.referencelist_controller/crud"; ?>',
-            caption: "Reference List (<?php echo $this->input->post('reference_type_code', ''); ?>)"
+            caption: "Daftar Referensi (<?php echo $this->input->post('reference_type_code', ''); ?>)"
 
         });
 
@@ -334,10 +334,14 @@
     function responsive_jqgrid(grid_selector, pager_selector) {
 
         var parent_column = $(grid_selector).closest('[class*="col-"]');
-        $(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width() );
+        $(grid_selector).jqGrid( 'setGridWidth', $("#grid-ui").width() );
         $(pager_selector).jqGrid( 'setGridWidth', parent_column.width() );
 
     }
+
+    $(window).bind('resize', function() {
+        responsive_jqgrid('#grid-table', '#grid-pager');    
+    }).trigger('resize');
 
 </script>
 

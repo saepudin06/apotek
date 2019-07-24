@@ -11,9 +11,9 @@ class Referencetype extends Abstract_model {
     public $alias           = "";
 
     public $fields          = array(
-                                'reference_type_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Reference Type ID'),                                
-                                'code'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Code'),
-                                'name'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Name'),
+                                'reference_type_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'ID'),                                
+                                'code'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Kode'),
+                                'name'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Tipe Referensi'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),
