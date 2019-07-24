@@ -92,7 +92,7 @@
                 </div>
 
                 <div class="col-md-7">
-                    <div class="col-md-12">
+                    <div class="col-md-12" id="grid-ui">
                         <table id="grid-table"></table>
                         <div id="grid-pager"></div>
                     </div>
