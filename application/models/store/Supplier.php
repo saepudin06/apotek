@@ -13,8 +13,8 @@ class Supplier extends Abstract_model {
     public $fields          = array(
                                 'supplier_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Supplier ID'),
                                 'supplier_type_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Supplier Type ID'),
-                                'name'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Name'),                                
-                                'address'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Address'),                                
+                                'name'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Nama'),                                
+                                'address'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Alamat'),                                
                                 'no_telp'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Telphone'),    
                                 'no_hp'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Handphone'),    
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),

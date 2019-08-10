@@ -13,9 +13,9 @@ class Storeinfo extends Abstract_model {
     public $fields          = array(
                                 'store_info_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Store Info ID'),
                                 'store_type_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Store Type ID'),
-                                'name'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Name'),                                
-                                'code'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Code'),                                
-                                'description'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Description'),    
+                                'name'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Lokasi'),                                
+                                'code'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Kode'),                                
+                                'description'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Keterangan'),    
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),

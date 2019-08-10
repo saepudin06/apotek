@@ -12,7 +12,7 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Store</a>
+                    <a href="javascript:;">Gudang</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Supplier</li>
             </ol>
@@ -58,7 +58,7 @@
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="name" name="name" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Name *</span>
+                                    <span>Nama *</span>
                                 </label>
                             </div>
 
@@ -85,24 +85,24 @@
                                             $items = $table->getAll(0,-1,'supplier_type_id','asc');
 
                                         ?>
-                                        <option value=""> -- Choose Supplier Type -- </option>
+                                        <option value=""> -- Pilih Tipe Supplier -- </option>
                                         <?php foreach($items as $item):?>
                                             <option value="<?php echo $item['supplier_type_id'];?>"> <?php echo $item['name'];?></option>
                                         <?php endforeach; ?>
                                     </select>
-                                    <span>Supplier Type *</span>
+                                    <span>Tipe Supplier *</span>
                                 </label>
                             </div>
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-12">
                                     <input class="form-control" id="address" name="address" placeholder="" autocomplete="off" />
-                                    <span>Address *</span>
+                                    <span>Alamat *</span>
                                 </label>
                             </div>
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -129,11 +129,11 @@
             colModel: [
                 {label: 'ID', name: 'supplier_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Supplier Type ID', name: 'supplier_type_id', width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Name', name: 'name', width: 220, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Supplier Type', name: 'supplier_type_name', width: 220, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Nama', name: 'name', width: 220, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tipe Supplier', name: 'supplier_type_name', width: 220, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Telephone', name: 'no_telp', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Handphone', name: 'no_hp', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Address', name: 'address', width: 220, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Alamat', name: 'address', width: 220, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',

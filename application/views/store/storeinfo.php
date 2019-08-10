@@ -12,9 +12,9 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Store</a>
+                    <a href="javascript:;">Gudang</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Store Info</li>
+                <li class="breadcrumb-item active" aria-current="page">Info Gudang</li>
             </ol>
         </nav>
         
@@ -31,7 +31,7 @@
                         aria-selected="true"><strong>Store Type</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
-                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Store Info</strong></a>
+                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Info Gudang</strong></a>
                 </li>
             </ul> -->
             
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Store Info</h5>
+                        <h5 class="mb-4">Form Info Gudang</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -58,14 +58,14 @@
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="code" name="code" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Code *</span>
+                                    <span>Kode *</span>
                                 </label>
                             </div>
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="name" name="name" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Name *</span>
+                                    <span>Lokasi *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
@@ -80,24 +80,24 @@
                                             $items = $table->getAll(0,-1,'store_type_id','asc');
 
                                         ?>
-                                        <option value=""> -- Choose Store Type -- </option>
+                                        <option value=""> -- Pilih Jenis Gudang -- </option>
                                         <?php foreach($items as $item):?>
                                             <option value="<?php echo $item['store_type_id'];?>"> <?php echo $item['name'];?></option>
                                         <?php endforeach; ?>
                                     </select>
-                                    <span>Store Type *</span>
+                                    <span>Jenis Gudang *</span>
                                 </label>
                             </div>
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-12">
                                     <input class="form-control" id="description" name="description" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Description *</span>
+                                    <span>Keterangan *</span>
                                 </label>
                             </div>
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -124,10 +124,10 @@
             colModel: [
                 {label: 'ID', name: 'store_info_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Store Type ID', name: 'store_type_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Code', name: 'code', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Name', name: 'name', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Store Type', name: 'store_type_name', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: false},
-                {label: 'Description', name: 'description', width: 220, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Kode', name: 'code', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Lokasi', name: 'name', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Jenis Gudang', name: 'store_type_name', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: false},
+                {label: 'Keterangan', name: 'description', width: 220, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -165,7 +165,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."store.storeinfo_controller/crud"; ?>',
-            caption: "Store Info"
+            caption: "Info Gudang"
 
         });
 
