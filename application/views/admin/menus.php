@@ -68,7 +68,7 @@
                                 </label>     
                             </div>
                             <div class="col-md-2">
-                                <button class="btn btn-primary default" type="button" onclick="search_icon('menu_icon')">Search</button>
+                                <button class="btn btn-primary default" type="button" onclick="search_icon('menu_icon')">Cari</button>
                             </div>
                         </div>
 
@@ -80,9 +80,9 @@
 
                         
 
-                        <button class="btn btn-primary" type="reset" id="btn-add">Add</button>
-                        <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                        <button class="btn btn-danger" type="button" id="btn-delete">Delete</button>
+                        <button class="btn btn-primary" type="reset" id="btn-add">Tambah</button>
+                        <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                        <button class="btn btn-danger" type="button" id="btn-delete">Hapus</button>
                     </form>
                 </div>
 

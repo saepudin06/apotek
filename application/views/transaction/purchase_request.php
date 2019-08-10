@@ -101,9 +101,12 @@
             colModel: [
                 {label: 'ID', name: 'purchase_request_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Code', name: 'code', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Created By', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Date', name: 'pr_date', width: 500, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Date', name: 'pr_date', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'amount', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Created By', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Created Date', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Updated By', name: 'update_by', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Updated Date', name: 'update_date', width: 100, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',

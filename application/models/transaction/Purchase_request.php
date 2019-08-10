@@ -22,7 +22,7 @@ class Purchase_request extends Abstract_model {
 
                             );
 
-    public $selectClause    = "purchase_request_id, code, amount, to_char(pr_date, 'dd/mm/yyyy') pr_date, created_date, created_by, update_date, update_by";
+    public $selectClause    = "purchase_request_id, code, amount, to_char(pr_date, 'dd/mm/yyyy') pr_date, to_char(created_date, 'dd/mm/yyyy') created_date, created_by, to_char(update_date, 'dd/mm/yyyy') update_date, update_by";
     public $fromClause      = "purchase_request";
 
     public $refs            = array();
