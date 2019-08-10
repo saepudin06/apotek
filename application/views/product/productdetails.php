@@ -48,10 +48,12 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Detail Produk (<?php echo $this->input->post('product_name','');?>)</h5>
+                        <h5 class="mb-4">Form Detail Produk</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+
+                            <input type="hidden" class="form-control" id="product_id" name="product_id" value="<?php echo $this->input->post('product_id','');?>" placeholder="" autocomplete="off" readonly="" />
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-3">
@@ -60,8 +62,8 @@
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="product_id" name="product_id" value="<?php echo $this->input->post('product_id','');?>" placeholder="" autocomplete="off" readonly="" />
-                                    <span>Product ID *</span>
+                                    <input class="form-control" id="product_id" name="product_id" value="<?php echo $this->input->post('product_name','');?>" placeholder="" autocomplete="off" readonly="" />
+                                    <span>Nama Produk *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
@@ -147,7 +149,7 @@
             colModel: [
                 {label: 'ID', name: 'prd_details_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Product ID', name: 'product_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Name Produk', name: 'product_name', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Nama Produk', name: 'product_name', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Label', name: 'product_label', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal Dibuat', name: 'production_date', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal Mulai Penjualan', name: 'sales_start_date', width: 150, align: "left", editable: false, search:false, sortable:false},

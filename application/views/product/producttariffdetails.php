@@ -12,9 +12,9 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Product</a>
+                    <a href="javascript:;">Produk</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Products</li>
+                <li class="breadcrumb-item active" aria-current="page">Daftar Produk</li>
             </ol>
         </nav>
         
@@ -28,13 +28,13 @@
             <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-6" role="tablist">
                 <li class="nav-item w-30 text-center">
                     <a class="nav-link" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Products</strong></a>
+                        aria-selected="true"><strong>Produk</strong></a>
                 </li>
                 <li class="nav-item w-30 text-center">
-                    <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Product Detail</strong></a>
+                    <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail Produk</strong></a>
                 </li>
                 <li class="nav-item w-30 text-center">
-                    <a class="nav-link active" id="tab-3" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Tariff Product</strong></a>
+                    <a class="nav-link active" id="tab-3" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Tarif</strong></a>
                 </li>
             </ul>
             
@@ -48,39 +48,40 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Tariff Product(<?php echo $this->input->post('product_label','');?>)</h5>
+                        <h5 class="mb-4">Form Tariff (<?php echo $this->input->post('product_label','');?>)</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                             <input type="hidden" id="product_id" name="product_id" value="<?php echo $this->input->post('product_id'); ?>">
-                            <input type="hidden" id="product_name" name="product_name" value="<?php echo $this->input->post('product_name'); ?>">
+
+                            <input type="hidden" id="prd_details_id" name="prd_details_id" value="<?php echo $this->input->post('prd_details_id','');?>" placeholder="" autocomplete="off" readonly="" />
 
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-3">
+                                <label class="form-group has-float-label col-md-4">
                                     <input class="form-control" id="prod_tariff_id" name="prod_tariff_id" placeholder="" autocomplete="off" readonly="" />
                                     <span>ID *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="prd_details_id" name="prd_details_id" value="<?php echo $this->input->post('prd_details_id','');?>" placeholder="" autocomplete="off" readonly="" />
-                                    <span>Product Detail ID *</span>
+                                <label class="form-group has-float-label col-md-4">
+                                    <input id="product_name" class="form-control" name="product_name" value="<?php echo $this->input->post('product_name'); ?>" readonly="" />
+                                    <span>Nama Produk *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-6">
+                                <label class="form-group has-float-label col-md-4">
                                     <input class="form-control" id="product_label" name="product_label" value="<?php echo $this->input->post('product_label'); ?>" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Product Label *</span>
+                                    <span>Label *</span>
                                 </label>
                             </div>
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-4">
                                     <input class="form-control" onkeypress="return isNumberKey(event)" id="basic_price" name="basic_price" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Basic Price *</span>
+                                    <span>Harga Awal *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
                                     <input class="form-control" onkeypress="return isNumberKey(event)" id="sell_price" name="sell_price" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Sell Price *</span>
+                                    <span>Harga Jual *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
@@ -92,22 +93,22 @@
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control datepicker" id="start_date" name="start_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Start Date *</span>
+                                    <span>Berlaku Dari *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control datepicker" id="end_date" name="end_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>End Date</span>
+                                    <span>Berlaku Sampai</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="price_note" name="price_note" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Price Note *</span>
+                                    <span>Catatan *</span>
                                 </label>
                             </div>
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -135,7 +136,7 @@
         product_name = $('#product_name').val();
 
         if(product_id == null || product_id == '') {
-            swal('','Product ID is null','info');
+            swal('','Product tidak ditemukan','info');
             return false;
         }
 
@@ -161,13 +162,13 @@
             colModel: [
                 {label: 'ID', name: 'prod_tariff_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Product Detail ID', name: 'prd_details_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Product Label', name: 'product_label', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Sell Price', name: 'sell_price', width: 150, align: "right", editable: false, search:false, sortable:false},
-                {label: 'Basic Price', name: 'basic_price', width: 150, align: "right", editable: false, search:false, sortable:false},
-                {label: 'Tax', name: 'tax', width: 150, align: "right", editable: false, search:false, sortable:false},
-                {label: 'Start Date', name: 'start_date', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'End Date', name: 'end_date', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Price Note', name: 'price_note', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Label', name: 'product_label', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Harga Awal', name: 'basic_price', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Harga Jual', name: 'sell_price', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Pajak', name: 'tax', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Berlaku Dari', name: 'start_date', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Berlaku Sampai', name: 'end_date', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Catatan', name: 'price_note', width: 150, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -205,7 +206,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."product.producttariffdetails_controller/crud"; ?>',
-            caption: "Tariff Product(<?php echo $this->input->post('product_label','');?>)"
+            caption: "Tarif (<?php echo $this->input->post('product_label','');?>)"
 
         });
 

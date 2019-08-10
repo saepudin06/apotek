@@ -125,7 +125,7 @@
                             </div>
 
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-3">
+                                <label class="form-group has-float-label col-md-4">
                                     <select class="form-control select2-single" id="package_type_id">
                                         <!-- <option label="&nbsp;">&nbsp;</option> -->
                                         <?php
@@ -149,12 +149,12 @@
                                     <span>Package Value. *</span>
                                 </label>
  -->
-                                <label class="form-group has-float-label col-md-3">
+                                <label class="form-group has-float-label col-md-4">
                                     <input class="form-control" onkeypress="return isNumberKey(event)" id="stock_min" name="stock_min" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Min. Stok *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-3">
+                                <label class="form-group has-float-label col-md-4">
                                     <input class="form-control" onkeypress="return isNumberKey(event)" id="initial_stock" name="initial_stock" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Stok Awal *</span>
                                 </label>

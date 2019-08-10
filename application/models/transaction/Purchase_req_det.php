@@ -25,9 +25,7 @@ class Purchase_req_det extends Abstract_model {
                             );
 
     public $selectClause    = "*";
-    public $fromClause      = "(select a.*, b.name product_name
-                                from purchase_req_det a
-                                left join products b on a.product_id=b.product_id)";
+    public $fromClause      = "vw_list_pr_details";
 
     public $refs            = array();
 

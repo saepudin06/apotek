@@ -12,11 +12,11 @@ class Productdetails extends Abstract_model {
 
     public $fields          = array(
                                 'prd_details_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Product Detail ID'),                                
-                                'product_id'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Product ID'),
-                                'product_label'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Product Label'),
-                                'production_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Production Date'),
-                                'sales_start_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Sales Start Date'),
-                                'sales_end_date'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Sales End Date'),
+                                'product_id'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Nama Produk'),
+                                'product_label'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Label'),
+                                'production_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Tanggal Dibuat'),
+                                'sales_start_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Tanggal Mulai Pernjualan'),
+                                'sales_end_date'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Tanggal Akhir Pernjualan'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),
