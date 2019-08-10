@@ -29,11 +29,14 @@ class Auth extends CI_Controller
             redirect(base_url().'auth/index');
         }
 
-        $sql = "select * from users where user_name = ?";
+        $sql = "select a.*, b.bu_id
+                from users a
+                left join empmaster b on a.p_employee_id = b.emp_id
+                where a.user_name = ? ";
 
         $query = $this->db->query($sql, array($username));
         $row = $query->row_array();
-
+        
         $md5pass = md5(trim($password));
 
 
@@ -53,6 +56,7 @@ class Auth extends CI_Controller
                         'user_name'         => $row['user_name'],
                         'user_email'        => $row['user_email'],
                         'user_full_name'    => $row['user_full_name'],
+                        'bu_id'             => $row['bu_id'],
                         'logged_in'         => true,
                         'location_name'     => null,
                         'location_code'     => null

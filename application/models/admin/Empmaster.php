@@ -105,6 +105,12 @@ class Empmaster extends Abstract_model {
     }
 
 
+    public function getEmp()
+    {
+        $this->db->order_by("emp_id", "asc");
+        $q = $this->db->get('empmaster');
+        return $q->result_array();
+    }
 
 }
 

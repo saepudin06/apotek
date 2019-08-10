@@ -100,6 +100,23 @@
                             <span>Role *</span>
                         </label>
 
+                        <label class="form-group has-float-label">
+                            <select id="p_employee_id" name="p_employee_id" class="form-control select2-single">
+                                <?php
+                                    $ci = & get_instance();
+                                    $ci->load->model('admin/empmaster');
+                                    $table = $ci->empmaster;
+                                    $items = $table->getEmp();
+
+                                ?>
+                                <option value=""> -- Pilih -- </option>
+                                <?php foreach($items as $item):?>
+                                    <option value="<?php echo $item['emp_id'];?>"> <?php echo $item['name'];?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <span>Pegawai *</span>
+                        </label>
+
 
                         <button class="btn btn-primary" type="reset" id="btn-add">Tambah</button>
                         <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
@@ -162,7 +179,9 @@ $("#tab-2").on("click", function(event) {
                 {label: 'Status', name: 'status_active', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'User Status', name: 'user_status', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Role', name: 'role_name', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Pegawai', name: 'emp_name', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Role ID', name: 'role_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
+                {label: 'Emp ID', name: 'p_employee_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 
             ],
             height: '100%',
@@ -173,7 +192,7 @@ $("#tab-2").on("click", function(event) {
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
-            shrinkToFit: true,
+            shrinkToFit: false,
             multiboxonly: true,
             onSelectRow: function (rowid) {
                 /*do something when selected*/
@@ -483,4 +502,6 @@ $("#tab-2").on("click", function(event) {
         
         $("#grid-table").trigger("reloadGrid");
     }
+
+    $('.select2-single').select2();
 </script>

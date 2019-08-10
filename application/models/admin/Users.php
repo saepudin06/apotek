@@ -18,6 +18,7 @@ class Users extends Abstract_model {
                                 'user_password'      => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Password'),
                                 'user_status'     => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Status'),
                                 'role_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Role'),
+                                'p_employee_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Pegawai'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'updated_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),
@@ -35,13 +36,16 @@ class Users extends Abstract_model {
                                  a.created_date,
                                  a.updated_by,
                                  a.updated_date,
+                                 a.p_employee_id,
                                  a.role_id,
                                  b.role_name,
+                                 c.name emp_name,
                                  CASE nvl(a.user_status,'0') WHEN '0' THEN 'Not Active'
                                                                 WHEN '1' THEN 'Active'
                                                             END as status_active";
     public $fromClause      = "users a
-                               left join roles b on a.role_id = b.role_id";
+                               left join roles b on a.role_id = b.role_id
+                               left join empmaster c on a.p_employee_id = c.emp_id";
 
     public $refs            = array();
 
@@ -89,7 +93,6 @@ class Users extends Abstract_model {
         }
         return true;
     }
-
 
 
 }
