@@ -54,8 +54,8 @@
                 product_price = grid.jqGrid('getCell', idd, 'product_price');
 
                 if(idd == null) {
-                    // swal('','Please select one row','info');
-                    alert('Please select one row');
+                    // swal('','Silakan pilih salah satu baris','info');
+                    alert('Silakan pilih salah satu baris');
                     return false;
                 }
 

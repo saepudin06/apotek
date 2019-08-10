@@ -70,8 +70,8 @@
                                 </label>
                             </div>
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -284,7 +284,7 @@
                     var grid = $('#grid-table');
                     rowid = grid.jqGrid ('getGridParam', 'selrow');
                     if(rowid == null) {
-                        swal('','Please select one row','info');
+                        swal('','Silakan pilih salah satu baris','info');
                         return false;
                     }
 
@@ -306,7 +306,7 @@
                     var grid = $('#grid-table');
                     rowid = grid.jqGrid ('getGridParam', 'selrow');
                     if(rowid == null) {
-                        swal('','Please select one row','info');
+                        swal('','Silakan pilih salah satu baris','info');
                         return false;
                     }
                     delete_data(rowid);

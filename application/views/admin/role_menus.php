@@ -77,8 +77,8 @@
                             </div>
                         <?php endforeach; ?>
                         
-                        <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                        <button class="btn btn-primary" type="button" id="btn-refresh">Refresh All</button>
+                        <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                        <button class="btn btn-primary" type="button" id="btn-refresh">Refresh Semua</button>
                     </form>
                 </div>
 

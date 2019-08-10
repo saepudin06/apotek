@@ -119,7 +119,7 @@
         product_name = grid.jqGrid ('getCell', prd_details_id, 'product_name');
 
         if(prd_details_id == null || prd_details_id == '') {
-            swal('','Please select one row','info');
+            swal('','Silakan pilih salah satu baris','info');
             return false;
         }
 
@@ -336,7 +336,7 @@
                     var grid = $('#grid-table');
                     rowid = grid.jqGrid ('getGridParam', 'selrow');
                     if(rowid == null) {
-                        swal('','Please select one row','info');
+                        swal('','Silakan pilih salah satu baris','info');
                         return false;
                     }
 
@@ -358,7 +358,7 @@
                     var grid = $('#grid-table');
                     rowid = grid.jqGrid ('getGridParam', 'selrow');
                     if(rowid == null) {
-                        swal('','Please select one row','info');
+                        swal('','Silakan pilih salah satu baris','info');
                         return false;
                     }
                     delete_data(rowid);

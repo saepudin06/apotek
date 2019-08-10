@@ -343,7 +343,7 @@
                     var grid = $('#grid-table');
                     rowid = grid.jqGrid ('getGridParam', 'selrow');
                     if(rowid == null) {
-                        swal('','Please select one row','info');
+                        swal('','Silakan pilih salah satu baris','info');
                         return false;
                     }
 
@@ -365,7 +365,7 @@
                     var grid = $('#grid-table');
                     rowid = grid.jqGrid ('getGridParam', 'selrow');
                     if(rowid == null) {
-                        swal('','Please select one row','info');
+                        swal('','Silakan pilih salah satu baris','info');
                         return false;
                     }
                     delete_data(rowid);
@@ -398,7 +398,7 @@
     function goto_detail(purchase_order_id){
         
         if(purchase_order_id == null) {
-            swal('','Please select one row','info');
+            swal('','Silakan pilih salah satu baris','info');
             return false;
         }
 

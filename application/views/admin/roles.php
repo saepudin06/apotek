@@ -59,9 +59,9 @@
                             <span>Description</span>
                         </label>
 
-                        <button class="btn btn-primary" type="reset" id="btn-add">Add</button>
-                        <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                        <button class="btn btn-danger" type="button" id="btn-delete">Delete</button>
+                        <button class="btn btn-primary" type="reset" id="btn-add">Tambah</button>
+                        <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                        <button class="btn btn-danger" type="button" id="btn-delete">Hapus</button>
                     </form>
                 </div>
 
@@ -86,7 +86,7 @@ $("#tab-2").on("click", function(event) {
     role_name = grid.jqGrid ('getCell', role_id, 'role_name');
 
     if(role_id == null) {
-        swal('','Please select one row','info');
+        swal('','Silakan pilih salah satu baris','info');
         return false;
     }
 
