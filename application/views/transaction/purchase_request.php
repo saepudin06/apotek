@@ -280,29 +280,31 @@
                 title: "Add",
                 cursor: "pointer",
                 id : "btn-add"
-        }).navButtonAdd('#grid-pager',{
-                caption: "", //Edit
-                buttonicon: "simple-icon-note",
-                onClickButton: function(rowid){ 
-                    var grid = $('#grid-table');
-                    rowid = grid.jqGrid ('getGridParam', 'selrow');
-                    if(rowid == null) {
-                        swal('','Silakan pilih salah satu baris','info');
-                        return false;
-                    }
+        })
+        // .navButtonAdd('#grid-pager',{
+        //         caption: "", //Edit
+        //         buttonicon: "simple-icon-note",
+        //         onClickButton: function(rowid){ 
+        //             var grid = $('#grid-table');
+        //             rowid = grid.jqGrid ('getGridParam', 'selrow');
+        //             if(rowid == null) {
+        //                 swal('','Silakan pilih salah satu baris','info');
+        //                 return false;
+        //             }
 
-                    $('#grid-ui').hide();
-                    $('#form-ui').slideDown( "slow" );
+        //             $('#grid-ui').hide();
+        //             $('#form-ui').slideDown( "slow" );
 
-                    setData(rowid);
+        //             setData(rowid);
 
-                    // $('#form-ui').trigger("reset");
-                },
-                position: "last",
-                title: "Edit",
-                cursor: "pointer",
-                id : "btn-edit"
-        }).navButtonAdd('#grid-pager',{
+        //             // $('#form-ui').trigger("reset");
+        //         },
+        //         position: "last",
+        //         title: "Edit",
+        //         cursor: "pointer",
+        //         id : "btn-edit"
+        // })
+        .navButtonAdd('#grid-pager',{
                 caption: "", //Delete
                 buttonicon: "simple-icon-minus",
                 onClickButton: function(){ 

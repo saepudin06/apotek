@@ -4,7 +4,7 @@
             <!-- modal title -->
             <div class="modal-header no-padding">
                 <div class="table-header">
-                    <span class="form-add-edit-title"> Data Product </span>
+                    <span class="form-add-edit-title"> Data Produk </span>
                 </div>
             </div>
             <input type="hidden" id="modal_lov_product_id_val" value="" />
@@ -14,11 +14,11 @@
             <div class="modal-body">
                 <div>
                   <button type="button" class="btn btn-sm btn-success default" id="modal_lov_product_btn_blank">
-                      Blank
+                      Kosong
                   </button>
 
                   <button class="btn btn-danger btn-sm default" data-dismiss="modal">
-                       Close
+                       Tutup
                   </button>
                 </div>
 
@@ -90,11 +90,11 @@
             loadui: "disable",
             colModel: [
                 {label: 'Product ID', name: 'product_id', width: 100, align: "left", editable: false, hidden:true},
-                {label: 'Product Name',name: 'name',width: 150, align: "left",editable: false },
-                {label: 'Product Type', name: 'product_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Package Type',name: 'package_type_name',width: 150, align: "left",editable: false },
-                {label: 'Measure Type',name: 'measure_type_name',width: 150, align: "left",editable: false },
-                {label: 'Stock Min.',name: 'stock_min',width: 150, align: "left",editable: false },
+                {label: 'Nama Produk',name: 'name',width: 150, align: "left",editable: false },
+                {label: 'Jenis Produk', name: 'product_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Satuan',name: 'package_type_name',width: 150, align: "left",editable: false },
+                {label: 'Ukuran',name: 'measure_type_name',width: 150, align: "left",editable: false },
+                {label: 'Min. Stok',name: 'stock_min',width: 150, align: "left",editable: false },
             ],
             height: '100%',
             width: 750,
