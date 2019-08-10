@@ -156,6 +156,7 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'purchase_req_det_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'Min. Stok', name: 'stock_min', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Purchase Request ID', name: 'purchase_request_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Product ID', name: 'product_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Produk', name: 'product_name', width: 400, align: "left", editable: false, search:false, sortable:false},
@@ -417,7 +418,7 @@
         var basic_price  = $('#grid-table').jqGrid('getCell', rowid, 'basic_price');
         var qty  = $('#grid-table').jqGrid('getCell', rowid, 'qty');
         var amount  = $('#grid-table').jqGrid('getCell', rowid, 'amount');
-        // var status  = $('#grid-table').jqGrid('getCell', rowid, 'status');
+        var stock_min  = $('#grid-table').jqGrid('getCell', rowid, 'stock_min');
         
         $('#purchase_req_det_id').val(rowid);
         $('#purchase_request_id').val(purchase_request_id);
@@ -426,7 +427,7 @@
         $('#basic_price').val(basic_price);        
         $('#qty').val(qty);        
         $('#amount').val(amount);        
-        // $('#status').val(status); 
+        $('#stock_min').val(stock_min); 
         // $('#status').trigger('change');        
 
     }
