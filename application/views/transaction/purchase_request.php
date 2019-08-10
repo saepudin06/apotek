@@ -342,8 +342,9 @@
 
         event.stopPropagation();
         var grid = $('#grid-table');
-        purchase_request_id = grid.jqGrid('getGridParam', 'selrow');
-        pr_date = grid.jqGrid('getCell', purchase_request_id, 'pr_date');
+        var purchase_request_id = grid.jqGrid('getGridParam', 'selrow');
+        var pr_date = grid.jqGrid('getCell', purchase_request_id, 'pr_date');
+        var pr_code = grid.jqGrid('getCell', purchase_request_id, 'code');
 
         if(purchase_request_id == null) {
             swal('','Silakan pilih salah satu baris','info');
@@ -353,6 +354,7 @@
         
         loadContentWithParams("transaction.purchase_req_det", {
             purchase_request_id: purchase_request_id,
+            pr_code: pr_code,
             pr_date : pr_date
         });
     });

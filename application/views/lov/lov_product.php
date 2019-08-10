@@ -84,7 +84,7 @@
         var pager_selector = "#grid-pager-lov_product";
 
         jQuery("#grid-table-lov_product").jqGrid({
-            url: '<?php echo WS_JQGRID."product.products_controller/crud"; ?>',
+            url: '<?php echo WS_JQGRID."product.products_controller/readLov"; ?>',
             datatype: "json",
             mtype: "POST",
             loadui: "disable",

@@ -66,29 +66,29 @@
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="product_label" name="product_label" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Product Label *</span>
+                                    <span>Label *</span>
                                 </label>
                             </div>
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-4">
                                     <input class="form-control datepicker" id="production_date" name="production_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Production Date *</span>
+                                    <span>Tanggal Dibuat *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
                                     <input class="form-control datepicker" id="sales_start_date" name="sales_start_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Sales Start Date *</span>
+                                    <span>Tanggal Mulai Pernjualan *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
                                     <input class="form-control datepicker" id="sales_end_date" name="sales_end_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Sales End Date</span>
+                                    <span>Tanggal Akhir Pernjualan</span>
                                 </label>
                             </div>
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -147,11 +147,11 @@
             colModel: [
                 {label: 'ID', name: 'prd_details_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Product ID', name: 'product_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Product Name', name: 'product_name', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Product Label', name: 'product_label', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Production Date', name: 'production_date', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Sales Start Date', name: 'sales_start_date', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Sales End Date', name: 'sales_end_date', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Name Produk', name: 'product_name', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Label', name: 'product_label', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tanggal Dibuat', name: 'production_date', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tanggal Mulai Penjualan', name: 'sales_start_date', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tanggal Akhir Penjualan', name: 'sales_end_date', width: 150, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -189,7 +189,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."product.productdetails_controller/crud"; ?>',
-            caption: "Product Details(<?php echo $this->input->post('product_name','');?>)"
+            caption: "Detail Produk (<?php echo $this->input->post('product_name','');?>)"
 
         });
 

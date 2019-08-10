@@ -15,13 +15,14 @@ class Purchase_request_controller {
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
-        $i_search = getVarClean('i_search','str','');
+        $i_search = getVarClean('i_search','str','');        
 
         try {
 
             $ci = & get_instance();
             $ci->load->model('transaction/purchase_request');
             $table = $ci->purchase_request;
+            $userdata = $ci->session->userdata;
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -39,6 +40,9 @@ class Purchase_request_controller {
 
             // Filter Table
             $req_param['where'] = array();
+
+            $table->setCriteria("bu_id=".$userdata['bu_id']);
+
             if(!empty($i_search)) {
                 $table->setCriteria("( upper(pr_date) like upper('%".$i_search."%') OR
                                        upper(code) like upper('%".$i_search."%')

@@ -50,6 +50,8 @@
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
+                            <input class="form-control" type="hidden" id="purchase_request_id" name="purchase_request_id" value="<?php echo $this->input->post('purchase_request_id'); ?>" placeholder="" autocomplete="off" readonly="" />
+
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" id="purchase_req_det_id" name="purchase_req_det_id" placeholder="" autocomplete="off" readonly="" />
@@ -57,8 +59,8 @@
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="purchase_request_id" name="purchase_request_id" value="<?php echo $this->input->post('purchase_request_id'); ?>" placeholder="" autocomplete="off" readonly="" />
-                                    <span>Purchase Request ID *</span>
+                                    <input class="form-control" id="pr_code" name="pr_code" placeholder="" autocomplete="off" readonly="" value="<?php echo $this->input->post('pr_code'); ?>" />
+                                    <span>Kode *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-5">
