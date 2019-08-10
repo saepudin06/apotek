@@ -12,9 +12,8 @@ class Purchase_request extends Abstract_model {
 
     public $fields          = array(
                                 'purchase_request_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Purchase Request ID'),
-                                'code'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Code'),
-                                'amount'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Amount'),
-                                'pr_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Date'),
+                                'code'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Kode'),
+                                'pr_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Tanggal'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),

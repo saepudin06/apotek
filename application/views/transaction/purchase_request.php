@@ -12,9 +12,9 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Transaction</a>
+                    <a href="javascript:;">Transaksi</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Purchase Request</li>
+                <li class="breadcrumb-item active" aria-current="page">Rencana Pembelian (PR)</li>
             </ol>
         </nav>
         
@@ -28,7 +28,7 @@
             <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Purchase Request</strong></a>
+                        aria-selected="true"><strong>Rencana Pembelian</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
@@ -45,36 +45,31 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Purchase Request</h5>
+                        <h5 class="mb-4">Form Rencana Pembelian</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-3">
+                                <label class="form-group has-float-label col-md-4">
                                     <input class="form-control" id="purchase_request_id" name="purchase_request_id" placeholder="" autocomplete="off" readonly="" />
                                     <span>ID *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-3">
+                                <label class="form-group has-float-label col-md-4">
                                     <input class="form-control" id="code" name="code" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Code *</span>
+                                    <span>Kode *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-3">
+                                <label class="form-group has-float-label col-md-4">
                                     <input class="form-control datepicker" id="pr_date" name="pr_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Date *</span>
-                                </label>
-
-                                <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control numeric" id="amount" name="amount" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Amount </span>
+                                    <span>Tanggal *</span>
                                 </label>
                             </div>
 
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -100,13 +95,13 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'purchase_request_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Code', name: 'code', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Date', name: 'pr_date', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'amount', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
-                {label: 'Created By', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Created Date', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Updated By', name: 'update_by', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Updated Date', name: 'update_date', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Kode', name: 'code', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tanggal', name: 'pr_date', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Pembuat', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tanggal Dibuat', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Pengubah', name: 'update_by', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tanggal Diubah', name: 'update_date', width: 100, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -144,7 +139,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."transaction.purchase_request_controller/crud"; ?>',
-            caption: "Purchase Request"
+            caption: "Rencana Pembelian"
 
         });
 

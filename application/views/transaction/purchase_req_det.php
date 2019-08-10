@@ -12,9 +12,9 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Transaction</a>
+                    <a href="javascript:;">Transaksi</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Purchase Request</li>
+                <li class="breadcrumb-item active" aria-current="page">Rencana Pembelian (PR)</li>
             </ol>
         </nav>
         
@@ -28,7 +28,7 @@
             <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Purchase Request</strong></a>
+                        aria-selected="true"><strong>Rencana Pembelian</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
@@ -63,11 +63,11 @@
 
                                 <label class="form-group has-float-label col-md-5">
                                     <input class="form-control" id="product_name" name="product_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Product *</span>
+                                    <span>Produk *</span>
                                 </label>
 
                                 <div class="col-md-1">
-                                    <button class="btn btn-primary default" type="button" onclick="search_product('product_id', 'product_name')">Search</button>
+                                    <button class="btn btn-primary default" type="button" onclick="search_product('product_id', 'product_name')">Cari <i class="simple-icon-question"></i></button>
                                 </div>
 
                                 <input class="form-control" type="hidden" id="product_id" name="product_id" placeholder="" autocomplete="off" readonly="" />
@@ -77,17 +77,17 @@
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-4">
                                     <input class="form-control" onkeypress="return isNumberKey(event)" onkeyup="sumamout()" id="basic_price" name="basic_price" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Basic Price *</span>
+                                    <span>Harga Awal *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
                                     <input class="form-control" onkeypress="return isNumberKey(event)" onkeyup="sumamout()" id="qty" name="qty" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Qty *</span>
+                                    <span>Jumlah *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
                                     <input class="form-control numeric" id="amount" name="amount" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Amount *</span>
+                                    <span>Total *</span>
                                 </label>
 
                                 <!-- <label class="form-group has-float-label col-md-3">
@@ -99,8 +99,8 @@
                                 </label> -->
                             </div>
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -153,10 +153,10 @@
                 {label: 'ID', name: 'purchase_req_det_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Purchase Request ID', name: 'purchase_request_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Product ID', name: 'product_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Product', name: 'product_name', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Basic Price', name: 'basic_price', width: 100, align: "right", editable: false, search:false, sortable:false},
-                {label: 'Qty', name: 'qty', width: 100, align: "right", editable: false, search:false, sortable:false},
-                {label: 'Amount', name: 'amount', width: 100, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Produk', name: 'product_name', width: 400, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Harga Awal', name: 'basic_price', width: 100, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Jumlah', name: 'qty', width: 100, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Total', name: 'amount', width: 100, align: "right", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',

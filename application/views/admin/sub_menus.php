@@ -69,7 +69,7 @@
                                 </label>     
                             </div>
                             <div class="col-md-2">
-                                <button class="btn btn-primary default" type="button" onclick="search_icon('sub_menu_icon')">Cari</button>
+                                <button class="btn btn-primary default" type="button" onclick="search_icon('sub_menu_icon')">Cari <i class="simple-icon-question"></i></button>
                             </div>
                         </div>
 
