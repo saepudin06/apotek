@@ -97,7 +97,7 @@
 
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control datepicker" id="end_date" name="end_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>End Date *</span>
+                                    <span>End Date</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">

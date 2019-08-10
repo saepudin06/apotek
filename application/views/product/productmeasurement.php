@@ -12,9 +12,9 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Product</a>
+                    <a href="javascript:;">Produk</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Product Measurement</li>
+                <li class="breadcrumb-item active" aria-current="page">Jenis Ukuran</li>
             </ol>
         </nav>
         
@@ -28,7 +28,7 @@
             <!-- <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Product Measurement</strong></a>
+                        aria-selected="true"><strong>Jenis Ukuran</strong></a>
                 </li>
             </ul> -->
             <div class="separator mb-2"></div>
@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Product Measurement</h5>
+                        <h5 class="mb-4">Form Jenis Ukuran</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -54,12 +54,12 @@
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="name" name="name" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Name *</span>
+                                    <span>Jenis Ukuran *</span>
                                 </label>
                             </div>
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -85,7 +85,7 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'measure_type_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Name', name: 'name', width: 200, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Jenis Ukuran', name: 'name', width: 200, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -123,7 +123,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."product.productmeasurement_controller/crud"; ?>',
-            caption: "Product Measurement"
+            caption: "Jenis Ukuran"
 
         });
 

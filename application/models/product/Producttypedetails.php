@@ -12,7 +12,7 @@ class Producttypedetails extends Abstract_model {
 
     public $fields          = array(
                                 'product_type_det_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Product Type Detail ID'),                                
-                                'name'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Name'),
+                                'name'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Detail Jenis Produk'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),

@@ -83,7 +83,7 @@
 
                                 <label class="form-group has-float-label col-md-4">
                                     <input class="form-control datepicker" id="sales_end_date" name="sales_end_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Sales End Date *</span>
+                                    <span>Sales End Date</span>
                                 </label>
                             </div>
 

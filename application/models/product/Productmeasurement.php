@@ -12,7 +12,7 @@ class Productmeasurement extends Abstract_model {
 
     public $fields          = array(
                                 'measure_type_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Measure Type ID'),
-                                'name'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Name'),
+                                'name'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Jenis Ukuran'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),

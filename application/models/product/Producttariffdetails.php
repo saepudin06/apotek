@@ -18,7 +18,7 @@ class Producttariffdetails extends Abstract_model {
                                 'tax'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Tax'),
                                 'price_note'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Price Note'),
                                 'start_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Start Date'),
-                                'end_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'End Date'),
+                                'end_date'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'End Date'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),

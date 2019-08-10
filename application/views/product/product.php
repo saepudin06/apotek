@@ -12,9 +12,9 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Product</a>
+                    <a href="javascript:;">Produk</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Products</li>
+                <li class="breadcrumb-item active" aria-current="page">Daftar Produk</li>
             </ol>
         </nav>
         
@@ -28,13 +28,13 @@
             <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-6" role="tablist">
                 <li class="nav-item w-30 text-center">
                     <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Products</strong></a>
+                        aria-selected="true"><strong>Produk</strong></a>
                 </li>
                 <li class="nav-item w-30 text-center">
-                    <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Product Detail</strong></a>
+                    <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail Produk</strong></a>
                 </li>
                 <li class="nav-item w-30 text-center">
-                    <a class="nav-link" id="tab-3" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Tariff Product</strong></a>
+                    <a class="nav-link" id="tab-3" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Tarif</strong></a>
                 </li>
             </ul>
             
@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Products</h5>
+                        <h5 class="mb-4">Form Daftar Produk</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -61,7 +61,7 @@
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="name" name="name" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Name *</span>
+                                    <span>Nama *</span>
                                 </label>
                             </div>
 
@@ -77,12 +77,12 @@
                                             $items = $table->getAll(0,-1,'product_type_id','asc');
 
                                         ?>
-                                        <option value=""> -- Choose Product Type -- </option>
+                                        <option value=""> -- Pilih Jenis Produk -- </option>
                                         <?php foreach($items as $item):?>
                                             <option value="<?php echo $item['product_type_id'];?>"> <?php echo $item['name'];?></option>
                                         <?php endforeach; ?>
                                     </select>
-                                    <span>Product Type *</span>
+                                    <span>Jenis Produk *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
@@ -96,12 +96,12 @@
                                             $items = $table->getAll(0,-1,'bu_id','asc');
 
                                         ?>
-                                        <option value=""> -- Choose Bussiness Unit -- </option>
+                                        <option value=""> -- Pilih Unit Bisnis -- </option>
                                         <?php foreach($items as $item):?>
                                             <option value="<?php echo $item['bu_id'];?>"> <?php echo $item['name'];?></option>
                                         <?php endforeach; ?>
                                     </select>
-                                    <span>Bussiness Unit *</span>
+                                    <span>Unit Bisnis *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
@@ -115,12 +115,12 @@
                                             $items = $table->getAll(0,-1,'measure_type_id','asc');
 
                                         ?>
-                                        <option value=""> -- Choose Measure Type -- </option>
+                                        <option value=""> -- Pilih Ukuran -- </option>
                                         <?php foreach($items as $item):?>
                                             <option value="<?php echo $item['measure_type_id'];?>"> <?php echo $item['name'];?></option>
                                         <?php endforeach; ?>
                                     </select>
-                                    <span>Measure Type *</span>
+                                    <span>Ukuran *</span>
                                 </label>
                             </div>
 
@@ -136,12 +136,12 @@
                                             $items = $table->getAll(0,-1,'package_type_id','asc');
 
                                         ?>
-                                        <option value=""> -- Choose Package Type -- </option>
+                                        <option value=""> -- Pilih Satuan -- </option>
                                         <?php foreach($items as $item):?>
                                             <option value="<?php echo $item['package_type_id'];?>"> <?php echo $item['name'];?></option>
                                         <?php endforeach; ?>
                                     </select>
-                                    <span>Package Type *</span>
+                                    <span>Satuan *</span>
                                 </label>
 
                                 <!-- <label class="form-group has-float-label col-md-3">
@@ -151,17 +151,17 @@
  -->
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" onkeypress="return isNumberKey(event)" id="stock_min" name="stock_min" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Stock Min. *</span>
+                                    <span>Min. Stok *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" onkeypress="return isNumberKey(event)" id="initial_stock" name="initial_stock" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Initial Stock *</span>
+                                    <span>Stok Awal *</span>
                                 </label>
                             </div>
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -211,13 +211,13 @@
                 {label: 'Bussiness Unit ID', name: 'bu_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Measure Type ID', name: 'measure_type_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Package Type ID', name: 'package_type_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Name', name: 'name', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Product Type', name: 'product_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Bussiness Unit', name: 'bu_name', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Measure Type', name: 'measure_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Package Type', name: 'package_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Stock Min.', name: 'stock_min', width: 100, align: "right", editable: false, search:false, sortable:false, hidden: false},
-                {label: 'Initial Stock', name: 'initial_stock', width: 100, align: "right", editable: false, search:false, sortable:false, hidden: false},
+                {label: 'Nama', name: 'name', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Jenis Produk', name: 'product_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Unit Bisnis', name: 'bu_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Ukuran', name: 'measure_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Satuan', name: 'package_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Min. Stok', name: 'stock_min', width: 100, align: "right", editable: false, search:false, sortable:false, hidden: false},
+                {label: 'Stok Awal', name: 'initial_stock', width: 100, align: "right", editable: false, search:false, sortable:false, hidden: false},
                 
             ],
             // height: '100%',
@@ -255,7 +255,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."product.products_controller/crud"; ?>',
-            caption: "Products"
+            caption: "Daftar Produk"
 
         });
 

@@ -12,9 +12,9 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Product</a>
+                    <a href="javascript:;">Produk</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Product Type</li>
+                <li class="breadcrumb-item active" aria-current="page">Jenis Produk</li>
             </ol>
         </nav>
         
@@ -31,7 +31,7 @@
                         aria-selected="true"><strong>Store Type</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
-                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Product Type</strong></a>
+                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Jenis Produk</strong></a>
                 </li>
             </ul> -->
             
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Product Type</h5>
+                        <h5 class="mb-4">Form Jenis Produk</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -67,12 +67,12 @@
                                             $items = $table->getAll(0,-1,'product_type_det_id','asc');
 
                                         ?>
-                                        <option value=""> -- Choose Product Type Detail -- </option>
+                                        <option value=""> -- Pilih Jenis Produk Detail -- </option>
                                         <?php foreach($items as $item):?>
                                             <option value="<?php echo $item['product_type_det_id'];?>"> <?php echo $item['name'];?></option>
                                         <?php endforeach; ?>
                                     </select>
-                                    <span>Product Type Detail *</span>
+                                    <span>Jenis Produk Detail *</span>
                                 </label>
                                 
                             </div>
@@ -80,12 +80,12 @@
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-12">
                                     <input class="form-control" id="name" name="name" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Name *</span>
+                                    <span>Jenis Produk *</span>
                                 </label>
                             </div>
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -112,8 +112,8 @@
             colModel: [
                 {label: 'ID', name: 'product_type_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Product Type Detail ID', name: 'product_type_det_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},                
-                {label: 'Product Type Detail', name: 'product_type_det_name', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: false},
-                {label: 'Name', name: 'name', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Jenis Produk Detail', name: 'product_type_det_name', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: false},
+                {label: 'Jenis Produk', name: 'name', width: 100, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -151,7 +151,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."product.producttype_controller/crud"; ?>',
-            caption: "Product Type"
+            caption: "Jenis Produk"
 
         });
 

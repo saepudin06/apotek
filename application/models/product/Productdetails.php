@@ -16,7 +16,7 @@ class Productdetails extends Abstract_model {
                                 'product_label'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Product Label'),
                                 'production_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Production Date'),
                                 'sales_start_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Sales Start Date'),
-                                'sales_end_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Sales End Date'),
+                                'sales_end_date'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Sales End Date'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),
