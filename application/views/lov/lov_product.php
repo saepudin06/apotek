@@ -9,6 +9,7 @@
             </div>
             <input type="hidden" id="modal_lov_product_id_val" value="" />
             <input type="hidden" id="modal_lov_product_name_val" value="" />
+            <input type="hidden" id="modal_lov_product_min_stock_val" value="" />
 
             <!-- modal body -->
             <div class="modal-body">
@@ -53,29 +54,33 @@
         $("#modal_lov_product_btn_blank").on('click', function() {
             $("#"+ $("#modal_lov_product_id_val").val()).val("");
             $("#"+ $("#modal_lov_product_name_val").val()).val("");
+            $("#"+ $("#modal_lov_product_min_stock_val").val()).val("");
             $("#modal_lov_product").modal("toggle");
         });
     });
 
-    function modal_lov_product_show(the_id_field, the_code_field) {
-        modal_lov_product_set_field_value(the_id_field, the_code_field);
+    function modal_lov_product_show(the_id_field, the_code_field, the_min_stock_field) {
+        modal_lov_product_set_field_value(the_id_field, the_code_field, the_min_stock_field);
         $("#modal_lov_product").modal({backdrop: 'static'});
         modal_lov_product_prepare_table();
     }
 
 
-    function modal_lov_product_set_field_value(the_id_field, the_code_field) {
+    function modal_lov_product_set_field_value(the_id_field, the_code_field, the_min_stock_field) {
          $("#modal_lov_product_id_val").val(the_id_field);
          $("#modal_lov_product_name_val").val(the_code_field);
+         $("#modal_lov_product_min_stock_val").val(the_min_stock_field);
     }
 
-    function modal_lov_product_set_value(the_id_val, the_code_val) {
+    function modal_lov_product_set_value(the_id_val, the_code_val, the_min_stock_field) {
          $("#"+ $("#modal_lov_product_id_val").val()).val(the_id_val);
          $("#"+ $("#modal_lov_product_name_val").val()).val(the_code_val);
+         $("#"+ $("#modal_lov_product_min_stock_val").val()).val(the_min_stock_field);
          $("#modal_lov_product").modal("toggle");
 
          $("#"+ $("#modal_lov_product_id_val").val()).change();
          $("#"+ $("#modal_lov_product_name_val").val()).change();
+         $("#"+ $("#modal_lov_product_min_stock_val").val()).change();
     }
 
 
@@ -116,8 +121,9 @@
                 var sel_id = grid.jqGrid('getGridParam', 'selrow');
                 var product_id = grid.jqGrid('getCell', sel_id, 'product_id');
                 var product_name = grid.jqGrid('getCell', sel_id, 'name');
+                var stock_min = grid.jqGrid('getCell', sel_id, 'stock_min');
 
-                modal_lov_product_set_value(product_id,product_name);
+                modal_lov_product_set_value(product_id,product_name,stock_min);
 
             },
             sortorder:'',

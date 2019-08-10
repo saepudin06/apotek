@@ -50,6 +50,8 @@
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
+                            <input type="hidden" name="stock_min" id="stock_min" />
+
                             <input class="form-control" type="hidden" id="purchase_request_id" name="purchase_request_id" value="<?php echo $this->input->post('purchase_request_id'); ?>" placeholder="" autocomplete="off" readonly="" />
 
                             <div class="form-row">
@@ -69,7 +71,7 @@
                                 </label>
 
                                 <div class="col-md-1">
-                                    <button class="btn btn-primary default" type="button" onclick="search_product('product_id', 'product_name')">Cari <i class="simple-icon-question"></i></button>
+                                    <button class="btn btn-primary default" type="button" onclick="search_product('product_id', 'product_name','stock_min')">Cari <i class="simple-icon-question"></i></button>
                                 </div>
 
                                 <input class="form-control" type="hidden" id="product_id" name="product_id" placeholder="" autocomplete="off" readonly="" />
@@ -117,11 +119,12 @@
 <?php $this->load->view('lov/lov_product'); ?>
 
 <script type="text/javascript">
-    function search_product(id, code){
-        modal_lov_product_show(id, code);
+    function search_product(id, code, stock_min){
+        modal_lov_product_show(id, code, stock_min);
     }
 
     function sumamout() {
+        
         
         var basic_price = $('#basic_price').val();
         var qty = $('#qty').val();
@@ -480,6 +483,17 @@
     $("#form_data").on('submit', (function (e) {
 
         e.preventDefault(); 
+        var stock_min = $('#stock_min').val();
+        var qty = $('#qty').val();
+
+        if(qty > stock_min){
+            swal('','Jumlah Stok melebihi Min. stok['+stock_min+'] yang ditentukan','info');
+            $('#qty').val(0);
+            $('#amount').val(0);
+            return false;
+
+        }
+
         var data = new FormData(this);
         var purchase_req_det_id = $('#purchase_req_det_id').val();
             
