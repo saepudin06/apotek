@@ -27,27 +27,7 @@ class Products extends Abstract_model {
                             );
 
     public $selectClause    = "*";
-    public $fromClause      = "(select a.product_id, 
-                                        a.product_type_id, 
-                                        a.bu_id, 
-                                        a.measure_type_id, 
-                                        a.package_type_id, 
-                                        a.name, 
-                                        a.stock_min, 
-                                        a.initial_stock, 
-                                        a.created_date, 
-                                        a.update_date, 
-                                        a.update_by, 
-                                        a.created_by, 
-                                        b.name product_type_name,
-                                        c.name bu_name,
-                                        d.name measure_type_name,
-                                        e.name package_type_name
-                                from products a 
-                                left join producttype b on a.product_type_id=b.product_type_id
-                                left join bunit c on a.bu_id=c.bu_id
-                                left join productmeasurement d on a.measure_type_id=d.measure_type_id
-                                left join productpackagetype e on a.package_type_id= e.package_type_id)";
+    public $fromClause      = "vw_info_product";
 
     public $refs            = array();
 

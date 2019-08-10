@@ -12,9 +12,9 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Product</a>
+                    <a href="javascript:;">Produk</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Products</li>
+                <li class="breadcrumb-item active" aria-current="page">Daftar Produk</li>
             </ol>
         </nav>
         
@@ -28,13 +28,13 @@
             <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-6" role="tablist">
                 <li class="nav-item w-30 text-center">
                     <a class="nav-link" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Products</strong></a>
+                        aria-selected="true"><strong>Produk</strong></a>
                 </li>
                 <li class="nav-item w-30 text-center">
-                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Product Detail</strong></a>
+                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail Produk</strong></a>
                 </li>
                 <li class="nav-item w-30 text-center">
-                    <a class="nav-link" id="tab-3" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Tariff Product</strong></a>
+                    <a class="nav-link" id="tab-3" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Tarif</strong></a>
                 </li>
             </ul>
             
@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Products Details(<?php echo $this->input->post('product_name','');?>)</h5>
+                        <h5 class="mb-4">Form Detail Produk (<?php echo $this->input->post('product_name','');?>)</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
