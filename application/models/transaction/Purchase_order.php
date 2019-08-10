@@ -15,8 +15,6 @@ class Purchase_order extends Abstract_model {
                                 'purchase_request_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Purchase Request ID'),
                                 'supplier_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Supplier ID'),
                                 'amount'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Amount'),
-                                'due_date_payment'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Due Date Payment'),
-                                'invoice_num_ref'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Invoice Num'),
                                 'po_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Date'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
@@ -25,7 +23,7 @@ class Purchase_order extends Abstract_model {
 
                             );
 
-    public $selectClause    = "purchase_order_id, purchase_request_id, supplier_id, created_date, update_date, update_by, created_by, amount, to_char(due_date_payment,'dd/mm/yyyy') due_date_payment, invoice_num_ref, to_char(po_date,'dd/mm/yyyy') po_date, purchase_request, supplier_name";
+    public $selectClause    = "purchase_order_id, purchase_request_id, supplier_id, bu_id, created_date, update_date, update_by, created_by, amount, to_char(po_date,'dd/mm/yyyy') po_date, purchase_request, supplier_name";
     public $fromClause      = "(select a.*, b.code purchase_request, c.name supplier_name
                                 from purchase_order a
                                 left join purchase_request b on a.purchase_request_id=b.purchase_request_id

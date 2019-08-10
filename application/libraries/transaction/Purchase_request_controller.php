@@ -311,8 +311,8 @@ class Purchase_request_controller {
         $userdata = $ci->session->userdata;
 
         try{
-            $sql = "SELECT gen_purchase_req(?) as msg FROM DUAL";
-            $q = $ci->db->query($sql, array($userdata['user_name']));
+            $sql = "SELECT gen_purchase_req(?, ?) as msg FROM DUAL";
+            $q = $ci->db->query($sql, array($userdata['user_name'],$userdata['bu_id']));
             $rows = $q->row_array();
 
 

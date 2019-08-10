@@ -108,16 +108,16 @@
                         </div>
                         <div class="w-10 w-xs-100">
                             <?php 
-                                if($item['status_id'] == 1){
-                                    $fill = "badge-secondary";                                              
-                                }else if($item['status_id'] == 2){
-                                    $fill = "badge-primary";
-                                }else{
-                                    $fill = "badge-success";
-                                }
+                                // if($item['status_id'] == 1){
+                                //     $fill = "badge-secondary";                                              
+                                // }else if($item['status_id'] == 2){
+                                //     $fill = "badge-primary";
+                                // }else{
+                                    // $fill = "badge-success";
+                                // }
 
                             ?>
-                            <span class="badge badge-pill <?php echo $fill;?>"><?php echo $item['status_code'];?></span>
+                            <!-- <span class="badge badge-pill <?php echo $fill;?>"><?php echo $item['status_code'];?></span> -->
                         </div>
                     </div>
                     <div class="custom-control custom-checkbox pl-1 align-self-center pr-4">

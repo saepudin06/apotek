@@ -16,8 +16,6 @@ class Purchase_order_det extends Abstract_model {
                                 'purchase_order_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Purchase Order ID'),
                                 'qty'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Qty'),
                                 'basic_price'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Basic Price'),
-                                'exp_date'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Exp Date'),
-                                'status_id'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Status'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),
@@ -80,11 +78,10 @@ class Purchase_order_det extends Abstract_model {
             $orderby = "asc";
         }
 
-        $sql = "SELECT a.*, nvl(b.purchase_order_det_id,0) purchase_order_det_id, b.purchase_order_id, nvl(b.qty, a.qty) po_qty, nvl(b.basic_price, a.basic_price) po_basic_price,  nvl(b.status_id,1) status_id, nvl(d.val_1,'Purchase Request') status_code, c.name product_name
+        $sql = "SELECT a.*, nvl(b.purchase_order_det_id,0) purchase_order_det_id, b.purchase_order_id, nvl(b.qty, a.qty) po_qty, nvl(b.basic_price, a.basic_price) po_basic_price, c.name product_name
                 FROM purchase_req_det a
                 LEFT JOIN purchase_order_det b ON a.purchase_req_det_id=b.purchase_req_det_id AND b.purchase_order_id = ?
                 LEFT JOIN products c ON a.product_id=c.product_id
-                LEFT JOIN referencelist d ON b.status_id=d.reference_list_id
                 WHERE c.name like '%".$serach."%'
                 order by c.name ".$orderby;
         // print_r($sql);

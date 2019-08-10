@@ -56,10 +56,6 @@
                                     <span>ID *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control" id="invoice_num_ref" name="invoice_num_ref" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Invoice Num *</span>
-                                </label>
 
                                 <label class="form-group has-float-label col-md-4">
                                     <input class="form-control datepicker" id="po_date" name="po_date" placeholder="" autocomplete="off" autofocus="" />
@@ -68,10 +64,6 @@
                             </div>
 
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control datepicker" id="due_date_payment" name="due_date_payment" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Due Date Payment *</span>
-                                </label>  
 
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" id="supplier_name" name="supplier_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
@@ -142,13 +134,11 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'purchase_order_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Invoice Num', name: 'invoice_num_ref', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Supplier Id', name: 'supplier_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Supplier', name: 'supplier_name', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Purchase Request ID', name: 'purchase_request_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Purchase Request', name: 'purchase_request', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'PO Date', name: 'po_date', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Due Date Payment', name: 'due_date_payment', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Amount', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
                 {label: '<center>#</center>',width: 100,align: "center",
                     formatter:function(cellvalue, options, rowObject) {
@@ -416,23 +406,21 @@
     function setData(rowid){
         
         var po_date = $('#grid-table').jqGrid('getCell', rowid, 'po_date');
-        var amount  = $('#grid-table').jqGrid('getCell', rowid, 'amount');
-        var invoice_num_ref  = $('#grid-table').jqGrid('getCell', rowid, 'invoice_num_ref');
+        var amount  = $('#grid-table').jqGrid('getCell', rowid, 'amount');        
         var supplier_id  = $('#grid-table').jqGrid('getCell', rowid, 'supplier_id');
         var supplier_name  = $('#grid-table').jqGrid('getCell', rowid, 'supplier_name');
         var purchase_request  = $('#grid-table').jqGrid('getCell', rowid, 'purchase_request');
         var purchase_request_id  = $('#grid-table').jqGrid('getCell', rowid, 'purchase_request_id');
-        var due_date_payment  = $('#grid-table').jqGrid('getCell', rowid, 'due_date_payment');
+        
         
         $('#purchase_order_id').val(rowid);
         $('#po_date').val(po_date);
-        $('#amount').val(amount);        
-        $('#invoice_num_ref').val(invoice_num_ref);        
+        $('#amount').val(amount);                      
         $('#supplier_id').val(supplier_id);        
         $('#supplier_name').val(supplier_name);        
         $('#purchase_request').val(purchase_request);        
         $('#purchase_request_id').val(purchase_request_id);        
-        $('#due_date_payment').val(due_date_payment);        
+        
 
     }
 

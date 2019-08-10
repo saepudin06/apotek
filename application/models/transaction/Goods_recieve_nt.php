@@ -7,15 +7,19 @@
 class Goods_recieve_nt extends Abstract_model {
 
     public $table           = "goods_recieve_nt";
-    public $pkey            = "goods_recieve_nt";
+    public $pkey            = "goods_recieve_nt_id";
     public $alias           = "";   
 
     public $fields          = array(
-                                'goods_recieve_nt'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'ID'),
+                                'goods_recieve_nt_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'ID'),
                                 'purchase_order_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Purchase Order ID'),
                                 'status'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Status'),
                                 'amount'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Amount'),
+                                'code'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Code'),
+                                'invoice_num_ref'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Invoice Num Ref'),
+                                'due_date_payment'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Due Date Payment'),
                                 'notes'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Notes'),
+                                'bu_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'BU ID'),
                                 'qty'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Qty'),
                                 'grn_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Date'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
@@ -25,10 +29,10 @@ class Goods_recieve_nt extends Abstract_model {
 
                             );
 
-    public $selectClause    = "goods_recieve_nt, purchase_order_id, status, amount, notes, qty, to_char(grn_date,'dd/mm/yyyy') grn_date, invoice_num_ref";
-    public $fromClause      = "(select a.*, b.invoice_num_ref
+    public $selectClause    = "goods_recieve_nt_id, purchase_order_id, status, status_name, amount, notes, qty, to_char(grn_date,'dd/mm/yyyy') grn_date, invoice_num_ref, code, due_date_payment, bu_id";
+    public $fromClause      = "(select a.*, b.name status_name 
                                 from goods_recieve_nt a
-                                left join purchase_order b on a.purchase_order_id=b.purchase_order_id)";
+                                left join referencelist b on a.status=b.reference_list_id)";
 
     public $refs            = array();
 
