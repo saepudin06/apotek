@@ -437,7 +437,7 @@
 
         swal({
               title: "",
-              text: "Do you want to delete this Data?",
+              text: "Apakah anda ingin menghapus data ini?",
               showCancelButton: true,
               confirmButtonClass: "btn-danger",
               confirmButtonText: "Yes!",

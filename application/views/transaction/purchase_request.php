@@ -100,7 +100,7 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'purchase_request_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Code', name: 'code', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Code', name: 'code', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Created By', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Date', name: 'pr_date', width: 500, align: "left", editable: false, search:false, sortable:false},
                 {label: 'amount', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
@@ -384,7 +384,7 @@
     function delete_data(rowid){
         swal({
               title: "",
-              text: "Do you want to delete this Data?",
+              text: "Apakah anda ingin menghapus data ini?",
               showCancelButton: true,
               confirmButtonClass: "btn-danger",
               confirmButtonText: "Yes!",
