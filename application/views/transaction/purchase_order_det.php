@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                    <input id="search-data" value="<?php echo $this->input->post("search","");?>" onchange="searchData()" placeholder="Search...">
+                    <input id="search-data" value="<?php echo $this->input->post("search","");?>" onchange="searchData()" placeholder="Pencarian...">
                 </div>  
                 <div class="float-md-left mr-1 mb-1">
                     <button type="button" onclick="backtopage()" class="btn btn-outline-secondary btn-xs mb-1">Kembali</button>

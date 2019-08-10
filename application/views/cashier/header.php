@@ -76,7 +76,7 @@
             </a>
 
             <!-- <div class="search" data-search-path="Layouts.Search.html?q=">
-                <input placeholder="Search...">
+                <input placeholder="Pencarian...">
                 <span class="search-icon">
                     <i class="simple-icon-magnifier"></i>
                 </span>
