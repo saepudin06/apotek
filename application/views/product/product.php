@@ -144,11 +144,11 @@
                                     <span>Package Type *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-3">
+                                <!-- <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" onkeypress="return isNumberKey(event)" id="package_val" name="package_val" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Package Value. *</span>
                                 </label>
-
+ -->
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" onkeypress="return isNumberKey(event)" id="stock_min" name="stock_min" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Stock Min. *</span>
@@ -216,7 +216,6 @@
                 {label: 'Bussiness Unit', name: 'bu_name', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Measure Type', name: 'measure_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Package Type', name: 'package_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Package Value', name: 'package_val', width: 150, align: "right", editable: false, search:false, sortable:false, hidden: false},
                 {label: 'Stock Min.', name: 'stock_min', width: 100, align: "right", editable: false, search:false, sortable:false, hidden: false},
                 {label: 'Initial Stock', name: 'initial_stock', width: 100, align: "right", editable: false, search:false, sortable:false, hidden: false},
                 
@@ -466,7 +465,7 @@
         var measure_type_id = $('#grid-table').jqGrid('getCell', rowid, 'measure_type_id');
         var package_type_id = $('#grid-table').jqGrid('getCell', rowid, 'package_type_id');
         var name = $('#grid-table').jqGrid('getCell', rowid, 'name');
-        var package_val = $('#grid-table').jqGrid('getCell', rowid, 'package_val');
+        // var package_val = $('#grid-table').jqGrid('getCell', rowid, 'package_val');
         var stock_min  = $('#grid-table').jqGrid('getCell', rowid, 'stock_min');
         var initial_stock  = $('#grid-table').jqGrid('getCell', rowid, 'initial_stock');
         
@@ -481,7 +480,7 @@
         $('#package_type_id').trigger('change');
 
         $('#name').val(name);
-        $('#package_val').val(package_val);
+        // $('#package_val').val(package_val);
         $('#stock_min').val(stock_min);        
         $('#initial_stock').val(initial_stock);        
 

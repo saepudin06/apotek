@@ -299,6 +299,45 @@ class Purchase_request_controller {
         return $data;
     }
 
+    function generatePR() {
+
+        $ci = & get_instance();
+        $ci->load->model('transaction/purchase_request');
+        $table = $ci->purchase_request;
+
+        $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
+
+
+        $userdata = $ci->session->userdata;
+
+        try{
+            $sql = "SELECT gen_purchase_req(?) as msg FROM DUAL";
+            $q = $ci->db->query($sql, array($userdata['user_name']));
+            $rows = $q->row_array();
+
+
+            if($rows['msg'] == 0){
+                $data['success'] = true;
+                $data['message'] = 'Purcase Request Berhasil Digenerate';
+                $data['total'] = 1;
+                $data['records'] = 0;
+                $data['page'] = 1;
+            }else{                
+                $data['success'] = false;
+                $data['message'] = 'Purcase Request Gagal Digenerate';
+                $data['total'] = 0;
+                $data['records'] = 0;
+                $data['page'] = 1;
+            }
+            
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+            $data['rows'] = array();
+            $data['total'] = 0;
+        }
+        return $data;
+    }
+
 }
 
 /* End of file Purchase_request_controller.php */

@@ -271,12 +271,13 @@
         ).navButtonAdd('#grid-pager',{
                 caption: "", //Add
                 buttonicon: "simple-icon-plus",
-                onClickButton: function(){ 
-                    $('#grid-ui').hide();
-                    $('#form-ui').slideDown( "slow" );
-                    $('#form_data').trigger("reset");                    
+                onClickButton : generatePR,
+                // onClickButton: function(){ 
+                    // $('#grid-ui').hide();
+                    // $('#form-ui').slideDown( "slow" );
+                    // $('#form_data').trigger("reset");                    
                      //alert("Adding Row");
-                },
+                // },
                 position: "last",
                 title: "Add",
                 cursor: "pointer",
@@ -497,4 +498,41 @@
             return false;
         }
     });
+
+    function generatePR(){
+        swal({
+              title: "Generate Purcase Request",
+              text: "Apakah anda yakin?",
+              showCancelButton: true,
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Yes!",
+              closeOnConfirm: true
+            },
+            function(){
+
+                $.ajax({
+                    url: "<?php echo WS_JQGRID."transaction.purchase_request_controller/generatePR"; ?>" ,
+                    type: "POST",
+                    dataType: "json",
+                    data: {},
+                    success: function (data) {
+                        if (data.success){
+
+                            swal("", data.message, "success");
+                            $("#grid-table").trigger("reloadGrid");
+
+                        }else{
+                            swal("", data.message, "warning");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+                    }
+            });
+
+                
+            return false;
+        });
+
+    }
 </script>
