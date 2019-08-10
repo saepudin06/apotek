@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Tariff (<?php echo $this->input->post('product_label','');?>)</h5>
+                        <h5 class="mb-4">Form Tarif</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -206,7 +206,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."product.producttariffdetails_controller/crud"; ?>',
-            caption: "Tarif (<?php echo $this->input->post('product_label','');?>)"
+            caption: "Tarif (<?php echo $this->input->post('product_name','');?>)"
 
         });
 
