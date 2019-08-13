@@ -12,10 +12,10 @@ class Purchase_order extends Abstract_model {
 
     public $fields          = array(
                                 'purchase_order_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Purchase Order ID'),
-                                'purchase_request_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Purchase Request ID'),
-                                'supplier_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Supplier ID'),
-                                'amount'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Amount'),
-                                'po_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Date'),
+                                'purchase_request_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Rencana Pembelian'),
+                                'supplier_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Supplier'),
+                                'code'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Kode PO'),
+                                'po_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Tanggal Pembelian'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),
@@ -23,11 +23,20 @@ class Purchase_order extends Abstract_model {
 
                             );
 
-    public $selectClause    = "purchase_order_id, purchase_request_id, supplier_id, bu_id, created_date, update_date, update_by, created_by, amount, to_char(po_date,'dd/mm/yyyy') po_date, purchase_request, supplier_name";
-    public $fromClause      = "(select a.*, b.code purchase_request, c.name supplier_name
-                                from purchase_order a
-                                left join purchase_request b on a.purchase_request_id=b.purchase_request_id
-                                left join supplier c on a.supplier_id=c.supplier_id)";
+    public $selectClause    = "purchase_order_id,
+                               purchase_request_id,
+                               supplier_id,
+                               code,
+                               pr_code,
+                               sup_name,
+                               bu_name,
+                               TO_CHAR (po_date, 'dd/mm/yyyy') po_date,
+                               created_date, 
+                               update_date, 
+                               update_by, 
+                               created_by,
+                               amount";
+    public $fromClause      = "vw_po_info";
 
     public $refs            = array();
 

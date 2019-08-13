@@ -12,9 +12,9 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Transaction</a>
+                    <a href="javascript:;">Transaksi</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Purchase Order</li>
+                <li class="breadcrumb-item active" aria-current="page">Pembelian (PO)</li>
             </ol>
         </nav>
         
@@ -25,15 +25,15 @@
 <div class="row">    
     <div class="col-12">        
         <div class="card mb-4">
-            <!-- <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
+            <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Purchase Order</strong></a>
+                        aria-selected="true"><strong>Pembelian</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
                 </li>
-            </ul> -->
+            </ul>
             
             <div class="separator mb-2"></div>
             <div class="card-body">            
@@ -45,58 +45,46 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Purchase Order</h5>
+                        <h5 class="mb-4">Form Pembelian</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-4">
+                                <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" id="purchase_order_id" name="purchase_order_id" placeholder="" autocomplete="off" readonly="" />
                                     <span>ID *</span>
                                 </label>
-
-
-                                <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control datepicker" id="po_date" name="po_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Date *</span>
-                                </label>                                
-                            </div>
-
-                            <div class="form-row">
-
+                                
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="supplier_name" name="supplier_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <input class="form-control" id="sup_name" name="sup_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
                                     <span>Supplier *</span>
                                 </label>
 
                                 <div class="col-md-1">
-                                    <button class="btn btn-primary default" type="button" onclick="search_supplier('supplier_id', 'supplier_name')">Search</button>
+                                    <button class="btn btn-primary default" type="button" onclick="search_supplier('supplier_id', 'sup_name')">Cari <i class="simple-icon-question"></i></button>
                                 </div>
 
                                 <input class="form-control" type="hidden" id="supplier_id" name="supplier_id" placeholder="" autocomplete="off" readonly="" />
 
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="purchase_request" name="purchase_request" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Purchase Request *</span>
+                                    <input class="form-control" id="pr_code" name="pr_code" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <span>Rencana Pembelian *</span>
                                 </label>
 
                                 <div class="col-md-1">
-                                    <button class="btn btn-primary default" type="button" onclick="search_pr('purchase_request_id', 'purchase_request')">Search</button>
+                                    <button class="btn btn-primary default" type="button" onclick="search_pr('purchase_request_id', 'pr_code')">Cari <i class="simple-icon-question"></i></button>
                                 </div>
 
                                 <input class="form-control" type="hidden" id="purchase_request_id" name="purchase_request_id" placeholder="" autocomplete="off" readonly="" />
 
-                                <!-- <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control numeric" id="amount" name="amount" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Amount *</span>
-                                </label> -->
 
                             </div>
+
                             
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -135,18 +123,13 @@
             colModel: [
                 {label: 'ID', name: 'purchase_order_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Supplier Id', name: 'supplier_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
-                {label: 'Supplier', name: 'supplier_name', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Purchase Request ID', name: 'purchase_request_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
-                {label: 'Purchase Request', name: 'purchase_request', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Unit Bisnis', name: 'bu_name', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'PO Date', name: 'po_date', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Kode Pembelian', name: 'code', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Supplier', name: 'sup_name', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Purchase Request ID', name: 'purchase_request_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
+                {label: 'Rencana Pembelian', name: 'pr_code', width: 100, align: "left", editable: false, search:false, sortable:false},                
                 {label: 'Amount', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
-                {label: '<center>#</center>',width: 100,align: "center",
-                    formatter:function(cellvalue, options, rowObject) {
-                        var purchase_order_id = rowObject['purchase_order_id'];
-                        
-                        return '<button type="button" class="btn btn-outline-info btn-xs mb-1" onclick="goto_detail(\''+purchase_order_id+'\')">Detail</button>';
-                    }
-                },
                 
             ],
             // height: '100%',
@@ -186,7 +169,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."transaction.purchase_order_controller/crud"; ?>',
-            caption: "Purchase Order"
+            caption: "Pembelian"
 
         });
 
@@ -385,7 +368,14 @@
 
 <script type="text/javascript">
 
-    function goto_detail(purchase_order_id){
+    $("#tab-2").on("click", function(event) {
+
+        event.stopPropagation();
+        var grid = $('#grid-table');
+        var purchase_order_id = grid.jqGrid('getGridParam', 'selrow');
+        var po_code = grid.jqGrid('getCell', purchase_order_id, 'code');
+        var purchase_request_id = grid.jqGrid('getCell', purchase_order_id, 'purchase_request_id');
+
         
         if(purchase_order_id == null) {
             swal('','Silakan pilih salah satu baris','info');
@@ -394,10 +384,10 @@
 
         loadContentWithParams("transaction.purchase_order_det", {
             purchase_order_id: purchase_order_id,
-            orderby: '',
-            search: ''
+            po_code: po_code,
+            purchase_request_id: purchase_request_id
         });
-    }
+    });
 
 </script>
 
@@ -406,18 +396,18 @@
     function setData(rowid){
         
         var po_date = $('#grid-table').jqGrid('getCell', rowid, 'po_date');
-        var amount  = $('#grid-table').jqGrid('getCell', rowid, 'amount');        
+        var pr_code  = $('#grid-table').jqGrid('getCell', rowid, 'pr_code');        
         var supplier_id  = $('#grid-table').jqGrid('getCell', rowid, 'supplier_id');
-        var supplier_name  = $('#grid-table').jqGrid('getCell', rowid, 'supplier_name');
+        var sup_name  = $('#grid-table').jqGrid('getCell', rowid, 'sup_name');
         var purchase_request  = $('#grid-table').jqGrid('getCell', rowid, 'purchase_request');
         var purchase_request_id  = $('#grid-table').jqGrid('getCell', rowid, 'purchase_request_id');
         
         
         $('#purchase_order_id').val(rowid);
         $('#po_date').val(po_date);
-        $('#amount').val(amount);                      
+        $('#pr_code').val(pr_code);                      
         $('#supplier_id').val(supplier_id);        
-        $('#supplier_name').val(supplier_name);        
+        $('#sup_name').val(sup_name);        
         $('#purchase_request').val(purchase_request);        
         $('#purchase_request_id').val(purchase_request_id);        
         

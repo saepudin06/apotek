@@ -14,11 +14,11 @@
             <div class="modal-body">
                 <div>
                   <button type="button" class="btn btn-sm btn-success default" id="modal_lov_supplier_btn_blank">
-                      Blank
+                      Kosong
                   </button>
 
                   <button class="btn btn-danger btn-sm default" data-dismiss="modal">
-                       Close
+                       Tutup
                   </button>
                 </div>
 
@@ -90,8 +90,8 @@
             loadui: "disable",
             colModel: [
                 {label: 'Supplier ID', name: 'supplier_id', width: 100, align: "left", editable: false, hidden:true},
-                {label: 'Supplier Name',name: 'name',width: 150, align: "left",editable: false },
-                {label: 'Address', name: 'address', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Nam Supplier',name: 'name',width: 150, align: "left",editable: false },
+                {label: 'Alamat', name: 'address', width: 150, align: "left", editable: false, search:false, sortable:false},
             ],
             height: '100%',
             width: 750,

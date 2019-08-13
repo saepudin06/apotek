@@ -22,6 +22,7 @@ class Purchase_order_controller {
             $ci = & get_instance();
             $ci->load->model('transaction/purchase_order');
             $table = $ci->purchase_order;
+            $userdata = $ci->session->userdata;
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -39,6 +40,8 @@ class Purchase_order_controller {
 
             // Filter Table
             $req_param['where'] = array();
+            $table->setCriteria("bu_id=".$userdata['bu_id']);
+
             if(!empty($i_search)) {
                 $table->setCriteria("( upper(invoice_num_ref) like upper('%".$i_search."%') OR
                                        upper(purchase_request) like upper('%".$i_search."%') OR
@@ -119,59 +122,54 @@ class Purchase_order_controller {
             return $data;
         }
 
+        $userdata = $ci->session->userdata;
+        $action = 'I';
+        try{
 
-        $table->actionType = 'CREATE';
-        $errors = array();
+            $sql = "BEGIN "
+                    . " P_CRUD_PURCHASE_ORDER("
+                    . " :i_action, "
+                    . " :i_purchase_request_id,"
+                    . " :i_supplier_id,"
+                    . " :i_bu_id,"
+                    . " :i_user,"
+                    . " :i_purchase_order_id,"
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
 
-        if (isset($items[0])){
-            $numItems = count($items);
-            for($i=0; $i < $numItems; $i++){
-                try{
+            $stmt = oci_parse($table->db->conn_id, $sql);
 
-                    $table->db->trans_begin(); //Begin Trans
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_action', $action);
+            oci_bind_by_name($stmt, ':i_purchase_request_id', $items['purchase_request_id']);
+            oci_bind_by_name($stmt, ':i_supplier_id', $items['supplier_id']);
+            oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);            
+            oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
+            oci_bind_by_name($stmt, ':i_purchase_order_id', $items['purchase_order_id']);
 
-                        $table->setRecord($items[$i]);
-                        $table->create();
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
 
-                    $table->db->trans_commit(); //Commit Trans
 
-                }catch(Exception $e){
+            ociexecute($stmt);
 
-                    $table->db->trans_rollback(); //Rollback Trans
-                    $errors[] = $e->getMessage();
-                }
-            }
-
-            $numErrors = count($errors);
-            if ($numErrors > 0){
-                $data['message'] = $numErrors." from ".$numItems." record(s) failed to be saved.<br/><br/><b>System Response:</b><br/>- ".implode("<br/>- ", $errors)."";
-            }else{
-                $data['success'] = true;
-                $data['message'] = 'Data added successfully';
-            }
-            $data['rows'] =$items;
-        }else {
-
-            try{
-                $table->db->trans_begin(); //Begin Trans
-
-                    $table->setRecord($items);
-                    $table->create();
-
-                $table->db->trans_commit(); //Commit Trans
-
-                $data['success'] = true;
-                $data['message'] = 'Data added successfully';
-                
-
-            }catch (Exception $e) {
-                $table->db->trans_rollback(); //Rollback Trans
-
-                $data['message'] = $e->getMessage();
+            if($o_msg_code == 0){
                 $data['rows'] = $items;
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+            }else{
+                $data['rows'] = $items;
+                $data['success'] = false;
+                $data['message'] = $o_msg;
             }
 
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+            $data['rows'] = $items;
         }
+
         return $data;
 
     }
@@ -191,61 +189,54 @@ class Purchase_order_controller {
             return $data;
         }
 
-        //exit;
+        $userdata = $ci->session->userdata;
+        $action = 'U';
+        try{
 
-        $table->actionType = 'UPDATE';
+            $sql = "BEGIN "
+                    . " P_CRUD_PURCHASE_ORDER("
+                    . " :i_action, "
+                    . " :i_purchase_request_id,"
+                    . " :i_supplier_id,"
+                    . " :i_bu_id,"
+                    . " :i_user,"
+                    . " :i_purchase_order_id,"
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
 
-        if (isset($items[0])){
-            
-            $errors = array();
-            $numItems = count($items);
-            for($i=0; $i < $numItems; $i++){
-                try{
-                    $table->db->trans_begin(); //Begin Trans
+            $stmt = oci_parse($table->db->conn_id, $sql);
 
-                        $table->setRecord($items[$i]);
-                        $table->update();
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_action', $action);
+            oci_bind_by_name($stmt, ':i_purchase_request_id', $items['purchase_request_id']);
+            oci_bind_by_name($stmt, ':i_supplier_id', $items['supplier_id']);
+            oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);            
+            oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
+            oci_bind_by_name($stmt, ':i_purchase_order_id', $items['purchase_order_id']);
 
-                    $table->db->trans_commit(); //Commit Trans
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
 
-                    $items[$i] = $table->get($items[$i][$table->pkey]);
-                }catch(Exception $e){
-                    $table->db->trans_rollback(); //Rollback Trans
 
-                    $errors[] = $e->getMessage();
-                }
-            }
+            ociexecute($stmt);
 
-            $numErrors = count($errors);
-            if ($numErrors > 0){
-                $data['message'] = $numErrors." from ".$numItems." record(s) failed to be saved.<br/><br/><b>System Response:</b><br/>- ".implode("<br/>- ", $errors)."";
-            }else{
-                $data['success'] = true;
-                $data['message'] = 'Data update successfully';
-            }
-            $data['rows'] =$items;
-        }else {
-            
-            try{
-                $table->db->trans_begin(); //Begin Trans
-
-                    $table->setRecord($items);
-                    $table->update();
-
-                $table->db->trans_commit(); //Commit Trans
-
-                $data['success'] = true;
-                $data['message'] = 'Data update successfully';
-                
-                $data['rows'] = $table->get($items[$table->pkey]);
-            }catch (Exception $e) {
-                $table->db->trans_rollback(); //Rollback Trans
-
-                $data['message'] = $e->getMessage();
+            if($o_msg_code == 0){
                 $data['rows'] = $items;
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+            }else{
+                $data['rows'] = $items;
+                $data['success'] = false;
+                $data['message'] = $o_msg;
             }
 
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+            $data['rows'] = $items;
         }
+
         return $data;
 
     }
@@ -261,42 +252,63 @@ class Purchase_order_controller {
         $jsonItems = getVarClean('items', 'str', '');
         $data = jsonDecode($jsonItems);
 
+        $userdata = $ci->session->userdata;
         $items = $data["id_"];
-
+        $action = 'D';
+        $null = null;
+        
         try{
-            $table->db->trans_begin(); //Begin Trans
 
-            $total = 0;
-            if (is_array($items)){
-                foreach ($items as $key => $value){
-                    if (empty($value)) throw new Exception('Empty parameter');
-                    $table->remove($value);
-                    $data['rows'][] = array($table->pkey => $value);
-                    $total++;
-                }
+            $sql = "BEGIN "
+                    . " P_CRUD_PURCHASE_ORDER("
+                    . " :i_action, "
+                    . " :i_purchase_request_id,"
+                    . " :i_supplier_id,"
+                    . " :i_bu_id,"
+                    . " :i_user,"
+                    . " :i_purchase_order_id,"
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
+
+            $stmt = oci_parse($table->db->conn_id, $sql);
+
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_action', $action);
+            oci_bind_by_name($stmt, ':i_purchase_request_id', $null);
+            oci_bind_by_name($stmt, ':i_supplier_id', $null);
+            oci_bind_by_name($stmt, ':i_bu_id', $null);            
+            oci_bind_by_name($stmt, ':i_user', $null);
+            oci_bind_by_name($stmt, ':i_purchase_order_id', $items);
+
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
+
+
+            ociexecute($stmt);
+
+            if($o_msg_code == 0){
+                $data['rows'] = null;
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+                $data['total'] = 1;
+                $data['records'] = 0;
+                $data['page'] = 1;
             }else{
-                $items = (int) $items;
-                if (empty($items)){
-                    throw new Exception('Empty parameter');
-                }
-                $table->remove($items);
-                $data['rows'][] = array($table->pkey => $items);
-                $data['total'] = $total = 1;
+                $data['rows'] = null;
+                $data['success'] = false;
+                $data['message'] = $o_msg;
+                $data['total'] = 1;
+                $data['records'] = 0;
+                $data['page'] = 1;
             }
 
-            $data['records'] = 0;
-            $data['page'] = 1;
-            $data['success'] = true;
-            $data['message'] = $total.' Data deleted successfully';
-            
-            $table->db->trans_commit(); //Commit Trans
-
         }catch (Exception $e) {
-            $table->db->trans_rollback(); //Rollback Trans
             $data['message'] = $e->getMessage();
-            $data['rows'] = array();
-            $data['total'] = 0;
+            $data['rows'] = $items;
         }
+
         return $data;
     }
 
