@@ -10,18 +10,20 @@ class Purchase_order_det_controller {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','purchase_order_id');
-        $sord = getVarClean('sord','str','asc');
+        $sidx = getVarClean('sidx','str','purchase_order_det_id');
+        $sord = getVarClean('sord','str','desc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
-        $purchase_order_id = getVarClean('purchase_order_id','str','');
+        $i_search = getVarClean('i_search','str','');
+        $purchase_order_id = getVarClean('purchase_order_id','int',0);
 
         try {
 
             $ci = & get_instance();
             $ci->load->model('transaction/purchase_order_det');
             $table = $ci->purchase_order_det;
+            // $userdata = $ci->session->userdata;
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -39,7 +41,14 @@ class Purchase_order_det_controller {
 
             // Filter Table
             $req_param['where'] = array();
-            $table->setCriteria("purchase_order_id = ".$purchase_order_id);
+            $table->setCriteria("purchase_order_id=".$purchase_order_id);
+
+            if(!empty($i_search)) {
+                $table->setCriteria("( upper(invoice_num_ref) like upper('%".$i_search."%') OR
+                                       upper(purchase_request) like upper('%".$i_search."%') OR
+                                       upper(supplier_name) like upper('%".$i_search."%') 
+                                     )");
+            }
 
             $table->setJQGridParam($req_param);
             $count = $table->countAll();
@@ -73,7 +82,32 @@ class Purchase_order_det_controller {
         return $data;
     }
 
-    function insertdata() {
+    function crud() {
+
+        $data = array();
+        $oper = getVarClean('oper', 'str', '');
+        switch ($oper) {
+            case 'add' :
+                $data = $this->create();
+            break;
+
+            case 'edit' :
+                $data = $this->update();
+            break;
+
+            case 'del' :
+                $data = $this->destroy();
+            break;
+
+            default :
+                $data = $this->read();
+            break;
+        }
+
+        return $data;
+    }
+
+    function create() {
 
 
         $ci = & get_instance();
@@ -84,90 +118,199 @@ class Purchase_order_det_controller {
 
         $items = $_POST;
 
+        if (!is_array($items)){
+            $data['message'] = 'Invalid items parameter';
+            return $data;
+        }
+
+        $userdata = $ci->session->userdata;
+        $action = 'I';
+        try{
+
+            $sql = "BEGIN "
+                    . " P_CRUD_PURCHASE_ORDER("
+                    . " :i_action, "
+                    . " :i_purchase_request_id,"
+                    . " :i_supplier_id,"
+                    . " :i_bu_id,"
+                    . " :i_user,"
+                    . " :i_purchase_order_id,"
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
+
+            $stmt = oci_parse($table->db->conn_id, $sql);
+
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_action', $action);
+            oci_bind_by_name($stmt, ':i_purchase_request_id', $items['purchase_request_id']);
+            oci_bind_by_name($stmt, ':i_supplier_id', $items['supplier_id']);
+            oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);            
+            oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
+            oci_bind_by_name($stmt, ':i_purchase_order_id', $items['purchase_order_id']);
+
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
+
+
+            ociexecute($stmt);
+
+            if($o_msg_code == 0){
+                $data['rows'] = $items;
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+            }else{
+                $data['rows'] = $items;
+                $data['success'] = false;
+                $data['message'] = $o_msg;
+            }
+
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+            $data['rows'] = $items;
+        }
+
+        return $data;
+
+    }
+
+    function update() {
+
+        $ci = & get_instance();
+        $ci->load->model('transaction/purchase_order_det');
+        $table = $ci->purchase_order_det;
+
+        $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
+
+        $items = $_POST;
 
         if (!is_array($items)){
             $data['message'] = 'Invalid items parameter';
             return $data;
         }
 
-        // print_r($items); exit;
-        
-        $errors = array();
+        $userdata = $ci->session->userdata;
+        $action = 'U';
+        try{
 
-        try {
-            
-            // if(isset($items['purchase_req_det_id']) && count($items['purchase_req_det_id']) > 0){
-                $table->db->trans_begin(); //Begin Trans
-                    
-                    // $table->deleteItem($items['role_id']);
-                    
-                    for($i=0; $i<count($items['purchase_req_det_id']); $i++){
-                        $purchase_order_det_id = $items['purchase_order_det_id'][$i];
-                        $purchase_req_det_id = $items['purchase_req_det_id'][$i];
-                        $qty = $items['qty'][$i];
-                        $basic_price = $items['basic_price'][$i];
-                        $purchase_order_id = $items['purchase_order_id'];
-                        
+            $sql = "BEGIN "
+                    . " P_CRUD_PURCHASE_ORDER("
+                    . " :i_action, "
+                    . " :i_purchase_request_id,"
+                    . " :i_supplier_id,"
+                    . " :i_bu_id,"
+                    . " :i_user,"
+                    . " :i_purchase_order_id,"
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
 
-                        if(isset($items['check'][$purchase_req_det_id])){
+            $stmt = oci_parse($table->db->conn_id, $sql);
 
-                            // $table->deleteItem($purchase_order_det_id);
-                            
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_action', $action);
+            oci_bind_by_name($stmt, ':i_purchase_request_id', $items['purchase_request_id']);
+            oci_bind_by_name($stmt, ':i_supplier_id', $items['supplier_id']);
+            oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);            
+            oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
+            oci_bind_by_name($stmt, ':i_purchase_order_id', $items['purchase_order_id']);
 
-                            if($purchase_order_det_id > 0){
-                                $table->actionType = 'UPDATE';
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
 
-                                $table->setRecord(
-                                    array('purchase_req_det_id' => $purchase_req_det_id,
-                                           'basic_price' => $basic_price,
-                                           'purchase_order_id' => $purchase_order_id,
-                                           'purchase_order_det_id' => $purchase_order_det_id,
-                                           'qty' => $qty,
-                                           'status_id' => 2
-                                       )
-                                );
 
-                                $table->update();
-                            
-                            }else{
-                                $table->actionType = 'CREATE';
+            ociexecute($stmt);
 
-                                $table->setRecord(
-                                    array('purchase_req_det_id' => $purchase_req_det_id,
-                                           'basic_price' => $basic_price,
-                                           'purchase_order_id' => $purchase_order_id,
-                                           'qty' => $qty,
-                                           'status_id' => 2
-                                       )
-                                );
-                                $table->create();
-                            }
-                            
+            if($o_msg_code == 0){
+                $data['rows'] = $items;
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+            }else{
+                $data['rows'] = $items;
+                $data['success'] = false;
+                $data['message'] = $o_msg;
+            }
 
-                        }else{
-                            // print_r($purchase_order_det_id); exit;
-                            $table->db->trans_begin(); //Begin Trans
-                            $table->deleteItem($purchase_order_det_id);
-                            $table->db->trans_commit(); //Commit Trans
-                        }
-                    
-                    }
-
-                    $table->updatePO($items['purchase_order_id']);
-
-                $table->db->trans_commit(); //Commit Trans
-            // }
-
-            $data['success'] = true;
-            $data['message'] = 'Data added succesfully';
-        } catch (Exception $e) {
-            $table->db->trans_rollback(); //Rollback Trans
-
+        }catch (Exception $e) {
             $data['message'] = $e->getMessage();
             $data['rows'] = $items;
         }
+
         return $data;
 
+    }
+
+    function destroy() {
+
+        $ci = & get_instance();
+        $ci->load->model('transaction/purchase_order_det');
+        $table = $ci->purchase_order_det;
+
+        $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
+
+        $jsonItems = getVarClean('items', 'str', '');
+        $data = jsonDecode($jsonItems);
+
+        $userdata = $ci->session->userdata;
+        $items = $data["id_"];
+        $action = 'D';
+        $null = null;
+        
+        try{
+
+            $sql = "BEGIN "
+                    . " P_CRUD_PURCHASE_ORDER("
+                    . " :i_action, "
+                    . " :i_purchase_request_id,"
+                    . " :i_supplier_id,"
+                    . " :i_bu_id,"
+                    . " :i_user,"
+                    . " :i_purchase_order_id,"
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
+
+            $stmt = oci_parse($table->db->conn_id, $sql);
+
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_action', $action);
+            oci_bind_by_name($stmt, ':i_purchase_request_id', $null);
+            oci_bind_by_name($stmt, ':i_supplier_id', $null);
+            oci_bind_by_name($stmt, ':i_bu_id', $null);            
+            oci_bind_by_name($stmt, ':i_user', $null);
+            oci_bind_by_name($stmt, ':i_purchase_order_id', $items);
+
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
+
+
+            ociexecute($stmt);
+
+            if($o_msg_code == 0){
+                $data['rows'] = null;
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+                $data['total'] = 1;
+                $data['records'] = 0;
+                $data['page'] = 1;
+            }else{
+                $data['rows'] = null;
+                $data['success'] = false;
+                $data['message'] = $o_msg;
+                $data['total'] = 1;
+                $data['records'] = 0;
+                $data['page'] = 1;
+            }
+
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+            $data['rows'] = $items;
+        }
+
+        return $data;
     }
 
 }

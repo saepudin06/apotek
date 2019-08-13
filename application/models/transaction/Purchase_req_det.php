@@ -13,7 +13,7 @@ class Purchase_req_det extends Abstract_model {
     public $fields          = array(
                                 'purchase_req_det_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Purchase Request Det ID'),
                                 'purchase_request_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Purchase Request ID'),
-                                'product_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Product ID'),
+                                'product_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Produk Request'),
                                 'basic_price'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Harga Awal'),
                                 'amount'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Total'),
                                 'qty'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Jumlah'),

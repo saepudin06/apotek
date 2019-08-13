@@ -1,25 +1,8 @@
 <div class="row">
-    <div class="col-12">
-        <div class="mb-2">
-            <div class="float-sm-right text-zero">
-                <button type="submit" class="btn btn-primary" id="btn-submit">SUBMIT</button>
-
-                <div class="btn-group ">
-                    <div class="btn btn-primary btn-lg pl-4 pr-0 check-button">
-                        <label class="custom-control custom-checkbox mb-0 d-inline-block">
-                            <input type="checkbox" class="custom-control-input" id="checkAll" value="checkall">
-                            <span class="custom-control-label"></span>
-                        </label>
-                    </div>
-                    <button type="button" class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split pl-2 pr-2"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <!-- <div class="dropdown-menu dropdown-menu-right"> -->
-                        <!-- <a class="dropdown-item" href="#">Action</a> -->
-                        <!-- <a class="dropdown-item" href="#">Another action</a> -->
-                    <!-- </div> -->
-                </div>
+    <div class="col-12 list">
+        <div class="float-sm-right text-zero">
+            <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                <input onchange="searchData()" id="search-data" placeholder="Pencarian...">
             </div>
         </div>
 
@@ -29,208 +12,560 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Transaction</a>
+                    <a href="javascript:;">Transaksi</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Purchase Order Detail</li>
+                <li class="breadcrumb-item active" aria-current="page">Pembelian (PO)</li>
             </ol>
         </nav>
-        <!-- <div class="separator mb-5"></div> -->
+        
     </div>
-
-    <div class="mb-2">
-        <div class="collapse d-md-block" id="displayOptions" style="padding-left: 30px;">
-            <div class="d-block d-md-inline-block">
-                <div class="btn-group float-md-left mr-1 mb-1">
-                    <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Order By
-                    </button>
-                    <div class="dropdown-menu">
-                        <div class="dropdown-item asc" onclick="orderby('asc')">Ascending</div>
-                        <div class="dropdown-item desc" onclick="orderby('desc')">Descending</div>
-                    </div>
-                </div>
-                <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                    <input id="search-data" value="<?php echo $this->input->post("search","");?>" onchange="searchData()" placeholder="Pencarian...">
-                </div>  
-                <div class="float-md-left mr-1 mb-1">
-                    <button type="button" onclick="backtopage()" class="btn btn-outline-secondary btn-xs mb-1">Kembali</button>
-                </div>              
-            </div>
-        </div>
-    </div>
-    <div class="separator mb-5"></div>
     
 </div>
 
-<div class="row">
-    <div class="col-12 list" data-check-all="checkAll">        
-
-        <form method="post" id="form_data">
-            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-
-            <input type="hidden" class="form-control" id="purchase_order_id" name="purchase_order_id" placeholder="" value="<?php echo $this->input->post("purchase_order_id","");?>" /> 
+<div class="row">    
+    <div class="col-12">        
+        <div class="card mb-4">
+            <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
+                <li class="nav-item w-50 text-center">
+                    <a class="nav-link" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
+                        aria-selected="true"><strong>Pembelian</strong></a>
+                </li>
+                <li class="nav-item w-50 text-center">
+                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
+                </li>
+            </ul>
             
-            <?php
-                $ci = & get_instance();
-                $ci->load->model('transaction/purchase_order_det');
-
-                $idd = $ci->input->post("purchase_order_id","");
-                $orderby = $ci->input->post("orderby","");
-                $search = $ci->input->post("search","");
-                $table = $ci->purchase_order_det;
-                $items = $table->getPODet($idd,$orderby,$search);
-
-            ?>
-            <?php foreach($items as $item):?>
-
-            <input type="hidden" class="form-control" name="purchase_req_det_id[]" placeholder="" value="<?php echo $item['purchase_req_det_id'];?>" />
-
-            <input type="hidden" class="form-control" name="purchase_order_det_id[]" placeholder="" value="<?php echo $item['purchase_order_det_id'];?>" />
-
-            <div class="card d-flex flex-row mb-3">
-                <div class="d-flex flex-grow-1 min-width-zero">
-                    <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-                        <a class="list-item-heading mb-1 truncate w-20 w-xs-100" href="javascript:;">
-                            <?php echo $item['product_name'];?>
-                        </a>
-                        <p class="mb-1 text-muted text-small w-10 w-xs-100">Qty : <?php echo $item['qty'];?></p>
-                        <p class="mb-1 text-muted text-small w-15 w-xs-100">Basic Price : <?php echo $item['basic_price'];?></p>
-                        <div class="w-10 w-xs-100">
-                            <div class="form-group">
-                                <input type="text" name="qty[]" onkeypress="return isNumberKey(event)" value="<?php echo $item['po_qty'];?>" class="form-control" style="font-size: 11px !important" placeholder="Qty">
-                            </div>
-                        </div>
-                        <div class="w-20 w-xs-100">
-                            <div class="form-group">
-                                <input type="text" name="basic_price[]" onkeypress="return isNumberKey(event)" value="<?php echo $item['po_basic_price'];?>" class="form-control" style="font-size: 11px !important" placeholder="Basic Price">
-                            </div>
-                        </div>
-                        <div class="w-10 w-xs-100">
-                            <?php 
-                                // if($item['status_id'] == 1){
-                                //     $fill = "badge-secondary";                                              
-                                // }else if($item['status_id'] == 2){
-                                //     $fill = "badge-primary";
-                                // }else{
-                                    // $fill = "badge-success";
-                                // }
-
-                            ?>
-                            <!-- <span class="badge badge-pill <?php echo $fill;?>"><?php echo $item['status_code'];?></span> -->
-                        </div>
+            <div class="separator mb-2"></div>
+            <div class="card-body">            
+                
+                <div class="row">
+                    <div class="col-md-12" id="grid-ui">         
+                        <table id="grid-table"></table>
+                        <div id="grid-pager"></div>
                     </div>
-                    <div class="custom-control custom-checkbox pl-1 align-self-center pr-4">
-                        <label class="custom-control custom-checkbox mb-0">                            
-                            <input type="checkbox" name="check[<?php echo $item['purchase_req_det_id'];?>]" class="custom-control-input chk" id="<?php echo 'checkbox'.$item['purchase_req_det_id'];?>" value="1">
-                            <span class="custom-control-label"></span>
-                        </label>
+
+                    <div class="col-md-12" id="form-ui" style="display: none;">    
+                        <h5 class="mb-4">Form Detail</h5>
+
+                        <form method="post" id="form_data">
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+
+                            <input type="hidden" name="stock_min" id="stock_min" />
+
+                            <input class="form-control" type="hidden" id="purchase_order_id" name="purchase_order_id" value="<?php echo $this->input->post('purchase_order_id'); ?>" placeholder="" autocomplete="off" readonly="" />
+
+                            <input class="form-control" type="hidden" id="purchase_request_id" name="purchase_request_id" value="<?php echo $this->input->post('purchase_request_id'); ?>" placeholder="" autocomplete="off" readonly="" />
+
+                            <div class="form-row">
+                                <label class="form-group has-float-label col-md-3">
+                                    <input class="form-control" id="purchase_order_det_id" name="purchase_order_det_id" placeholder="" autocomplete="off" readonly="" />
+                                    <span>ID *</span>
+                                </label>
+
+                                <label class="form-group has-float-label col-md-3">
+                                    <input class="form-control" id="po_code" name="po_code" placeholder="" autocomplete="off" readonly="" value="<?php echo $this->input->post('po_code'); ?>" />
+                                    <span>Kode *</span>
+                                </label>
+
+                                <label class="form-group has-float-label col-md-5">
+                                    <input class="form-control" id="product_name" name="product_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <span>Produk Request *</span>
+                                </label>
+
+                                <div class="col-md-1">
+                                    <button class="btn btn-primary default" type="button" onclick="search_product('product_id', 'product_name','stock_min')">Cari <i class="simple-icon-question"></i></button>
+                                </div>
+
+                                <input class="form-control" type="hidden" id="product_id" name="product_id" placeholder="" autocomplete="off" readonly="" />
+
+                            </div>
+
+                            <div class="form-row">
+                                <label class="form-group has-float-label col-md-4">
+                                    <input class="form-control" onkeypress="return isNumberKey(event)" onkeyup="sumamout()" id="basic_price" name="basic_price" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Harga Awal *</span>
+                                </label>
+
+                                <label class="form-group has-float-label col-md-4">
+                                    <input class="form-control" onkeypress="return isNumberKey(event)" onkeyup="sumamout()" id="qty" name="qty" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Jumlah *</span>
+                                </label>
+
+                                <label class="form-group has-float-label col-md-4">
+                                    <input class="form-control numeric" id="amount" name="amount" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <span>Total *</span>
+                                </label>
+
+                                <!-- <label class="form-group has-float-label col-md-3">
+                                    <select class="form-control" id="status">
+                                        <option value="1">Active</option>
+                                        <option value="2">Not Active</option>
+                                    </select>
+                                    <span>Status *</span>
+                                </label> -->
+                            </div>
+
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
+
+                        </form>
                     </div>
                 </div>
+
+
             </div>
-            <?php endforeach; ?>
-
-        </form>
-
+        </div>
     </div>
 </div>
 
-<script type="text/javascript"> 
+<?php $this->load->view('lov/lov_product'); ?>
 
-    $('#checkAll').on('change', function(){
+<script type="text/javascript">
+    function search_product(id, code, stock_min){
+        modal_lov_product_show(id, code, stock_min);
+    }
+
+    function sumamout() {
         
-        if($('#checkAll').prop('checked')) {
-            $('.chk').attr('checked', true);
-        }else{
-            $('.chk').removeAttr('checked');
+        
+        var basic_price = $('#basic_price').val();
+        var qty = $('#qty').val();
+
+        if(qty == null || qty == ''){
+            qty = 0;
         }
+
+        if(basic_price == null || basic_price == ''){
+            basic_price = 0;
+        }
+
+        var sumamout = basic_price*qty;
+        $('#amount').val(sumamout);
+    }
+</script>
+
+<script>
+    jQuery(function($) {
+
+        var grid_selector = "#grid-table";
+        var pager_selector = "#grid-pager";
+
+        jQuery("#grid-table").jqGrid({
+            url: '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/crud"; ?>',
+            postData: { purchase_order_id : '<?php echo $this->input->post('purchase_order_id'); ?>'},
+            datatype: "json",
+            mtype: "POST",
+            loadui: "disable",
+            colModel: [
+                {label: 'ID', name: 'purchase_order_det_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'Min. Stok', name: 'stock_min', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Purchase Request ID', name: 'purchase_order_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Product ID', name: 'product_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Kode PO', name: 'po_code_det', width: 400, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Kode PR', name: 'pr_code_det', width: 400, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Produk', name: 'product_name', width: 400, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Harga Awal', name: 'basic_price', width: 120, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Jumlah', name: 'qty', width: 100, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Total', name: 'amount', width: 120, align: "right", editable: false, search:false, sortable:false},
+                
+            ],
+            // height: '100%',
+            height: 200,
+            autowidth: true,
+            viewrecords: true,
+            rowNum: 10,
+            rowList: [10,20,30],
+            rownumbers: true, // show row numbers
+            rownumWidth: 35, // the width of the row numbers columns
+            altRows: true,
+            shrinkToFit: true,
+            multiboxonly: true,
+            onSelectRow: function (rowid) {
+                /*do something when selected*/
+                // setData(rowid);
+            },
+            sortorder:'',
+            pager: '#grid-pager',
+            jsonReader: {
+                root: 'rows',
+                id: 'id',
+                repeatitems: false
+            },
+            loadComplete: function (response) {
+                if(response.success == false) {
+                    swal({title: 'Attention', text: response.message, html: true, type: "warning"});
+                }
+
+                setTimeout(function(){
+                      $("#grid-table").setSelection($("#grid-table").getDataIDs()[0],true);
+                      $("#grid-table").focus();
+                },500);
+
+            },
+            //memanggil controller jqgrid yang ada di controller crud
+            editurl: '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/crud"; ?>',
+            caption: "Detail"
+
+        });
+
+        jQuery('#grid-table').jqGrid('navGrid', '#grid-pager',
+            {   //navbar options
+                edit: false,
+                editicon: 'simple-icon-note',
+                add: false,
+                addicon: 'simple-icon-plus',
+                del: false,
+                delicon: 'simple-icon-minus',
+                search: false,
+                searchicon: 'simple-icon-magnifier',
+                refresh: true,
+                afterRefresh: function () {
+                    // some code here
+                    // jQuery("#detailsPlaceholder").hide();
+                },
+
+                refreshicon: 'iconsmind-Refresh',
+                view: false,
+                viewicon: 'fa fa-search-plus grey bigger-120'
+            },
+
+            {
+                // options for the Edit Dialog
+                closeAfterEdit: true,
+                closeOnEscape:true,
+                recreateForm: true,
+                // serializeEditData: serializeJSON,
+                width: 'auto',
+                errorTextFormat: function (data) {
+                    return 'Error: ' + data.responseText
+                },
+                beforeShowForm: function (e, form) {
+                    var form = $(e[0]);
+                    style_edit_form(form);
+
+                },
+                afterShowForm: function(form) {
+                    form.closest('.ui-jqdialog').center();
+                },
+                afterSubmit:function(response,postdata) {
+                    var response = jQuery.parseJSON(response.responseText);
+                    if(response.success == false) {
+                        return [false,response.message,response.responseText];
+                    }
+                    return [true,"",response.responseText];
+                }
+            },
+            {
+                //new record form
+                closeAfterAdd: false,
+                clearAfterAdd : true,
+                closeOnEscape:true,
+                recreateForm: true,
+                width: 'auto',
+                errorTextFormat: function (data) {
+                    return 'Error: ' + data.responseText
+                },
+                // serializeEditData: serializeJSON,
+                viewPagerButtons: false,
+                beforeShowForm: function (e, form) {
+                    var form = $(e[0]);
+                    style_edit_form(form);
+                },
+                afterShowForm: function(form) {
+                    form.closest('.ui-jqdialog').center();
+                },
+                afterSubmit:function(response,postdata) {
+                    var response = jQuery.parseJSON(response.responseText);
+                    if(response.success == false) {
+                        return [false,response.message,response.responseText];
+                    }
+
+                    $(".tinfo").html('<div class="ui-state-success">' + response.message + '</div>');
+                    var tinfoel = $(".tinfo").show();
+                    tinfoel.delay(3000).fadeOut();
+
+
+                    return [true,"",response.responseText];
+                }
+            },
+            {
+                //delete record form
+                // serializeDelData: serializeJSON,
+                recreateForm: true,
+                beforeShowForm: function (e) {
+                    var form = $(e[0]);
+                    style_delete_form(form);
+
+                },
+                afterShowForm: function(form) {
+                    form.closest('.ui-jqdialog').center();
+                },
+                onClick: function (e) {
+                    //alert(1);
+                },
+                afterSubmit:function(response,postdata) {
+                    var response = jQuery.parseJSON(response.responseText);
+                    if(response.success == false) {
+                        return [false,response.message,response.responseText];
+                    }
+                    return [true,"",response.responseText];
+                }
+            },
+            {
+                //search form
+                closeAfterSearch: false,
+                recreateForm: true,
+                afterShowSearch: function (e) {
+                    var form = $(e[0]);
+                    style_search_form(form);
+                    form.closest('.ui-jqdialog').center();
+                },
+                afterRedraw: function () {
+                    style_search_filters($(this));
+                }
+            },
+            {
+                //view record form
+                recreateForm: true,
+                beforeShowForm: function (e) {
+                    var form = $(e[0]);
+                }
+            }
+        ).navButtonAdd('#grid-pager',{
+                caption: "", //Add
+                buttonicon: "simple-icon-plus",
+                onClickButton: function(){ 
+                    $('#grid-ui').hide();
+                    $('#form-ui').slideDown( "slow" );
+                    $('#form_data').trigger("reset");                    
+                     //alert("Adding Row");
+                    // $('#status').val('1').trigger('change');
+                },
+                position: "last",
+                title: "Add",
+                cursor: "pointer",
+                id : "btn-add"
+        }).navButtonAdd('#grid-pager',{
+                caption: "", //Edit
+                buttonicon: "simple-icon-note",
+                onClickButton: function(rowid){ 
+                    var grid = $('#grid-table');
+                    rowid = grid.jqGrid ('getGridParam', 'selrow');
+                    if(rowid == null) {
+                        swal('','Silakan pilih salah satu baris','info');
+                        return false;
+                    }
+
+                    $('#grid-ui').hide();
+                    $('#form-ui').slideDown( "slow" );
+
+                    setData(rowid);
+
+                    // $('#form-ui').trigger("reset");
+                },
+                position: "last",
+                title: "Edit",
+                cursor: "pointer",
+                id : "btn-edit"
+        }).navButtonAdd('#grid-pager',{
+                caption: "", //Delete
+                buttonicon: "simple-icon-minus",
+                onClickButton: function(){ 
+                    var grid = $('#grid-table');
+                    rowid = grid.jqGrid ('getGridParam', 'selrow');
+                    if(rowid == null) {
+                        swal('','Silakan pilih salah satu baris','info');
+                        return false;
+                    }
+                    delete_data(rowid);
+                },
+                position: "last",
+                title: "Delete",
+                cursor: "pointer",
+                id : "btn-delete"
+        });
 
     });
 
-    loadDataCheckBox();
+    function responsive_jqgrid(grid_selector, pager_selector) {
 
-    function loadDataCheckBox(){
+        var parent_column = $(grid_selector).closest('[class*="col-"]');
+        $(grid_selector).jqGrid( 'setGridWidth', $("#grid-ui").width() );
+        $(pager_selector).jqGrid( 'setGridWidth', parent_column.width() );
 
-        $.ajax({
-            type: 'POST',
-            dataType: "json",
-            url: '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/read"; ?>',
-            data: {
-                purchase_order_id : '<?php echo $this->input->post('purchase_order_id');?>',
-                _search : '',
-                rows    : 100
-            },
-            success: function(data) {
-                
-                for (var i = 0; i < data.rows.length; i++){
-                    var idcheck = 'checkbox'+data.rows[i].purchase_req_det_id;
-
-                    //chceked checkbox
-                    $('#'+idcheck).attr('checked', true);
-                    
-                }                
-               
-            }
-        });
     }
 
-    function orderby(order){
-        if(order == 'asc'){
-            $(".asc").addClass("active");
-            $(".desc").removeClass("active");
-        }else{
-            $(".desc").addClass("active");
-            $(".asc").removeClass("active");
+    $(window).bind('resize', function() {
+        responsive_jqgrid('#grid-table', '#grid-pager');    
+    }).trigger('resize');
+
+</script>
+
+
+<script type="text/javascript">
+    $("#tab-1").on("click", function(event) {
+
+        event.stopPropagation();
+        var grid = $('#grid-table');
+
+        loadContentWithParams("transaction.purchase_request", {});
+    });
+</script>
+
+<script type="text/javascript">
+
+    function setData(rowid){
+        
+        var purchase_order_id = $('#grid-table').jqGrid('getCell', rowid, 'purchase_order_id');
+        var product_id = $('#grid-table').jqGrid('getCell', rowid, 'product_id');
+        var product_name = $('#grid-table').jqGrid('getCell', rowid, 'product_name');
+        var basic_price  = $('#grid-table').jqGrid('getCell', rowid, 'basic_price');
+        var qty  = $('#grid-table').jqGrid('getCell', rowid, 'qty');
+        var amount  = $('#grid-table').jqGrid('getCell', rowid, 'amount');
+        var stock_min  = $('#grid-table').jqGrid('getCell', rowid, 'stock_min');
+        
+        $('#purchase_order_det_id').val(rowid);
+        $('#purchase_order_id').val(purchase_order_id);
+        $('#product_id').val(product_id);
+        $('#product_name').val(product_name);
+        $('#basic_price').val(basic_price);        
+        $('#qty').val(qty);        
+        $('#amount').val(amount);        
+        $('#stock_min').val(stock_min); 
+        // $('#status').trigger('change');        
+
+    }
+
+    $('#btn-cancel').on('click',function(){
+        $('#form-ui').hide();
+        $('#grid-ui').slideDown( "slow" );
+    });
+
+    /*delete*/
+    function delete_data(rowid){
+        var purchase_order_id = $('#grid-table').jqGrid('getCell', rowid, 'purchase_order_id');
+
+        swal({
+              title: "",
+              text: "Apakah anda ingin menghapus data ini?",
+              showCancelButton: true,
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Yes!",
+              closeOnConfirm: true
+            },
+            function(){
+
+                var del = { id_ : rowid, purchase_order_id : purchase_order_id };
+                itemJSON = JSON.stringify(del);
+
+                $.ajax({
+                    url: "<?php echo WS_JQGRID."transaction.purchase_order_det_controller/crud"; ?>" ,
+                    type: "POST",
+                    dataType: "json",
+                    data: {items:itemJSON, oper:'del'},
+                    success: function (data) {
+                        if (data.success){
+
+                            swal("", data.message, "success");
+                            resetSearch();
+
+                        }else{
+                            swal("", data.message, "warning");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+                    }
+                });
+
+                
+                return false;
+            });
+
+    }
+
+    /* submit */
+    $("#form_data").on('submit', (function (e) {
+
+        e.preventDefault(); 
+        var stock_min = $('#stock_min').val();
+        var qty = $('#qty').val();
+
+        if(qty > stock_min){
+            swal('','Jumlah Stok melebihi Min. stok['+stock_min+'] yang ditentukan','info');
+            $('#qty').val(0);
+            $('#amount').val(0);
+            return false;
+
         }
 
-        loadContentWithParams("transaction.purchase_order_det", {
-            purchase_order_id: "<?php echo $this->input->post("purchase_order_id","");?>",
-            orderby: order,
-            search: $('#search-data').val()
-        });
-    }
-
-    function searchData(){
-        loadContentWithParams("transaction.purchase_order_det", {
-            purchase_order_id: "<?php echo $this->input->post("purchase_order_id","");?>",
-            orderby: "<?php echo $this->input->post("orderby","");?>",
-            search: $('#search-data').val()
-        });
-    }
-
-    $("#btn-submit").on('click', function(){
-
-        var var_url = '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/insertdata"; ?>';
-
-        // var data = $('#form_data').serialize();
-        var data = $('#form_data').serializeArray();
+        var data = new FormData(this);
+        var purchase_order_det_id = $('#purchase_order_det_id').val();
+            
+        var var_url = '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/create"; ?>';
+        if(purchase_order_det_id) var_url = '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/update"; ?>';
+        
         $.ajax({
             type: 'POST',
             dataType: "json",
             url: var_url,
-            data: data, 
+            data: data,
+            contentType: false,       // The content type used when sending data to the server.
+            cache: false,             // To unable request pages to be cached
+            processData: false, 
             success: function(data) {
-
-                if(data.success) {                                        
+                //console.log(data);
+                if(data.success) {                    
+                    $("#grid-table").trigger("reloadGrid");
                     swal("", data.message, "success");
-                    searchData();
+                    $('#form-ui').hide();
+                    $('#grid-ui').slideDown( "slow" );
                 }else{
                     swal("", data.message, "warning");
                 }
-
-                // loadDataCheckBox();
                
             }
         });
-
-        return false;   
-            
         
-    });
+        
+        return false;
+    }));
 
-    function backtopage(){
-        loadContentWithParams("transaction.purchase_order", {});
+</script>
+<script type="text/javascript">
+    function searchData(){
+
+        jQuery("#grid-table").jqGrid('setGridParam',{
+            url: '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/read"; ?>',
+            postData: {
+                i_search : $('#search-data').val()
+            }
+        });
+        
+        $("#grid-table").trigger("reloadGrid");
+        responsive_jqgrid('#grid-table', '#grid-pager');
     }
+
+    function resetSearch(){
+        $('#form_data').trigger("reset");
+        
+        jQuery("#grid-table").jqGrid('setGridParam',{
+            url: '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/read"; ?>',
+            postData: {
+                i_search : ''
+            }
+        });
+        
+        $("#grid-table").trigger("reloadGrid");
+    }
+
+
+     $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy',
+        todayHighlight:'TRUE',
+        autoclose: true,
+        orientation: 'bottom'
+    });
 
     function isNumberKey(evt) {
         var charCode = (evt.which) ? evt.which : event.keyCode
