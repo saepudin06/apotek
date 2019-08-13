@@ -55,6 +55,7 @@
                             <input class="form-control" type="hidden" id="purchase_request_id" name="purchase_request_id" value="<?php echo $this->input->post('purchase_request_id'); ?>" placeholder="" autocomplete="off" readonly="" />
 
                             <input type="hidden" id="stock_min" name="stock_min" />
+                            <input type="hidden" id="purchase_req_det_id" name="purchase_req_det_id" />
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-3">
@@ -73,7 +74,7 @@
                                 </label>
 
                                 <div class="col-md-1">
-                                    <button class="btn btn-primary default" type="button" onclick="search_product('product_id', 'product_name','basic_price','qty','amount','stock_min')">Cari <i class="simple-icon-question"></i></button>
+                                    <button class="btn btn-primary default" type="button" onclick="search_product('product_id', 'product_name','basic_price','qty','amount','stock_min','purchase_req_det_id')">Cari <i class="simple-icon-question"></i></button>
                                 </div>
 
                                 <input class="form-control" type="hidden" id="product_id" name="product_id" placeholder="" autocomplete="off" readonly="" />
@@ -121,9 +122,9 @@
 <?php $this->load->view('lov/lov_purchase_request_det'); ?>
 
 <script type="text/javascript">
-    function search_product(id, code, basic_price, qty, amount, min_stock){
+    function search_product(id, code, basic_price, qty, amount, min_stock, purchase_req_det_id){
         var purchase_request_id = "<?php echo $this->input->post('purchase_request_id'); ?>";
-        modal_lov_pr_det_show(id, code, basic_price, qty, amount, min_stock, purchase_request_id)
+        modal_lov_pr_det_show(id, code, basic_price, qty, amount, min_stock, purchase_req_det_id, purchase_request_id)
     }
 
     function sumamout() {

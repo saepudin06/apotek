@@ -151,11 +151,11 @@ class Purchase_order_det_controller {
             oci_bind_by_name($stmt, ':i_purchase_order_id', $items['purchase_order_id']);
             oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);            
             oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
-            oci_bind_by_name($stmt, ':i_qty', $items['i_qty']);
-            oci_bind_by_name($stmt, ':i_basic_price', $items['i_basic_price']);
-            oci_bind_by_name($stmt, ':i_amount', $items['i_amount']);
-            oci_bind_by_name($stmt, ':i_purchase_req_det_id', $items['i_purchase_req_det_id']);
-            oci_bind_by_name($stmt, ':i_purchase_order_det_id', $items['i_purchase_order_det_id']);
+            oci_bind_by_name($stmt, ':i_qty', $items['qty']);
+            oci_bind_by_name($stmt, ':i_basic_price', $items['basic_price']);
+            oci_bind_by_name($stmt, ':i_amount', $items['amount']);
+            oci_bind_by_name($stmt, ':i_purchase_req_det_id', $items['purchase_req_det_id']);
+            oci_bind_by_name($stmt, ':i_purchase_order_det_id', $items['purchase_order_det_id']);
 
             // Bind the output parameter
             oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
@@ -226,11 +226,11 @@ class Purchase_order_det_controller {
             oci_bind_by_name($stmt, ':i_purchase_order_id', $items['purchase_order_id']);
             oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);            
             oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
-            oci_bind_by_name($stmt, ':i_qty', $items['i_qty']);
-            oci_bind_by_name($stmt, ':i_basic_price', $items['i_basic_price']);
-            oci_bind_by_name($stmt, ':i_amount', $items['i_amount']);
-            oci_bind_by_name($stmt, ':i_purchase_req_det_id', $items['i_purchase_req_det_id']);
-            oci_bind_by_name($stmt, ':i_purchase_order_det_id', $items['i_purchase_order_det_id']);
+            oci_bind_by_name($stmt, ':i_qty', $items['qty']);
+            oci_bind_by_name($stmt, ':i_basic_price', $items['basic_price']);
+            oci_bind_by_name($stmt, ':i_amount', $items['amount']);
+            oci_bind_by_name($stmt, ':i_purchase_req_det_id', $items['purchase_req_det_id']);
+            oci_bind_by_name($stmt, ':i_purchase_order_det_id', $items['purchase_order_det_id']);
 
             // Bind the output parameter
             oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
