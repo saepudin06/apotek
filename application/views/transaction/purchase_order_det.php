@@ -50,8 +50,6 @@
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
-                            <input type="hidden" name="stock_min" id="stock_min" />
-
                             <input class="form-control" type="hidden" id="purchase_order_id" name="purchase_order_id" value="<?php echo $this->input->post('purchase_order_id'); ?>" placeholder="" autocomplete="off" readonly="" />
 
                             <input class="form-control" type="hidden" id="purchase_request_id" name="purchase_request_id" value="<?php echo $this->input->post('purchase_request_id'); ?>" placeholder="" autocomplete="off" readonly="" />
@@ -158,7 +156,6 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'purchase_order_det_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Min. Stok', name: 'stock_min', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Purchase Request ID', name: 'purchase_order_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Product ID', name: 'product_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Kode PO', name: 'po_code_det', width: 400, align: "left", editable: false, search:false, sortable:false},
@@ -408,7 +405,7 @@
         event.stopPropagation();
         var grid = $('#grid-table');
 
-        loadContentWithParams("transaction.purchase_request", {});
+        loadContentWithParams("transaction.purchase_order", {});
     });
 </script>
 
@@ -418,11 +415,10 @@
         
         var purchase_order_id = $('#grid-table').jqGrid('getCell', rowid, 'purchase_order_id');
         var product_id = $('#grid-table').jqGrid('getCell', rowid, 'product_id');
-        var product_name = $('#grid-table').jqGrid('getCell', rowid, 'product_name');
+        var product_name  = $('#grid-table').jqGrid('getCell', rowid, 'product_name');
         var basic_price  = $('#grid-table').jqGrid('getCell', rowid, 'basic_price');
         var qty  = $('#grid-table').jqGrid('getCell', rowid, 'qty');
         var amount  = $('#grid-table').jqGrid('getCell', rowid, 'amount');
-        var stock_min  = $('#grid-table').jqGrid('getCell', rowid, 'stock_min');
         
         $('#purchase_order_det_id').val(rowid);
         $('#purchase_order_id').val(purchase_order_id);
@@ -431,7 +427,7 @@
         $('#basic_price').val(basic_price);        
         $('#qty').val(qty);        
         $('#amount').val(amount);        
-        $('#stock_min').val(stock_min); 
+        // $('#stock_min').val(stock_min); 
         // $('#status').trigger('change');        
 
     }
@@ -443,7 +439,7 @@
 
     /*delete*/
     function delete_data(rowid){
-        var purchase_order_id = $('#grid-table').jqGrid('getCell', rowid, 'purchase_order_id');
+        var purchase_order_det_id = $('#grid-table').jqGrid('getCell', rowid, 'purchase_order_det_id');
 
         swal({
               title: "",
@@ -455,7 +451,7 @@
             },
             function(){
 
-                var del = { id_ : rowid, purchase_order_id : purchase_order_id };
+                var del = { id_ : rowid, purchase_order_det_id : purchase_order_det_id };
                 itemJSON = JSON.stringify(del);
 
                 $.ajax({
@@ -488,16 +484,16 @@
     $("#form_data").on('submit', (function (e) {
 
         e.preventDefault(); 
-        var stock_min = $('#stock_min').val();
-        var qty = $('#qty').val();
+        // var stock_min = $('#stock_min').val();
+        // var qty = $('#qty').val();
 
-        if(qty > stock_min){
-            swal('','Jumlah Stok melebihi Min. stok['+stock_min+'] yang ditentukan','info');
-            $('#qty').val(0);
-            $('#amount').val(0);
-            return false;
+        // if(qty > stock_min){
+        //     swal('','Jumlah Stok melebihi Min. stok['+stock_min+'] yang ditentukan','info');
+        //     $('#qty').val(0);
+        //     $('#amount').val(0);
+        //     return false;
 
-        }
+        // }
 
         var data = new FormData(this);
         var purchase_order_det_id = $('#purchase_order_det_id').val();

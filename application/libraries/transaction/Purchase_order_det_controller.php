@@ -128,13 +128,17 @@ class Purchase_order_det_controller {
         try{
 
             $sql = "BEGIN "
-                    . " P_CRUD_PURCHASE_ORDER("
+                    . " P_CRUD_PURCHASE_ORDER_DT ("
                     . " :i_action, "
                     . " :i_purchase_request_id,"
-                    . " :i_supplier_id,"
+                    . " :i_purchase_order_id,"
                     . " :i_bu_id,"
                     . " :i_user,"
-                    . " :i_purchase_order_id,"
+                    . " :i_qty,"
+                    . " :i_basic_price,"
+                    . " :i_amount,"
+                    . " :i_purchase_req_det_id,"
+                    . " :i_purchase_order_det_id,"
                     . " :o_msg_code,"
                     . " :o_msg"
                     . "); END;";
@@ -144,10 +148,14 @@ class Purchase_order_det_controller {
             //  Bind the input parameter
             oci_bind_by_name($stmt, ':i_action', $action);
             oci_bind_by_name($stmt, ':i_purchase_request_id', $items['purchase_request_id']);
-            oci_bind_by_name($stmt, ':i_supplier_id', $items['supplier_id']);
+            oci_bind_by_name($stmt, ':i_purchase_order_id', $items['purchase_order_id']);
             oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);            
             oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
-            oci_bind_by_name($stmt, ':i_purchase_order_id', $items['purchase_order_id']);
+            oci_bind_by_name($stmt, ':i_qty', $items['i_qty']);
+            oci_bind_by_name($stmt, ':i_basic_price', $items['i_basic_price']);
+            oci_bind_by_name($stmt, ':i_amount', $items['i_amount']);
+            oci_bind_by_name($stmt, ':i_purchase_req_det_id', $items['i_purchase_req_det_id']);
+            oci_bind_by_name($stmt, ':i_purchase_order_det_id', $items['i_purchase_order_det_id']);
 
             // Bind the output parameter
             oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
@@ -195,13 +203,17 @@ class Purchase_order_det_controller {
         try{
 
             $sql = "BEGIN "
-                    . " P_CRUD_PURCHASE_ORDER("
+                    . " P_CRUD_PURCHASE_ORDER_DT ("
                     . " :i_action, "
                     . " :i_purchase_request_id,"
-                    . " :i_supplier_id,"
+                    . " :i_purchase_order_id,"
                     . " :i_bu_id,"
                     . " :i_user,"
-                    . " :i_purchase_order_id,"
+                    . " :i_qty,"
+                    . " :i_basic_price,"
+                    . " :i_amount,"
+                    . " :i_purchase_req_det_id,"
+                    . " :i_purchase_order_det_id,"
                     . " :o_msg_code,"
                     . " :o_msg"
                     . "); END;";
@@ -211,10 +223,14 @@ class Purchase_order_det_controller {
             //  Bind the input parameter
             oci_bind_by_name($stmt, ':i_action', $action);
             oci_bind_by_name($stmt, ':i_purchase_request_id', $items['purchase_request_id']);
-            oci_bind_by_name($stmt, ':i_supplier_id', $items['supplier_id']);
+            oci_bind_by_name($stmt, ':i_purchase_order_id', $items['purchase_order_id']);
             oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);            
             oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
-            oci_bind_by_name($stmt, ':i_purchase_order_id', $items['purchase_order_id']);
+            oci_bind_by_name($stmt, ':i_qty', $items['i_qty']);
+            oci_bind_by_name($stmt, ':i_basic_price', $items['i_basic_price']);
+            oci_bind_by_name($stmt, ':i_amount', $items['i_amount']);
+            oci_bind_by_name($stmt, ':i_purchase_req_det_id', $items['i_purchase_req_det_id']);
+            oci_bind_by_name($stmt, ':i_purchase_order_det_id', $items['i_purchase_order_det_id']);
 
             // Bind the output parameter
             oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
@@ -261,13 +277,17 @@ class Purchase_order_det_controller {
         try{
 
             $sql = "BEGIN "
-                    . " P_CRUD_PURCHASE_ORDER("
+                    . " P_CRUD_PURCHASE_ORDER_DT ("
                     . " :i_action, "
                     . " :i_purchase_request_id,"
-                    . " :i_supplier_id,"
+                    . " :i_purchase_order_id,"
                     . " :i_bu_id,"
                     . " :i_user,"
-                    . " :i_purchase_order_id,"
+                    . " :i_qty,"
+                    . " :i_basic_price,"
+                    . " :i_amount,"
+                    . " :i_purchase_req_det_id,"
+                    . " :i_purchase_order_det_id,"
                     . " :o_msg_code,"
                     . " :o_msg"
                     . "); END;";
@@ -277,10 +297,14 @@ class Purchase_order_det_controller {
             //  Bind the input parameter
             oci_bind_by_name($stmt, ':i_action', $action);
             oci_bind_by_name($stmt, ':i_purchase_request_id', $null);
-            oci_bind_by_name($stmt, ':i_supplier_id', $null);
+            oci_bind_by_name($stmt, ':i_purchase_order_id', $null);
             oci_bind_by_name($stmt, ':i_bu_id', $null);            
             oci_bind_by_name($stmt, ':i_user', $null);
-            oci_bind_by_name($stmt, ':i_purchase_order_id', $items);
+            oci_bind_by_name($stmt, ':i_qty', $null);
+            oci_bind_by_name($stmt, ':i_basic_price', $null);
+            oci_bind_by_name($stmt, ':i_amount', $null);
+            oci_bind_by_name($stmt, ':i_purchase_req_det_id', $null);
+            oci_bind_by_name($stmt, ':i_purchase_order_det_id', $items);
 
             // Bind the output parameter
             oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
