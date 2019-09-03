@@ -82,7 +82,7 @@
                 $('#qty').val(1);
                 $('#modal_secret_key').modal('toggle');
                 $("#grid-table").setSelection($("#grid-table").getDataIDs()[0],true);
-                $("#grid-table").focus();
+                // $("#grid-table").focus();
             }else{
                 alert('Sorry password not match');
             }
