@@ -28,9 +28,11 @@
                     <div class="card auth-card">
                         <div class="position-relative image-side ">
 
-                            <p class=" text-white h2"><?php echo $items['name'];?></p>
+                            <!-- <p class=" text-white h2"><?php echo $items['name'];?></p> -->
+                            <p class="h2"><?php echo $items['name'];?></p>
 
-                            <p class="white mb-0">
+                            <!-- <p class="white mb-0"> -->
+                            <p class="mb-0">
                                 <?php echo $items['address'];?>
                                 <br><?php echo "Email : ".$items['email'];?>
                             </p>
@@ -62,7 +64,7 @@
                                 </label>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <a href="javascript:;">&nbsp;</a>
-                                    <button class="btn btn-primary btn-lg btn-shadow" type="submit">LOGIN</button>
+                                    <button class="btn btn-secondary btn-lg btn-shadow" type="submit">LOGIN</button>
                                 </div>
                             </form>
                         </div>
