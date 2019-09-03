@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item">
                     <a href="javascript:;">Transaction</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Goods Recieve Note</li>
+                <li class="breadcrumb-item active" aria-current="page">Pengecekan Barang (GR)</li>
             </ol>
         </nav>
         
@@ -28,7 +28,7 @@
             <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Goods Recieve Note</strong></a>
+                        aria-selected="true"><strong>Pengecekan Barang</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Goods Recieve Note</h5>
+                        <h5 class="mb-4">Form Pengecekan Barang</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -163,7 +163,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/crud"; ?>',
-            caption: "Goods Recieve Note"
+            caption: "Pengecekan Barang"
 
         });
 
