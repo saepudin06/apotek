@@ -47,8 +47,21 @@
                     <div class="col-md-12" id="form-ui" style="display: none;">    
                         <h5 class="mb-4">Form Pegawai</h5>
 
-                        <form method="post" id="form_data">
+                        <form method="post" id="form_data" enctype="multipart/form-data" accept-charset="utf-8">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+
+                            <div class="form-row" id="photo_pth-1">
+                                <!-- <input class="form-control" name="file" type="file" /> -->
+                                <label class="form-group has-float-label col-md-12">
+                                    <input class="form-control" type="file" id="photo_pth" name="photo_pth" placeholder="" autocomplete="off" />
+                                    <span>Photo </span>
+                                </label>
+                            </div>
+
+                            <div class="form-row" id="photo_pth-2" style="display: none; margin-bottom: 10px;">
+                                <label class="form-group col-md-2" style="font-weight: bold; padding-left: 10px;" id="photo_pth-label"></label>
+                                <button class="btn btn-danger btn-xs default mb-1" type="button" id="btn-remove">Remove Image</button>
+                            </div>
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-3">
@@ -194,6 +207,7 @@
                 {label: 'Tempat Lahir', name: 'placeofbirth', width: 300, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'No. Telp Darurat', name: 'emergency_contact', width: 300, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Alamt Darurat', name: 'address_emrgncy', width: 300, align: "left", editable: false, search:false, sortable:false, hidden:true},
+                {label: 'Photo', name: 'photo_pth', width: 300, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Nama (Orang yang bisa dihubungi)', name: 'name_emrgency', width: 300, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 
             ],
@@ -369,6 +383,7 @@
                      //alert("Adding Row");
                      $('#bu_id').val(null).trigger('change');
                      $('#status').val('1').trigger('change');
+                     $("#photo_pth").val(null);
                 },
                 position: "last",
                 title: "Add",
@@ -457,6 +472,7 @@
         var emergency_contact  = $('#grid-table').jqGrid('getCell', rowid, 'emergency_contact');
         var name_emrgency  = $('#grid-table').jqGrid('getCell', rowid, 'name_emrgency');
         var address_emrgncy  = $('#grid-table').jqGrid('getCell', rowid, 'address_emrgncy');
+        var photo_pth  = $('#grid-table').jqGrid('getCell', rowid, 'photo_pth');
         
         $('#emp_id').val(rowid);        
         $('#bu_id').val(bu_id);    
@@ -477,6 +493,16 @@
         $('#emergency_contact').val(emergency_contact);        
         $('#name_emrgency').val(name_emrgency);        
         $('#address_emrgncy').val(address_emrgncy);        
+
+        if(photo_pth == "" || photo_pth == null){
+            $('#photo_pth-1').show();
+            $('#photo_pth-2').hide();
+            $('#photo_pth').val('');
+        }else{
+            $('#photo_pth-1').hide();
+            $('#photo_pth-2').show();
+            $('#photo_pth-label').text(photo_pth.replace("assets/img/", "Photo : "));                           
+        }
 
     }
 
@@ -565,6 +591,50 @@
         
         return false;
     }));
+
+    $('#btn-remove').on('click',function(){
+        var emp_id = $('#emp_id').val(); 
+
+        if(emp_id == null || emp_id == '') {
+            swal('','Data Pegawai Belum Ada','info');
+            return false;
+        }   
+
+        swal({
+              title: "",
+              text: "Apakah anda yakin akan menghapus photo ini?",
+              showCancelButton: true,
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Yes!",
+              closeOnConfirm: true
+            },
+            function(){
+
+                $.ajax({
+                    url: "<?php echo WS_JQGRID."admin.empmaster_controller/remove_img"; ?>" ,
+                    type: "POST",
+                    dataType: "json",
+                    data: {emp_id:emp_id},
+                    success: function (data) {
+                        if (data.success){
+                            swal("", data.message, "success");
+                            $('#photo_pth-1').show();
+                            $('#photo_pth-2').hide();
+                            $("#photo_pth").val(null);
+                            $("#grid-table").trigger("reloadGrid");
+                        }else{
+                            swal("", data.message, "warning");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+                    }
+                });
+
+                
+                return false;
+            });     
+    });
 
 </script>
 <script type="text/javascript">

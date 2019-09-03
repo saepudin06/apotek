@@ -26,6 +26,7 @@ class Empmaster extends Abstract_model {
                                 'name_emrgency'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Nama (Orang yang bisa dihubungi)'), 
                                 'status'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Status?'), 
                                 'production_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Tanggal Masuk'), 
+                                'photo_pth'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Photo'), 
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),
@@ -54,7 +55,8 @@ class Empmaster extends Abstract_model {
                                         a.status, 
                                         to_char(a.production_date, 'dd/mm/yyyy') production_date, 
                                         b.name bu_name, 
-                                        decode(a.status, 1, 'Active', 'Not Active') status_name 
+                                        decode(a.status, 1, 'Active', 'Not Active') status_name ,
+                                        a.photo_pth
                                 from empmaster a 
                                 left join bunit b on a.bu_id=b.bu_id)";
 

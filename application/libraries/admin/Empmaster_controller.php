@@ -122,10 +122,29 @@ class Empmaster_controller {
         $table->actionType = 'CREATE';
         $errors = array();
 
+        $config['upload_path'] = './assets/img/';
+        $config['allowed_types'] = 'jpg|JPG|JPEG|png|PNG|gif|GIF';
+        $config['max_size'] = '10000000';
+        $config['overwrite'] = TRUE;
+        $config['file_name'] = date('Ymdhis');
+
+        $ci->load->library('upload');
+        $ci->upload->initialize($config);
+
         if (isset($items[0])){
             $numItems = count($items);
             for($i=0; $i < $numItems; $i++){
                 try{
+
+                    if ($_FILES['photo_pth']['name'] != ''){
+                        if (!$ci->upload->do_upload("photo_pth")) {
+                            throw new Exception( $ci->upload->display_errors() );
+                        }else{
+                            $filedata = $ci->upload->data();
+                            $file_name = $filedata['file_name'];
+                            $items[$i]['photo_pth'] = "assets/img/".$file_name;
+                        }
+                    }
 
                     $table->db->trans_begin(); //Begin Trans
 
@@ -152,6 +171,16 @@ class Empmaster_controller {
         }else {
 
             try{
+
+                if ($_FILES['photo_pth']['name'] != ''){
+                    if (!$ci->upload->do_upload("photo_pth")) {
+                        throw new Exception( $ci->upload->display_errors() );
+                    }else{
+                        $filedata = $ci->upload->data();
+                        $file_name = $filedata['file_name'];
+                        $items['photo_pth'] = "assets/img/".$file_name;
+                    }
+                }
 
                 $table->db->trans_begin(); //Begin Trans
 
@@ -195,12 +224,31 @@ class Empmaster_controller {
 
         $table->actionType = 'UPDATE';
 
+        $config['upload_path'] = './assets/img/';
+        $config['allowed_types'] = 'jpg|JPG|JPEG|png|PNG|gif|GIF';
+        $config['max_size'] = '10000000';
+        $config['overwrite'] = TRUE;
+        $config['file_name'] = date('Ymdhis');
+
+        $ci->load->library('upload');
+        $ci->upload->initialize($config);
+
         if (isset($items[0])){
             
             $errors = array();
             $numItems = count($items);
             for($i=0; $i < $numItems; $i++){
                 try{
+
+                    if ($_FILES['photo_pth']['name'] != ''){
+                        if (!$ci->upload->do_upload("photo_pth")) {
+                            throw new Exception( $ci->upload->display_errors() );
+                        }else{
+                            $filedata = $ci->upload->data();
+                            $file_name = $filedata['file_name'];
+                            $items[$i]['photo_pth'] = "assets/img/".$file_name;
+                        }
+                    }
 
                     $table->db->trans_begin(); //Begin Trans
 
@@ -228,6 +276,16 @@ class Empmaster_controller {
         }else {
             
             try{
+
+                if ($_FILES['photo_pth']['name'] != ''){
+                    if (!$ci->upload->do_upload("photo_pth")) {
+                        throw new Exception( $ci->upload->display_errors() );
+                    }else{
+                        $filedata = $ci->upload->data();
+                        $file_name = $filedata['file_name'];
+                        $items['photo_pth'] = "assets/img/".$file_name;
+                    }
+                }
 
                 $table->db->trans_begin(); //Begin Trans
 
@@ -300,6 +358,31 @@ class Empmaster_controller {
             $data['total'] = 0;
         }
         return $data;
+    }
+
+
+    function remove_img() {
+        $data = array('rows' => array(), 'success' => false, 'message' => '');
+
+        $ci = & get_instance();
+        $ci->load->model('admin/empmaster');
+        $table = $ci->empmaster;
+
+        $emp_id = getVarClean('emp_id', 'int', 0);
+
+        $sql = "UPDATE empmaster SET
+                photo_pth = ''
+                WHERE emp_id = ?";
+
+        $table->db->query($sql, array($emp_id));
+        
+
+        $data['success'] = true;
+        $data['message'] = 'sukses';
+      
+        echo json_encode($data);
+        exit;
+        
     }
 
 

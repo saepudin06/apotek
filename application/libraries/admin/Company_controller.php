@@ -136,12 +136,14 @@ class Company_controller {
             for($i=0; $i < $numItems; $i++){
                 try{
 
-                    if (!$ci->upload->do_upload("logo")) {
-                        throw new Exception( $ci->upload->display_errors() );
-                    }else{
-                        $filedata = $ci->upload->data();
-                        $file_name = $filedata['file_name'];
-                        $items[$i]['logo'] = "upload/".$file_name;
+                    if ($_FILES['logo']['name'] != ''){
+                        if (!$ci->upload->do_upload("logo")) {
+                            throw new Exception( $ci->upload->display_errors() );
+                        }else{
+                            $filedata = $ci->upload->data();
+                            $file_name = $filedata['file_name'];
+                            $items[$i]['logo'] = "upload/".$file_name;
+                        }
                     }
 
                     $table->db->trans_begin(); //Begin Trans
@@ -170,12 +172,14 @@ class Company_controller {
 
             try{
 
-                if (!$ci->upload->do_upload("logo")) {
-                    throw new Exception( $ci->upload->display_errors() );
-                }else{
-                    $filedata = $ci->upload->data();
-                    $file_name = $filedata['file_name'];
-                    $items['logo'] = "upload/".$file_name;
+                if ($_FILES['logo']['name'] != ''){
+                    if (!$ci->upload->do_upload("logo")) {
+                        throw new Exception( $ci->upload->display_errors() );
+                    }else{
+                        $filedata = $ci->upload->data();
+                        $file_name = $filedata['file_name'];
+                        $items['logo'] = "upload/".$file_name;
+                    }
                 }
 
                 $table->db->trans_begin(); //Begin Trans
@@ -236,12 +240,14 @@ class Company_controller {
             for($i=0; $i < $numItems; $i++){
                 try{
 
-                    if (!$ci->upload->do_upload("logo")) {
-                        // throw new Exception( $ci->upload->display_errors() );
-                    }else{
-                        $filedata = $ci->upload->data();
-                        $file_name = $filedata['file_name'];
-                        $items[$i]['logo'] = "upload/".$file_name;
+                    if ($_FILES['logo']['name'] != ''){
+                        if (!$ci->upload->do_upload("logo")) {
+                            throw new Exception( $ci->upload->display_errors() );
+                        }else{
+                            $filedata = $ci->upload->data();
+                            $file_name = $filedata['file_name'];
+                            $items[$i]['logo'] = "upload/".$file_name;
+                        }
                     }
 
                     $table->db->trans_begin(); //Begin Trans
@@ -271,12 +277,14 @@ class Company_controller {
             
             try{
 
-                if (!$ci->upload->do_upload("logo")) {
-                    // throw new Exception( $ci->upload->display_errors() );
-                }else{
-                    $filedata = $ci->upload->data();
-                    $file_name = $filedata['file_name'];
-                    $items['logo'] = "upload/".$file_name;
+                if ($_FILES['logo']['name'] != ''){
+                    if (!$ci->upload->do_upload("logo")) {
+                        throw new Exception( $ci->upload->display_errors() );
+                    }else{
+                        $filedata = $ci->upload->data();
+                        $file_name = $filedata['file_name'];
+                        $items['logo'] = "upload/".$file_name;
+                    }
                 }
 
                 $table->db->trans_begin(); //Begin Trans
