@@ -51,7 +51,7 @@
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-3">
+                                <label class="form-group has-float-label col-md-4">
                                     <input class="form-control" id="purchase_order_id" name="purchase_order_id" placeholder="" autocomplete="off" readonly="" />
                                     <span>ID *</span>
                                 </label>
