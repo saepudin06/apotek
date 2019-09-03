@@ -349,7 +349,7 @@
         if(event.keyCode == 115) {
             event.preventDefault();
             $("#grid-table").setSelection($("#grid-table").getDataIDs()[0],true);
-            $("#grid-table").focus();
+            // $("#grid-table").focus();
         }
 
         /* tombol F9 */

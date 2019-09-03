@@ -178,7 +178,7 @@ $("#tab-2").on("click", function(event) {
 
                 setTimeout(function(){
                       $("#grid-table").setSelection($("#grid-table").getDataIDs()[0],true);
-                      $("#grid-table").focus();
+                      // $("#grid-table").focus();
                 },500);
 
             },

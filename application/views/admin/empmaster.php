@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-12 list">
         <div class="float-sm-right text-zero">
-            <!-- <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+            <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                 <input onchange="searchData()" id="search-data" placeholder="Pencarian...">
-            </div> -->
+            </div>
         </div>
 
         <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
@@ -240,7 +240,7 @@
 
                 setTimeout(function(){
                       $("#grid-table").setSelection($("#grid-table").getDataIDs()[0],true);
-                      $("#grid-table").focus();
+                      // $("#grid-table").focus();
                 },500);
 
             },
