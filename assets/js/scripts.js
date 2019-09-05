@@ -46,7 +46,8 @@ function loadStyle(href, callback) {
 
   $(".theme-color[data-theme='" + theme + "']").addClass("active");
 
-  var base_url = window.location.origin + '/apotek';
+  // var base_url = window.location.origin + '/apotek';
+  var base_url = window.location.origin + '/' + window.location.pathname.split ('/') [1];
 
   loadStyle(base_url + "/assets/css/" + theme, onStyleComplete);
   function onStyleComplete() {
