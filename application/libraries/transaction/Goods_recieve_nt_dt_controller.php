@@ -16,6 +16,7 @@ class Goods_recieve_nt_dt_controller {
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
         $i_search = getVarClean('i_search','str','');
+        $goods_recieve_nt_id = getVarClean('goods_recieve_nt_id','int',0);
 
         try {
 
@@ -39,8 +40,12 @@ class Goods_recieve_nt_dt_controller {
 
             // Filter Table
             $req_param['where'] = array();
+            $table->setCriteria("goods_recieve_nt_id=".$goods_recieve_nt_id);
+
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(invoice_num_ref) like upper('%".$i_search."%')
+                $table->setCriteria("( upper(product_name) like upper('%".$i_search."%') OR
+                                       upper(store_info) like upper('%".$i_search."%') OR
+                                       upper(STATUS) like upper('%".$i_search."%')
                                      )");
             }
 
@@ -81,16 +86,9 @@ class Goods_recieve_nt_dt_controller {
         $data = array();
         $oper = getVarClean('oper', 'str', '');
         switch ($oper) {
-            case 'add' :
-                $data = $this->create();
-            break;
-
+           
             case 'edit' :
                 $data = $this->update();
-            break;
-
-            case 'del' :
-                $data = $this->destroy();
             break;
 
             default :
@@ -99,79 +97,6 @@ class Goods_recieve_nt_dt_controller {
         }
 
         return $data;
-    }
-
-    function create() {
-
-
-        $ci = & get_instance();
-        $ci->load->model('transaction/goods_recieve_nt_dt');
-        $table = $ci->goods_recieve_nt_dt;
-
-        $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
-
-        $items = $_POST;
-
-        if (!is_array($items)){
-            $data['message'] = 'Invalid items parameter';
-            return $data;
-        }
-
-
-        $table->actionType = 'CREATE';
-        $errors = array();
-
-        if (isset($items[0])){
-            $numItems = count($items);
-            for($i=0; $i < $numItems; $i++){
-                try{
-
-                    $table->db->trans_begin(); //Begin Trans
-
-                        $table->setRecord($items[$i]);
-                        $table->create();
-
-                    $table->db->trans_commit(); //Commit Trans
-
-                }catch(Exception $e){
-
-                    $table->db->trans_rollback(); //Rollback Trans
-                    $errors[] = $e->getMessage();
-                }
-            }
-
-            $numErrors = count($errors);
-            if ($numErrors > 0){
-                $data['message'] = $numErrors." from ".$numItems." record(s) failed to be saved.<br/><br/><b>System Response:</b><br/>- ".implode("<br/>- ", $errors)."";
-            }else{
-                $data['success'] = true;
-                $data['message'] = 'Data added successfully';
-            }
-            $data['rows'] =$items;
-        }else {
-
-            try{
-                $table->db->trans_begin(); //Begin Trans
-
-                    $table->setRecord($items);
-                    $table->create();
-
-                $table->db->trans_commit(); //Commit Trans
-
-                $data['success'] = true;
-                $data['message'] = 'Data added successfully';
-                
-
-            }catch (Exception $e) {
-                $table->db->trans_rollback(); //Rollback Trans
-
-                $data['message'] = $e->getMessage();
-                $data['rows'] = $items;
-            }
-
-        }
-        return $data;
-
     }
 
     function update() {
@@ -191,111 +116,58 @@ class Goods_recieve_nt_dt_controller {
 
         //exit;
 
-        $table->actionType = 'UPDATE';
-
-        if (isset($items[0])){
-            
-            $errors = array();
-            $numItems = count($items);
-            for($i=0; $i < $numItems; $i++){
-                try{
-                    $table->db->trans_begin(); //Begin Trans
-
-                        $table->setRecord($items[$i]);
-                        $table->update();
-
-                    $table->db->trans_commit(); //Commit Trans
-
-                    $items[$i] = $table->get($items[$i][$table->pkey]);
-                }catch(Exception $e){
-                    $table->db->trans_rollback(); //Rollback Trans
-
-                    $errors[] = $e->getMessage();
-                }
-            }
-
-            $numErrors = count($errors);
-            if ($numErrors > 0){
-                $data['message'] = $numErrors." from ".$numItems." record(s) failed to be saved.<br/><br/><b>System Response:</b><br/>- ".implode("<br/>- ", $errors)."";
-            }else{
-                $data['success'] = true;
-                $data['message'] = 'Data update successfully';
-            }
-            $data['rows'] =$items;
-        }else {
-            
-            try{
-                $table->db->trans_begin(); //Begin Trans
-
-                    $table->setRecord($items);
-                    $table->update();
-
-                $table->db->trans_commit(); //Commit Trans
-
-                $data['success'] = true;
-                $data['message'] = 'Data update successfully';
-                
-                $data['rows'] = $table->get($items[$table->pkey]);
-            }catch (Exception $e) {
-                $table->db->trans_rollback(); //Rollback Trans
-
-                $data['message'] = $e->getMessage();
-                $data['rows'] = $items;
-            }
-
-        }
-        return $data;
-
-    }
-
-    function destroy() {
-
-        $ci = & get_instance();
-        $ci->load->model('transaction/goods_recieve_nt_dt');
-        $table = $ci->goods_recieve_nt_dt;
-
-        $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
-
-        $jsonItems = getVarClean('items', 'str', '');
-        $data = jsonDecode($jsonItems);
-
-        $items = $data["id_"];
-
+        $userdata = $ci->session->userdata;
+        
         try{
-            $table->db->trans_begin(); //Begin Trans
 
-            $total = 0;
-            if (is_array($items)){
-                foreach ($items as $key => $value){
-                    if (empty($value)) throw new Exception('Empty parameter');
-                    $table->remove($value);
-                    $data['rows'][] = array($table->pkey => $value);
-                    $total++;
-                }
+            $sql = "BEGIN "
+                    . " P_CRUD_GOODS_RECIEVE_DT("
+                    . " :i_user, "
+                    . " :i_status,"
+                    . " :i_grn_id,"
+                    . " :i_grn_dt_id,"                    
+                    . " :i_store_info_id,"
+                    . " :i_note,"
+                    . " to_date(:i_exp_date, 'DD/MM/YYYY'),"
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
+
+            $stmt = oci_parse($table->db->conn_id, $sql);
+
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
+            oci_bind_by_name($stmt, ':i_status', $items['status']);
+            oci_bind_by_name($stmt, ':i_grn_id', $items['goods_recieve_nt_id']);  
+            oci_bind_by_name($stmt, ':i_grn_dt_id', $items['good_rcv_nt_dt_id']);  
+            oci_bind_by_name($stmt, ':i_store_info_id', $items['store_info_id']);              
+            oci_bind_by_name($stmt, ':i_note', $items['note']);
+            oci_bind_by_name($stmt, ':i_exp_date', $items['exp_date']);   
+
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
+
+
+            ociexecute($stmt);
+
+            if($o_msg_code == 0){
+                $data['rows'] = $items;
+                $data['success'] = true;
+                $data['message'] = $o_msg;
             }else{
-                $items = (int) $items;
-                if (empty($items)){
-                    throw new Exception('Empty parameter');
-                }
-                $table->remove($items);
-                $data['rows'][] = array($table->pkey => $items);
-                $data['total'] = $total = 1;
+                $data['rows'] = $items;
+                $data['success'] = false;
+                $data['message'] = $o_msg;
             }
-
-            $data['records'] = 0;
-            $data['page'] = 1;
-            $data['success'] = true;
-            $data['message'] = $total.' Data deleted successfully';
-            
-            $table->db->trans_commit(); //Commit Trans
 
         }catch (Exception $e) {
-            $table->db->trans_rollback(); //Rollback Trans
             $data['message'] = $e->getMessage();
-            $data['rows'] = array();
-            $data['total'] = 0;
+            $data['rows'] = $items;
         }
+
         return $data;
+
     }
 
 }

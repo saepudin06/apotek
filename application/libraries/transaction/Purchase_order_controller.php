@@ -122,6 +122,7 @@ class Purchase_order_controller {
             return $data;
         }
 
+        $errors = array();
         $userdata = $ci->session->userdata;
         $action = 'I';
         try{

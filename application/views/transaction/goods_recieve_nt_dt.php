@@ -50,6 +50,7 @@
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                             <input type="hidden" name="purchase_order_id" id="purchase_order_id" value="<?php echo $this->input->post('purchase_order_id'); ?>">
+                            <input type="hidden" name="goods_recieve_nt_id" id="goods_recieve_nt_id" value="<?php echo $this->input->post('goods_recieve_nt_id'); ?>">
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-6">
@@ -58,54 +59,47 @@
                                 </label>
 
                                 <label class="form-group has-float-label col-md-6">
-                                    <input class="form-control" id="goods_recieve_nt" name="goods_recieve_nt" value="<?php echo $this->input->post('goods_recieve_nt'); ?>" placeholder="" autocomplete="off" readonly="" />
-                                    <span>Goods Recieve Note ID *</span>
+                                    <input class="form-control" id="product_name" name="product_name" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Produk *</span>
                                 </label>
-
-                            </div>
-                            
-                            <div class="form-row">
-
-                                <label class="form-group has-float-label col-md-6">
-                                    <input class="form-control" id="invoice_num_ref" name="invoice_num_ref" value="<?php echo $this->input->post('invoice_num_ref'); ?>" placeholder="" autocomplete="off" readonly="" />
-                                    <span>Invoice Num *</span>
-                                </label>
-
-                                <label class="form-group has-float-label col-md-5">
-                                    <input class="form-control" id="product_name" name="product_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Product *</span>
-                                </label>
-
-                                <div class="col-md-1">
-                                    <button class="btn btn-primary default" type="button" onclick="search_po_det('purchase_order_det_id', 'product_name', 'qty', 'basic_price')">Search</button>
-                                </div>
-                                
-                                <input class="form-control" type="hidden" id="purchase_order_det_id" name="purchase_order_det_id" placeholder="" autocomplete="off" readonly="" />
                             </div>
 
                             <div class="form-row">
-
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control" onkeypress="return isNumberKey(event)" id="qty" name="qty" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Qty *</span>
+                                    <input class="form-control datepicker" id="exp_date" name="exp_date" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Tgl. Kedaluwarsa *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control" onkeypress="return isNumberKey(event)" id="basic_price" name="basic_price" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Basic Price *</span>
-                                </label>
-
-                                <label class="form-group has-float-label col-md-4">
-                                    <select class="form-control" id="status">
-                                        <option value="1">Active</option>
-                                        <option value="2">Not Active</option>
+                                    <select class="form-control" name="status" id="status">
+                                        <option value="PASSED">PASSED</option>
+                                        <option value="CANCELED">CANCELED</option>
+                                        <option value="RETRURN">RETRURN</option>
                                     </select>
                                     <span>Status *</span>
                                 </label>
+
+                                <label class="form-group has-float-label col-md-3">
+                                    <input class="form-control" id="store_info" name="store_info" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <span>Info Penyimpanan *</span>
+                                </label>
+
+                                <div class="col-md-1">
+                                    <button class="btn btn-primary default" type="button" onclick="search_store('store_info_id', 'store_info')">Search</button>
+                                </div>
+
+                                <input class="form-control" type="hidden" id="store_info_id" name="store_info_id" placeholder="" autocomplete="off" readonly="" />
                             </div>
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <div class="form-row">
+                                 <label class="form-group has-float-label col-md-12">
+                                    <input class="form-control" id="note" name="note" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Produk *</span>
+                                </label>
+                            </div>
+
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -117,12 +111,11 @@
     </div>
 </div>
 
-<?php $this->load->view('lov/lov_purchase_order_det'); ?>
+<?php $this->load->view('lov/lov_store_info'); ?>
 
 <script type="text/javascript">
-    function search_po_det(id, code, qty, basic_price){
-        var purchase_order_id = $('#purchase_order_id').val();
-        modal_lov_purchase_order_det_show(id, code, qty, basic_price, purchase_order_id);
+    function search_store(id, code){
+        modal_lov_store_info_show(id, code);
     }
 </script>
 
@@ -134,19 +127,24 @@
 
         jQuery("#grid-table").jqGrid({
             url: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_dt_controller/crud"; ?>',
-            postData: { goods_recieve_nt : '<?php echo $this->input->post('goods_recieve_nt'); ?>'},
+            postData: { goods_recieve_nt_id : '<?php echo $this->input->post('goods_recieve_nt_id'); ?>'},
             datatype: "json",
             mtype: "POST",
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'good_rcv_nt_dt_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Goods Recieve Note ID', name: 'goods_recieve_nt', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Purchase Order Det ID', name: 'purchase_order_det_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Goods Recieve Note ID', name: 'goods_recieve_nt_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Purchase Order Det ID', name: 'store_info_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Invoice Num', name: 'invoice_num_ref', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Product', name: 'product_name', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Basic Price', name: 'basic_price', width: 100, align: "right", editable: false, search:false, sortable:false},
-                {label: 'Qty', name: 'qty', width: 100, align: "right", editable: false, search:false, sortable:false},
-                {label: 'Status', name: 'status', width: 100, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Produk', name: 'product_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Info Penyimpanan', name: 'store_info', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tgl. Kedaluwarsa', name: 'exp_date', width: 120, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Harga Awal', name: 'basic_price', width: 120, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Jumlah', name: 'qty', width: 100, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Total', name: 'amount', width: 120, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Status', name: 'status', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Catatan', name: 'note', width: 300, align: "left", editable: false, search:false, sortable:false},
+                
                 
             ],
             // height: '100%',
@@ -158,7 +156,7 @@
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
-            shrinkToFit: true,
+            shrinkToFit: false,
             multiboxonly: true,
             onSelectRow: function (rowid) {
                 /*do something when selected*/
@@ -312,20 +310,6 @@
                 }
             }
         ).navButtonAdd('#grid-pager',{
-                caption: "", //Add
-                buttonicon: "simple-icon-plus",
-                onClickButton: function(){ 
-                    $('#grid-ui').hide();
-                    $('#form-ui').slideDown( "slow" );
-                    $('#form_data').trigger("reset");                    
-                     //alert("Adding Row");
-                    // $('#status').val('1').trigger('change');
-                },
-                position: "last",
-                title: "Add",
-                cursor: "pointer",
-                id : "btn-add"
-        }).navButtonAdd('#grid-pager',{
                 caption: "", //Edit
                 buttonicon: "simple-icon-note",
                 onClickButton: function(rowid){ 
@@ -347,22 +331,6 @@
                 title: "Edit",
                 cursor: "pointer",
                 id : "btn-edit"
-        }).navButtonAdd('#grid-pager',{
-                caption: "", //Delete
-                buttonicon: "simple-icon-minus",
-                onClickButton: function(){ 
-                    var grid = $('#grid-table');
-                    rowid = grid.jqGrid ('getGridParam', 'selrow');
-                    if(rowid == null) {
-                        swal('','Silakan pilih salah satu baris','info');
-                        return false;
-                    }
-                    delete_data(rowid);
-                },
-                position: "last",
-                title: "Delete",
-                cursor: "pointer",
-                id : "btn-delete"
         });
 
     });
@@ -396,24 +364,23 @@
 
     function setData(rowid){
         
-        var goods_recieve_nt = $('#grid-table').jqGrid('getCell', rowid, 'goods_recieve_nt');
-        var purchase_order_det_id = $('#grid-table').jqGrid('getCell', rowid, 'purchase_order_det_id');
+        var goods_recieve_nt_id = $('#grid-table').jqGrid('getCell', rowid, 'goods_recieve_nt_id');
+        var store_info_id = $('#grid-table').jqGrid('getCell', rowid, 'store_info_id');
         var status = $('#grid-table').jqGrid('getCell', rowid, 'status');
-        var basic_price  = $('#grid-table').jqGrid('getCell', rowid, 'basic_price');
-        var qty  = $('#grid-table').jqGrid('getCell', rowid, 'qty');
-        var status  = $('#grid-table').jqGrid('getCell', rowid, 'status');
-        // var status  = $('#grid-table').jqGrid('getCell', rowid, 'status');
+        var exp_date  = $('#grid-table').jqGrid('getCell', rowid, 'exp_date');
+        var note  = $('#grid-table').jqGrid('getCell', rowid, 'note');
+        var product_name  = $('#grid-table').jqGrid('getCell', rowid, 'product_name');
+        var store_info  = $('#grid-table').jqGrid('getCell', rowid, 'store_info');
+        
         
         $('#good_rcv_nt_dt_id').val(rowid);
-        $('#goods_recieve_nt').val(goods_recieve_nt);
-        $('#purchase_order_det_id').val(purchase_order_det_id);
+        $('#goods_recieve_nt_id').val(goods_recieve_nt_id);
+        $('#store_info_id').val(store_info_id);
         $('#status').val(status);
-        $('#basic_price').val(basic_price);        
-        $('#qty').val(qty);        
-        $('#status').val(status);        
-        // $('#status').val(status); 
-        // $('#status').trigger('change');        
-
+        $('#exp_date').val(exp_date);        
+        $('#note').val(note);        
+        $('#product_name').val(product_name);        
+        $('#store_info').val(store_info);        
     }
 
     $('#btn-cancel').on('click',function(){
@@ -421,48 +388,6 @@
         $('#grid-ui').slideDown( "slow" );
     });
 
-    /*delete*/
-    function delete_data(rowid){
-        var purchase_request_id = $('#grid-table').jqGrid('getCell', rowid, 'purchase_request_id');
-
-        swal({
-              title: "",
-              text: "Apakah anda ingin menghapus data ini?",
-              showCancelButton: true,
-              confirmButtonClass: "btn-danger",
-              confirmButtonText: "Yes!",
-              closeOnConfirm: true
-            },
-            function(){
-
-                var del = { id_ : rowid, purchase_request_id : purchase_request_id };
-                itemJSON = JSON.stringify(del);
-
-                $.ajax({
-                    url: "<?php echo WS_JQGRID."transaction.goods_recieve_nt_dt_controller/crud"; ?>" ,
-                    type: "POST",
-                    dataType: "json",
-                    data: {items:itemJSON, oper:'del'},
-                    success: function (data) {
-                        if (data.success){
-
-                            swal("", data.message, "success");
-                            resetSearch();
-
-                        }else{
-                            swal("", data.message, "warning");
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
-                    }
-                });
-
-                
-                return false;
-            });
-
-    }
 
     /* submit */
     $("#form_data").on('submit', (function (e) {

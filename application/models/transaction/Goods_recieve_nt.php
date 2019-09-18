@@ -14,14 +14,13 @@ class Goods_recieve_nt extends Abstract_model {
                                 'goods_recieve_nt_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'ID'),
                                 'purchase_order_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Purchase Order ID'),
                                 'status'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Status'),
-                                'amount'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Amount'),
-                                'code'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Code'),
-                                'invoice_num_ref'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Invoice Num Ref'),
-                                'due_date_payment'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Due Date Payment'),
-                                'notes'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Notes'),
-                                'bu_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'BU ID'),
-                                'qty'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Qty'),
-                                'grn_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Date'),
+                                'amount'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Total'),
+                                'code'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Kode Pengecekan'),
+                                'invoice_num_ref'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'No. tagihan'),
+                                'due_date_payment'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Tgl. Jatuh Tempo Pembayaran'),
+                                'notes'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Catatan'),
+                                'bu_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'BU ID'),                                
+                                'grn_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Tanggal'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),
@@ -29,10 +28,22 @@ class Goods_recieve_nt extends Abstract_model {
 
                             );
 
-    public $selectClause    = "goods_recieve_nt_id, purchase_order_id, status, status_name, amount, notes, qty, to_char(grn_date,'dd/mm/yyyy') grn_date, invoice_num_ref, code, due_date_payment, bu_id";
-    public $fromClause      = "(select a.*, b.name status_name 
-                                from goods_recieve_nt a
-                                left join referencelist b on a.status=b.reference_list_id)";
+    public $selectClause    = "goods_recieve_nt_id,
+                               purchase_order_id,
+                               created_date,
+                               update_date,
+                               update_by,
+                               created_by,
+                               TO_CHAR (grn_date, 'dd/mm/yyyy') grn_date,
+                               code,
+                               invoice_num_ref,
+                               due_date_payment,
+                               bu_id,
+                               status,
+                               po_num,
+                               amount";
+
+    public $fromClause      = "vw_list_grn_h";
 
     public $refs            = array();
 

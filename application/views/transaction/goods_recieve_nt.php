@@ -52,39 +52,43 @@
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control" id="goods_recieve_nt" name="goods_recieve_nt" placeholder="" autocomplete="off" readonly="" />
+                                    <input class="form-control" id="goods_recieve_nt_id" name="goods_recieve_nt_id" placeholder="" autocomplete="off" readonly="" />
                                     <span>ID *</span>
                                 </label>
                                 
                                 <label class="form-group has-float-label col-md-4">
                                     <input class="form-control datepicker" id="grn_date" name="grn_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Date *</span>
+                                    <span>Tanggal *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="invoice_num_ref" name="invoice_num_ref" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Invoice Num *</span>
+                                <label class="form-group has-float-label col-md-4">
+                                    <input class="form-control" id="invoice_num_ref" name="invoice_num_ref" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>No. Tagihan *</span>
                                 </label>
-
-                                <div class="col-md-1">
-                                    <button class="btn btn-primary default" type="button" onclick="search_po('purchase_order_id', 'invoice_num_ref')">Search</button>
-                                </div>
-                                
-                                <input class="form-control" type="hidden" id="purchase_order_id" name="purchase_order_id" placeholder="" autocomplete="off" readonly="" />
 
                             </div>
 
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-12">
-                                    <input class="form-control" id="notes" name="notes" placeholder="" autocomplete="off" autofocus=""  />
-                                    <span>Notes</span>
+                                <label class="form-group has-float-label col-md-3">
+                                    <input class="form-control" id="po_num" name="po_num" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <span>Kode Pembelian *</span>
                                 </label>
 
+                                <div class="col-md-1">
+                                    <button class="btn btn-primary default" type="button" onclick="search_po('purchase_order_id', 'po_num')">Search</button>
+                                </div>
+
+                                <input class="form-control" type="hidden" id="purchase_order_id" name="purchase_order_id" placeholder="" autocomplete="off" readonly="" />
+
+                                <label class="form-group has-float-label col-md-8">
+                                    <input class="form-control" id="notes" name="notes" placeholder="" autocomplete="off" autofocus=""  />
+                                    <span>Catatan</span>
+                                </label>
                             </div>
                             
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">Submit</button>
-                            <button class="btn btn-danger" type="button" id="btn-cancel">Cancel</button>
+                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>
                     </div>
@@ -117,13 +121,14 @@
             mtype: "POST",
             loadui: "disable",
             colModel: [
-                {label: 'ID', name: 'goods_recieve_nt', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Purchase Order ID', name: 'purchase_order_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
-                {label: 'Date', name: 'grn_date', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Invoice Num', name: 'invoice_num_ref', width: 100, align: "left", editable: false, search:false, sortable:false},    
-                {label: 'Qty', name: 'qty', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Amount', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
-                {label: 'Notes', name: 'notes', width: 300, align: "left", editable: false, search:false, sortable:false},
+                {label: 'ID', name: 'goods_recieve_nt_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'Purchase Order ID', name: 'purchase_order_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},                
+                {label: 'Kode Pengecekan', name: 'code', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tanggal', name: 'grn_date', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Kode Pembelian', name: 'po_num', width: 150, align: "left", editable: false, search:false, sortable:false, hidden:false},
+                {label: 'No. Tagihan', name: 'invoice_num_ref', width: 100, align: "left", editable: false, search:false, sortable:false},                    
+                {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Catatan', name: 'notes', width: 300, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -364,18 +369,18 @@
 
         event.stopPropagation();
         var grid = $('#grid-table');
-        goods_recieve_nt = grid.jqGrid('getGridParam', 'selrow');
-        invoice_num_ref = grid.jqGrid('getCell', goods_recieve_nt, 'invoice_num_ref');
-        purchase_order_id = grid.jqGrid('getCell', goods_recieve_nt, 'purchase_order_id');
+        goods_recieve_nt_id = grid.jqGrid('getGridParam', 'selrow');
+        invoice_num_ref = grid.jqGrid('getCell', goods_recieve_nt_id, 'invoice_num_ref');
+        purchase_order_id = grid.jqGrid('getCell', goods_recieve_nt_id, 'purchase_order_id');
 
-        if(goods_recieve_nt == null) {
+        if(goods_recieve_nt_id == null) {
             swal('','Silakan pilih salah satu baris','info');
             return false;
         }
 
         
         loadContentWithParams("transaction.goods_recieve_nt_dt", {
-            goods_recieve_nt: goods_recieve_nt,
+            goods_recieve_nt_id: goods_recieve_nt_id,
             invoice_num_ref : invoice_num_ref,
             purchase_order_id : purchase_order_id
         });
@@ -391,12 +396,14 @@
         var invoice_num_ref  = $('#grid-table').jqGrid('getCell', rowid, 'invoice_num_ref');
         var purchase_order_id  = $('#grid-table').jqGrid('getCell', rowid, 'purchase_order_id');
         var notes  = $('#grid-table').jqGrid('getCell', rowid, 'notes');
+        var po_num  = $('#grid-table').jqGrid('getCell', rowid, 'po_num');
         
-        $('#goods_recieve_nt').val(rowid);
+        $('#goods_recieve_nt_id').val(rowid);
         $('#purchase_order_id').val(purchase_order_id);
         $('#grn_date').val(grn_date);
         $('#notes').val(notes);         
         $('#invoice_num_ref').val(invoice_num_ref);         
+        $('#po_num').val(po_num);         
 
     }
 
@@ -451,10 +458,10 @@
 
         e.preventDefault(); 
         var data = new FormData(this);
-        var goods_recieve_nt = $('#goods_recieve_nt').val();
+        var goods_recieve_nt_id = $('#goods_recieve_nt_id').val();
             
         var var_url = '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/create"; ?>';
-        if(goods_recieve_nt) var_url = '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/update"; ?>';
+        if(goods_recieve_nt_id) var_url = '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/update"; ?>';
         
         $.ajax({
             type: 'POST',

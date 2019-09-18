@@ -12,11 +12,12 @@ class Goods_recieve_nt_dt extends Abstract_model {
 
     public $fields          = array(
                                 'good_rcv_nt_dt_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'ID'),
-                                'goods_recieve_nt'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Goods Receive Note ID'),
+                                'goods_recieve_nt_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Goods Receive Note ID'),
                                 'purchase_order_det_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Purchase Order Detail ID'),
-                                'status'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Status'),
-                                'basic_price'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Basic Price'),
-                                'qty'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Qty'),
+                                'status'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Status'),
+                                'exp_date'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Tgl. Kedaluwarsa'),
+                                'note'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Catatan'),
+                                'store_info_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Store Info ID'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),
@@ -24,14 +25,24 @@ class Goods_recieve_nt_dt extends Abstract_model {
 
                             );
 
-    public $selectClause    = "*";
-    public $fromClause      = "(select a.*, e.name product_name, f.invoice_num_ref, due_date_payment
-                                from goods_recieve_nt_dt a
-                                left join goods_recieve_nt b on a.goods_recieve_nt = b.goods_recieve_nt
-                                left join purchase_order_det c on a.purchase_order_det_id = c.purchase_order_det_id
-                                left join purchase_req_det d on c.purchase_req_det_id = d.purchase_req_det_id
-                                left join products e on d.product_id = e.product_id
-                                left join purchase_order f on b.purchase_order_id = f.purchase_order_id)";
+    public $selectClause    = "cd_unq,
+                               product_name,
+                               store_info,
+                               created_date,
+                               update_date,
+                               update_by,
+                               created_by,
+                               TO_CHAR (exp_date, 'dd/mm/yyyy') exp_date,
+                               note,
+                               status,
+                               goods_recieve_nt_id,
+                               good_rcv_nt_dt_id,
+                               qty,
+                               basic_price,
+                               amount,
+                               store_info_id";
+                               
+    public $fromClause      = "vw_list_grn_dt";
 
     public $refs            = array();
 
@@ -52,6 +63,9 @@ class Goods_recieve_nt_dt extends Abstract_model {
             $this->record['created_by'] = $userdata['user_name'];
             $this->db->set('update_date',"to_date('".date('Y-m-d')."','yyyy-mm-dd')",false);
             $this->record['update_by'] = $userdata['user_name'];
+
+            $this->db->set('exp_date',"to_date('".$this->record['exp_date']."','dd/mm/yyyy')",false);
+            unset($this->record['exp_date']);
             
             $this->record[$this->pkey] = $this->generate_id($this->table, $this->pkey);
 
@@ -61,6 +75,9 @@ class Goods_recieve_nt_dt extends Abstract_model {
             //example:
             
             $this->db->set('update_date',"to_date('".date('Y-m-d')."','yyyy-mm-dd')",false);
+
+            $this->db->set('exp_date',"to_date('".$this->record['exp_date']."','dd/mm/yyyy')",false);
+            unset($this->record['exp_date']);
             $this->record['update_by'] = $userdata['user_name'];
 
         }
