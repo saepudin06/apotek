@@ -70,12 +70,16 @@
                                     <span>Tgl. Kedaluwarsa *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-4">
+                                <!-- <label class="form-group has-float-label col-md-4">
                                     <select class="form-control" name="status" id="status">
                                         <option value="PASSED">PASSED</option>
                                         <option value="CANCELED">CANCELED</option>
-                                        <option value="RETRURN">RETRURN</option>
+                                        <option value="RETURN">RETURN</option>
                                     </select>
+                                    <span>Status *</span>
+                                </label> -->
+                                <label class="form-group has-float-label col-md-4">
+                                    <input class="form-control" id="status" name="status" placeholder="" autocomplete="off" autofocus="" readonly="" />
                                     <span>Status *</span>
                                 </label>
 
@@ -94,7 +98,7 @@
                             <div class="form-row">
                                  <label class="form-group has-float-label col-md-12">
                                     <input class="form-control" id="note" name="note" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Produk *</span>
+                                    <span>Catatan *</span>
                                 </label>
                             </div>
 
@@ -133,6 +137,22 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'good_rcv_nt_dt_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: '<center>Action (Status)</center>',width: 300, align: "center",
+                    formatter:function(cellvalue, options, rowObject) {
+                        var status = rowObject['status'];
+                        var rowid = options.rowId;
+
+                        var PASSED = "PASSED";
+                        var CANCELED = "CANCELED";
+                        var RETURN = "RETURN";
+
+                        if(status == '' || status == null || status == 'null'){
+                            return '<button class="btn btn-primary btn-xs default" onclick="updateStatus('+rowid+',\''+PASSED+'\')">PASSED</button> <button class="btn btn-warning btn-xs default" onclick="updateStatus('+rowid+',\''+CANCELED+'\')">CANCELED</button> <button class="btn btn-danger btn-xs default" onclick="updateStatus('+rowid+',\''+RETURN+'\')">RETURN</button>';
+                        }else{
+                            return status;
+                        }
+                    }
+                },
                 {label: 'Goods Recieve Note ID', name: 'goods_recieve_nt_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Purchase Order Det ID', name: 'store_info_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Invoice Num', name: 'invoice_num_ref', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
@@ -142,9 +162,8 @@
                 {label: 'Harga Awal', name: 'basic_price', width: 120, align: "right", editable: false, search:false, sortable:false},
                 {label: 'Jumlah', name: 'qty', width: 100, align: "right", editable: false, search:false, sortable:false},
                 {label: 'Total', name: 'amount', width: 120, align: "right", editable: false, search:false, sortable:false},
-                {label: 'Status', name: 'status', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Status', name: 'status', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Catatan', name: 'note', width: 300, align: "left", editable: false, search:false, sortable:false},
-                
                 
             ],
             // height: '100%',
@@ -185,6 +204,8 @@
             caption: "Detail"
 
         });
+
+        // jQuery("#grid-table").jqGrid('setFrozenColumns');
 
         jQuery('#grid-table').jqGrid('navGrid', '#grid-pager',
             {   //navbar options
@@ -309,29 +330,30 @@
                     var form = $(e[0]);
                 }
             }
-        ).navButtonAdd('#grid-pager',{
-                caption: "", //Edit
-                buttonicon: "simple-icon-note",
-                onClickButton: function(rowid){ 
-                    var grid = $('#grid-table');
-                    rowid = grid.jqGrid ('getGridParam', 'selrow');
-                    if(rowid == null) {
-                        swal('','Silakan pilih salah satu baris','info');
-                        return false;
-                    }
+        );
+        // .navButtonAdd('#grid-pager',{
+        //         caption: "", //Edit
+        //         buttonicon: "simple-icon-note",
+        //         onClickButton: function(rowid){ 
+        //             var grid = $('#grid-table');
+        //             rowid = grid.jqGrid ('getGridParam', 'selrow');
+        //             if(rowid == null) {
+        //                 swal('','Silakan pilih salah satu baris','info');
+        //                 return false;
+        //             }
 
-                    $('#grid-ui').hide();
-                    $('#form-ui').slideDown( "slow" );
+        //             $('#grid-ui').hide();
+        //             $('#form-ui').slideDown( "slow" );
 
-                    setData(rowid);
+        //             setData(rowid);
 
-                    // $('#form-ui').trigger("reset");
-                },
-                position: "last",
-                title: "Edit",
-                cursor: "pointer",
-                id : "btn-edit"
-        });
+        //             // $('#form-ui').trigger("reset");
+        //         },
+        //         position: "last",
+        //         title: "Edit",
+        //         cursor: "pointer",
+        //         id : "btn-edit"
+        // });
 
     });
 
@@ -362,11 +384,11 @@
 
 <script type="text/javascript">
 
-    function setData(rowid){
+    function setData(rowid, status){
         
         var goods_recieve_nt_id = $('#grid-table').jqGrid('getCell', rowid, 'goods_recieve_nt_id');
         var store_info_id = $('#grid-table').jqGrid('getCell', rowid, 'store_info_id');
-        var status = $('#grid-table').jqGrid('getCell', rowid, 'status');
+        // var status = $('#grid-table').jqGrid('getCell', rowid, 'status');
         var exp_date  = $('#grid-table').jqGrid('getCell', rowid, 'exp_date');
         var note  = $('#grid-table').jqGrid('getCell', rowid, 'note');
         var product_name  = $('#grid-table').jqGrid('getCell', rowid, 'product_name');
@@ -389,44 +411,70 @@
     });
 
 
+
     /* submit */
     $("#form_data").on('submit', (function (e) {
 
         e.preventDefault(); 
         var data = new FormData(this);
         var good_rcv_nt_dt_id = $('#good_rcv_nt_dt_id').val();
-            
-        var var_url = '<?php echo WS_JQGRID."transaction.goods_recieve_nt_dt_controller/create"; ?>';
-        if(good_rcv_nt_dt_id) var_url = '<?php echo WS_JQGRID."transaction.goods_recieve_nt_dt_controller/update"; ?>';
-        
-        $.ajax({
-            type: 'POST',
-            dataType: "json",
-            url: var_url,
-            data: data,
-            contentType: false,       // The content type used when sending data to the server.
-            cache: false,             // To unable request pages to be cached
-            processData: false, 
-            success: function(data) {
-                //console.log(data);
-                if(data.success) {                    
-                    $("#grid-table").trigger("reloadGrid");
-                    swal("", data.message, "success");
-                    $('#form-ui').hide();
-                    $('#grid-ui').slideDown( "slow" );
-                }else{
-                    swal("", data.message, "warning");
-                }
-               
-            }
-        });
-        
-        
-        return false;
+
+        swal({
+              title: "",
+              text: "Apakah anda yakin?",
+              showCancelButton: true,
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Yes!",
+              closeOnConfirm: true
+            },
+            function(){
+
+                var_url = '<?php echo WS_JQGRID."transaction.goods_recieve_nt_dt_controller/update"; ?>';
+                $.ajax({
+                        type: 'POST',
+                        dataType: "json",
+                        url: var_url,
+                        data: data,
+                        contentType: false,       // The content type used when sending data to the server.
+                        cache: false,             // To unable request pages to be cached
+                        processData: false, 
+                        success: function(data) {
+                            //console.log(data);
+                            if(data.success) {                    
+                                $("#grid-table").trigger("reloadGrid");
+                                swal("", data.message, "success");
+                                $('#form-ui').hide();
+                                $('#grid-ui').slideDown( "slow" );
+                            }else{
+                                swal("", data.message, "warning");
+                            }
+                           
+                        }
+                    });
+                    
+                    
+                    return false;
+
+            });
+                
     }));
 
 </script>
 <script type="text/javascript">
+    function updateStatus(rowid, status){
+        var grid = $('#grid-table');
+        // rowid = grid.jqGrid ('getGridParam', 'selrow');
+        if(rowid == null) {
+            swal('','Silakan pilih salah satu baris','info');
+            return false;
+        }
+
+        $('#grid-ui').hide();
+        $('#form-ui').slideDown( "slow" );
+
+        setData(rowid, status);
+    }
+
     function searchData(){
 
         jQuery("#grid-table").jqGrid('setGridParam',{
