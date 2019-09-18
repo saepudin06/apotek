@@ -30,8 +30,8 @@ class Goods_recieve_nt extends Abstract_model {
 
     public $selectClause    = "goods_recieve_nt_id,
                                purchase_order_id,
-                               created_date,
-                               update_date,
+                               TO_CHAR (created_date, 'dd/mm/yyyy') created_date, 
+                               TO_CHAR (update_date, 'dd/mm/yyyy') update_date, 
                                update_by,
                                created_by,
                                TO_CHAR (grn_date, 'dd/mm/yyyy') grn_date,

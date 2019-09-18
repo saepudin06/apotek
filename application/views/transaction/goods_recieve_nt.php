@@ -123,12 +123,16 @@
             colModel: [
                 {label: 'ID', name: 'goods_recieve_nt_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Purchase Order ID', name: 'purchase_order_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},                
-                {label: 'Kode Pengecekan', name: 'code', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Kode Pengecekan', name: 'code', width: 200, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal', name: 'grn_date', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Kode Pembelian', name: 'po_num', width: 150, align: "left", editable: false, search:false, sortable:false, hidden:false},
-                {label: 'No. Tagihan', name: 'invoice_num_ref', width: 100, align: "left", editable: false, search:false, sortable:false},                    
+                {label: 'Kode Pembelian', name: 'po_num', width: 200, align: "left", editable: false, search:false, sortable:false, hidden:false},
+                {label: 'No. Tagihan', name: 'invoice_num_ref', width: 150, align: "left", editable: false, search:false, sortable:false},                    
                 {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
                 {label: 'Catatan', name: 'notes', width: 300, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Pembuat', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tanggal Dibuat', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Pengubah', name: 'update_by', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tanggal Diubah', name: 'update_date', width: 100, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -140,7 +144,7 @@
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
-            shrinkToFit: true,
+            shrinkToFit: false,
             multiboxonly: true,
             // multiselect: true,
             // multiPageSelection: true,

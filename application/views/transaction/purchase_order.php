@@ -125,11 +125,15 @@
                 {label: 'Supplier Id', name: 'supplier_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Unit Bisnis', name: 'bu_name', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'PO Date', name: 'po_date', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Kode Pembelian', name: 'code', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Supplier', name: 'sup_name', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Kode Pembelian', name: 'code', width: 200, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Supplier', name: 'sup_name', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Purchase Request ID', name: 'purchase_request_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
-                {label: 'Rencana Pembelian', name: 'pr_code', width: 100, align: "left", editable: false, search:false, sortable:false},                
+                {label: 'Rencana Pembelian', name: 'pr_code', width: 200, align: "left", editable: false, search:false, sortable:false},                
                 {label: 'Amount', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Pembuat', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tanggal Dibuat', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Pengubah', name: 'update_by', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tanggal Diubah', name: 'update_date', width: 100, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -141,7 +145,7 @@
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
-            shrinkToFit: true,
+            shrinkToFit: false,
             multiboxonly: true,
             // multiselect: true,
             // multiPageSelection: true,

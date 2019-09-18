@@ -31,8 +31,8 @@ class Purchase_order extends Abstract_model {
                                sup_name,
                                bu_name,
                                TO_CHAR (po_date, 'dd/mm/yyyy') po_date,
-                               created_date, 
-                               update_date, 
+                               TO_CHAR (created_date, 'dd/mm/yyyy') created_date, 
+                               TO_CHAR (update_date, 'dd/mm/yyyy') update_date, 
                                update_by, 
                                created_by,
                                amount";
