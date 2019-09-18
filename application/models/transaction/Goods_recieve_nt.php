@@ -41,7 +41,8 @@ class Goods_recieve_nt extends Abstract_model {
                                bu_id,
                                status,
                                po_num,
-                               amount";
+                               amount,
+                               payment_status";
 
     public $fromClause      = "vw_list_grn_h";
 

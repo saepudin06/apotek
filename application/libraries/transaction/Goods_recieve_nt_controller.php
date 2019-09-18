@@ -321,6 +321,122 @@ class Goods_recieve_nt_controller {
         return $data;
     }
 
+     function process() {
+
+
+        $ci = & get_instance();
+        $ci->load->model('transaction/goods_recieve_nt');
+        $table = $ci->goods_recieve_nt;
+
+        $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
+
+        $jsonItems = getVarClean('items', 'str', '');
+        $items = jsonDecode($jsonItems);
+
+        $errors = array();
+        $userdata = $ci->session->userdata;
+
+        try{
+
+            $sql = "BEGIN "
+                    . " PRC_ADD_STRO_STOCK_PER("
+                    . " :i_grn_id,"
+                    . " :i_user,"
+                    . " :i_bu_id,"                    
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
+
+            $stmt = oci_parse($table->db->conn_id, $sql);
+
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_grn_id', $items['goods_recieve_nt_id']);            
+            oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
+            oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);  
+            
+
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
+
+
+            ociexecute($stmt);
+
+            if($o_msg_code == 0){
+                $data['rows'] = array();
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+            }else{
+                $data['rows'] = array();
+                $data['success'] = false;
+                $data['message'] = $o_msg;
+            }
+
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+            $data['rows'] = array();
+        }
+
+        return $data;
+
+    }
+
+    function processall() {
+
+
+        $ci = & get_instance();
+        $ci->load->model('transaction/goods_recieve_nt');
+        $table = $ci->goods_recieve_nt;
+
+        $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
+
+
+        $errors = array();
+        $userdata = $ci->session->userdata;
+
+        try{
+
+            $sql = "BEGIN "
+                    . " P_COLLECT_ADD_STORE_STOCK("
+                    . " :i_user,"
+                    . " :i_bu_id,"                    
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
+
+            $stmt = oci_parse($table->db->conn_id, $sql);
+
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
+            oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);             
+            
+
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
+
+
+            ociexecute($stmt);
+
+            if($o_msg_code == 0){
+                $data['rows'] = array();
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+            }else{
+                $data['rows'] = array();
+                $data['success'] = false;
+                $data['message'] = $o_msg;
+            }
+
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+            $data['rows'] = array();
+        }
+
+        return $data;
+
+    }
+
 }
 
 /* End of file Goods_recieve_nt_controller.php */

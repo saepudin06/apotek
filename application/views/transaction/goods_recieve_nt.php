@@ -127,7 +127,10 @@
                 {label: 'Tanggal', name: 'grn_date', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Kode Pembelian', name: 'po_num', width: 200, align: "left", editable: false, search:false, sortable:false, hidden:false},
                 {label: 'No. Tagihan', name: 'invoice_num_ref', width: 150, align: "left", editable: false, search:false, sortable:false},                    
+                {label: 'Tempo Pembayaran', name: 'due_date_payment', width: 150, align: "left", editable: false, search:false, sortable:false},                    
                 {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Status', name: 'status', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Status Pembayaran', name: 'payment_status', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Catatan', name: 'notes', width: 300, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Pembuat', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal Dibuat', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false},
@@ -151,6 +154,16 @@
             onSelectRow: function (rowid) {
                 /*do something when selected*/
                 // setData(rowid);
+                var status = $('#grid-table').jqGrid('getCell', rowid, 'status');
+                console.log(status);
+
+                if(status != 'INITAL'){
+                    $('#btn-edit').hide();
+                    $('#btn-delete').hide();
+                }else{
+                    $('#btn-edit').show();
+                    $('#btn-delete').show();
+                }
             },
             sortorder:'',
             pager: '#grid-pager',
@@ -172,7 +185,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/crud"; ?>',
-            caption: "Pengecekan Barang"
+            caption: "Pengecekan Barang &nbsp;&nbsp;&nbsp; <button type='button' class='btn btn-info btn-xs default' onclick='Process()'>Proses</button> <button type='button' class='btn btn-success btn-xs default' onclick='ProcessAll()'>Proses (Semua)</button>"
 
         });
 
@@ -415,6 +428,90 @@
         $('#form-ui').hide();
         $('#grid-ui').slideDown( "slow" );
     });
+
+    /*process*/
+    function Process(){
+        var grid = $('#grid-table');
+        var goods_recieve_nt_id = grid.jqGrid('getGridParam', 'selrow');
+        var po_num = grid.jqGrid('getCell', goods_recieve_nt_id, 'po_num');
+
+        if(goods_recieve_nt_id == null) {
+            swal('','Silakan pilih salah satu baris','info');
+            return false;
+        }
+
+        swal({
+              title: "",
+              text: "Semua Product dengan kode pembelian "+po_num+" akan ditambahkan ke stock\nApakah anda yakin?",
+              showCancelButton: true,
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Yes!",
+              closeOnConfirm: true
+            },
+            function(){
+
+                var data = { goods_recieve_nt_id : goods_recieve_nt_id };
+                itemJSON = JSON.stringify(data);
+
+                $.ajax({
+                    url: "<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/process"; ?>" ,
+                    type: "POST",
+                    dataType: "json",
+                    data: {items:itemJSON},
+                    success: function (data) {
+                        if (data.success){
+
+                            swal("", data.message, "success");
+                            resetSearch();
+
+                        }else{
+                            swal("", data.message, "warning");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+                    }
+                });
+                                
+                return false;
+        });
+    }
+
+    /*process*/
+    function ProcessAll(){
+        swal({
+              title: "",
+              text: "Semua Product akan ditambahkan ke stock\nApakah anda yakin?",
+              showCancelButton: true,
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Yes!",
+              closeOnConfirm: true
+            },
+            function(){
+
+                $.ajax({
+                    url: "<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/processall"; ?>" ,
+                    type: "POST",
+                    dataType: "json",
+                    data: {},
+                    success: function (data) {
+                        if (data.success){
+
+                            swal("", data.message, "success");
+                            resetSearch();
+
+                        }else{
+                            swal("", data.message, "warning");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+                    }
+                });
+                                
+                return false;
+        });
+    }
 
     /*delete*/
     function delete_data(rowid){

@@ -355,6 +355,8 @@
         //         id : "btn-edit"
         // });
 
+
+
     });
 
     function responsive_jqgrid(grid_selector, pager_selector) {
@@ -364,6 +366,11 @@
         $(pager_selector).jqGrid( 'setGridWidth', parent_column.width() );
 
     }
+
+    $("#grid-table").jqGrid("destroyFrozenColumns")
+            .jqGrid("setColProp", "product_name", { frozen: true })
+            .jqGrid("setFrozenColumns")
+            .trigger("reloadGrid", [{ current: true}]);
 
     $(window).bind('resize', function() {
         responsive_jqgrid('#grid-table', '#grid-pager');    
