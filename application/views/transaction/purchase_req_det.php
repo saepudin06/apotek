@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item">
                     <a href="javascript:;">Transaksi</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Rencana Pembelian (PR)</li>
+                <li class="breadcrumb-item active" aria-current="page">Permintaan Pembelian (PR)</li>
             </ol>
         </nav>
         
@@ -28,7 +28,7 @@
             <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Rencana Pembelian</strong></a>
+                        aria-selected="true"><strong>Permintaan Pembelian</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
