@@ -45,7 +45,7 @@ class Goods_recieve_nt_dt_controller {
             if(!empty($i_search)) {
                 $table->setCriteria("( upper(product_name) like upper('%".$i_search."%') OR
                                        upper(store_info) like upper('%".$i_search."%') OR
-                                       upper(STATUS) like upper('%".$i_search."%')
+                                       upper(status) like upper('%".$i_search."%')
                                      )");
             }
 
