@@ -1,21 +1,20 @@
 <?php
 
 /**
- * Referencelist Model
+ * adj_store_evd Model
  *
  */
-class Referencelist extends Abstract_model {
+class Adj_store_evd extends Abstract_model {
 
-    public $table           = "referencelist";
-    public $pkey            = "reference_list_id";
+    public $table           = "adj_store_evd";
+    public $pkey            = "adj_store_evd";
     public $alias           = "";
 
     public $fields          = array(
-                                'reference_list_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'ID'),
-                                'reference_type_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Tipe Referensi ID'),
-                                'name'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Nama Referensi'),                                
-                                'val_1'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Nilai 1'),                                
-                                'val_2'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Nilai 2'),    
+                                'adj_store_evd'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Store Info ID'),
+                                'adj_store_stock_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Adj Store Stock ID'),
+                                'path_file'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Upload'),                                                          
+                                'description'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Keterangan'),    
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),
@@ -23,10 +22,16 @@ class Referencelist extends Abstract_model {
 
                             );
 
-    public $selectClause    = "reference_list_id, reference_type_id, reference_type_code, name, val_1, val_2, created_date, created_by, update_date, update_by";
-    public $fromClause      = "(select a.*, b.code reference_type_code 
-                                from referencelist a
-                                left join referencetype b on a.reference_type_id=b.reference_type_id)";
+    public $selectClause    = "adj_store_evd, 
+                                adj_store_stock_id, 
+                                TO_CHAR(created_date, 'dd/mm/yyyy') created_date, 
+                                TO_CHAR(update_date, 'dd/mm/yyyy') update_date, 
+                                created_by, 
+                                update_by, 
+                                description, 
+                                path_file";
+
+    public $fromClause      = "adj_store_evd";
 
     public $refs            = array();
 
@@ -62,13 +67,7 @@ class Referencelist extends Abstract_model {
         return true;
     }
 
-    public function getReferenceList($ref_type_id)
-    {
-        $this->db->order_by("reference_list_id", "asc");
-        $this->db->where('reference_type_id', $ref_type_id);
-        $q = $this->db->get('referencelist');
-        return $q->result_array();
-    }
+
 
 }
 
