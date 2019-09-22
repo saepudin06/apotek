@@ -55,6 +55,7 @@ class Invoice_receive_controller {
             if(!empty($i_search)) {
                 $table->setCriteria("( upper(invoice_num) like upper('%".$i_search."%') OR
                                        upper(invoice_ref) like upper('%".$i_search."%') OR
+                                       upper(INVOICE_NUM) like upper('%".$i_search."%') OR
                                        upper(status) like upper('%".$i_search."%')
                                      )");
             }

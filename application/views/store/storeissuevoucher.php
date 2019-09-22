@@ -12,9 +12,9 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Pembayaran</a>
+                    <a href="javascript:;">Gudang</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Tagihan Supplier</li>
+                <li class="breadcrumb-item active" aria-current="page">Pengeluaran Gudang</li>
             </ol>
         </nav>
         
@@ -38,55 +38,26 @@
             <div class="separator mb-2"></div>
             <div class="card-body">            
                 
+                <p>               
+                    <div class="row">
+                        <div class="col-md-2">
+                            <button type='button' class='btn btn-success default' onclick='Generate()'>Generate SIV</button>
+                        </div>  
+                    </div>
+                </p>
+                
                 <div class="row">
-
-                    <div class="col-md-3">
-                        <label class="form-group has-float-label">
-                            <input class="form-control" id="invoice_ref" name="invoice_ref" onchange="filterSup()" placeholder="" autocomplete="off" autofocus="" />
-                            <span>No. Referensi *</span>
-                        </label>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label class="form-group has-float-label">
-                            <input class="form-control" id="sup_name" name="sup_name" onchange="filterSup()" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                            <span>Supplier *</span>
-                        </label>
-                    </div>
-
-                    <div class="col-md-1">
-                        <button class="btn btn-primary default" type="button" onclick="search_supplier('supplier_id', 'sup_name')">Cari <i class="simple-icon-question"></i></button>
-                    </div>
-
-                    <input class="form-control" type="hidden" id="supplier_id" name="supplier_id" placeholder="" autocomplete="off" readonly="" />
-
-                    <div class="col-md-2">
-                        <button type='button' class='btn btn-info default' onclick='Generate()'>Generate Pembayaran</button>
-                    </div>
-
-                    <div class="col-md-2">
-                        <button type='button' class='btn btn-success default' onclick='UpdatePayRef()'>Update Pembayaran (by Referensi)</button>
-                    </div>
-
                     <div class="col-md-12" id="grid-ui">         
                         <table id="grid-table"></table>
                         <div id="grid-pager"></div>
                     </div>
                 </div>
 
-
             </div>
         </div>
     </div>
 </div>
 
-<?php $this->load->view('lov/lov_supplier'); ?>
-
-<script type="text/javascript">
-    function search_supplier(id, code){
-        modal_lov_supplier_show(id, code);
-    }
-</script>
 
 <script>
     jQuery(function($) {
@@ -95,38 +66,32 @@
         var pager_selector = "#grid-pager";
 
         jQuery("#grid-table").jqGrid({
-            url: '<?php echo WS_JQGRID."payment.invoice_receive_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."store.storeissuevoucher_controller/read"; ?>',
             datatype: "json",
             mtype: "POST",
             loadui: "disable",
             colModel: [
-                {label: 'ID', name: 'invoice_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Supplier ID', name: 'supplier_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},  
-                {label: '<center>Update Pembayaran</center>',width: 150, align: "center",
+                {label: 'ID', name: 'store_issue_voucher_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: '<center>Store Stock (Status)</center>',width: 150, align: "center",
                     formatter:function(cellvalue, options, rowObject) {
                         var invoice_id = rowObject['invoice_id'];
 
-                        if (rowObject['status'] != 'PAID'){
-                             return '<button class="btn btn-primary btn-xs default" onclick="UpdatePay('+invoice_id+')">Update</button>';
-                         }else{
-
-                               return '<strong><p class="text-success">'+rowObject['status']+'</p></strong>'; ;
-                         }
-
+                            if (rowObject['status'] == 'INITIAL' ){
+                               return '<strong><p class="text-warning">'+rowObject['status']+'</p></strong>'; 
+                            }else{
+                                return '<strong><p class="text-danger">'+rowObject['status']+'</p></strong>'; 
+                            }
                     }
                 },
+                {label: 'Code', name: 'code', width: 200, align: "left", editable: false, search:false, sortable:false}, 
+                {label: 'Period', name: 'period', width: 100, align: "left", editable: false, search:false, sortable:false}, 
                 {label: 'Status', name: 'status', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true}, 
-                {label: 'Supplier', name: 'supplier_name', width: 100, align: "left", editable: false, search:false, sortable:false}, 
-                {label: 'Tanggal', name: 'invoice_date', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'No. Tagihan', name: 'invoice_num', width: 150, align: "left", editable: false, search:false, sortable:false},                    
-                {label: 'No. Tagihan (Referensi)', name: 'invoice_ref', width: 150, align: "left", editable: false, search:false, sortable:false},                    
-                {label: 'Tempo Pembayaran', name: 'due_date_payment', width: 150, align: "left", editable: false, search:false, sortable:false},                    
-                {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
-                {label: 'Pembuat', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Tanggal Dibuat', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Pengubah', name: 'update_by', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Tanggal Diubah', name: 'update_date', width: 100, align: "left", editable: false, search:false, sortable:false},
-                
+                {label: 'Info BU', name: 'info_bu', width: 100, align: "left", editable: false, search:false, sortable:false}, 
+                {label: 'Amount', name: 'amount', width: 100, sorttype: 'number', align: "right", editable: false, search:false, sortable:false}, 
+                {label: 'Created Date', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false}, 
+                {label: 'Created By', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false}, 
+                {label: 'Update By', name: 'update_by', width: 100, align: "left", editable: false, search:false, sortable:false}, 
+                 {label: 'Update Date', name: 'update_date', width: 100, align: "left", editable: false, search:false, sortable:false}                
             ],
             // height: '100%',
             height: 200,
@@ -147,6 +112,19 @@
            
             },
             sortorder:'',
+            // set the subGrid property to true to show expand buttons for each row
+             subGrid: true, // set the subGrid property to true to show expand buttons for each row
+             subGridRowExpanded: showChildGrid, // javascript function that will take care of showing the child grid
+             subGridOptions : {
+                 // load the subgrid data only once
+                 // and the just show/hide
+                 reloadOnExpand :false,
+                 // select the row when the expand column is clicked
+                 selectOnExpand : true,
+                 plusicon : "ui-icon iconsmind-Maximize",
+                 minusicon  : "ui-icon iconsmind-Minimize"
+                // openicon : "ace-icon fa fa-chevron-right center orange"
+            },
             pager: '#grid-pager',
             jsonReader: {
                 root: 'rows',
@@ -166,7 +144,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/crud"; ?>',
-            caption: "Tagihan Supplier"
+            caption: "Pengeluaran Gudang"
 
         });
 
@@ -297,6 +275,47 @@
 
     });
 
+   function showChildGrid(parentRowID, parentRowKey) {
+        var childGridID = parentRowID + "_table";
+        var childGridPagerID = parentRowID + "_pager";
+
+        // send the parent row primary key to the server so that we know which grid to show
+        var childGridURL = "<?php echo WS_JQGRID.'store.storeissuevoucher_controller/read_dt'; ?>";
+
+        // add a table and pager HTML elements to the parent grid row - we will render the child grid here
+        $('#' + parentRowID).append('<table id=' + childGridID + '></table><div id=' + childGridPagerID + ' class=scroll></div>');
+
+        $("#" + childGridID).jqGrid({
+            url: childGridURL,
+            mtype: "POST",
+            datatype: "json",
+            page: 1,
+            rownumbers: true, // show row numbers
+            rownumWidth: 35,
+            shrinkToFit: true,
+//            scrollbar : false,
+            postData:{celValue:encodeURIComponent(parentRowKey)},
+            colModel: [
+                { label: 'ID', name: 'grp', key: true, width:10, editable: false,hidden:true },
+                { label: 'ID GRP', name: 'grp', width:200, align:"left", editable:false},
+                { label: 'Product Name', name: 'product_name', width:250, align:"left", editable:false},
+                { label: 'Code Trans', name: 'code_trans', width:200, align:"left", editable:false},
+                { label: 'Qty', name: 'qty', width:100, align:"right", editable:false},
+                { label: 'Amount DT', name: 'amount_dt', width:100, align:"right", editable:false}
+            ],
+//            loadonce: true,
+            width: "100%",
+            height: '100%',
+            jsonReader: {
+                root: 'rows',
+                id: 'id',
+                repeatitems: false
+            }
+//            pager: "#" + childGridPagerID
+        });
+
+    }
+
     function responsive_jqgrid(grid_selector, pager_selector) {
 
         var parent_column = $(grid_selector).closest('[class*="col-"]');
@@ -318,17 +337,10 @@
 
     /*process*/
     function Generate(){
-        var supplier_id = $('#supplier_id').val();
-        var supplier = $('#sup_name').val();
-
-        if(supplier_id == null || supplier_id == '') {
-            swal('','Supplier belum dipilih','info');
-            return false;
-        }
-
+       
         swal({
               title: "",
-              text: "Pembayaran supplier "+supplier+" akan digenerate\nApakah anda yakin?",
+              text: "Summary Transaksi akan digenerate\nApakah anda yakin?",
               showCancelButton: true,
               confirmButtonClass: "btn-danger",
               confirmButtonText: "Yes!",
@@ -336,11 +348,13 @@
             },
             function(){
 
+                // alert("Masuk.");
+
                 $.ajax({
-                    url: "<?php echo WS_JQGRID."payment.invoice_receive_controller/generate"; ?>" ,
+                    url: "<?php echo WS_JQGRID."store.storeissuevoucher_controller/generate"; ?>" ,
                     type: "POST",
                     dataType: "json",
-                    data: {supplier_id:supplier_id},
+                    data: {},
                     success: function (data) {
                         if (data.success){
 
@@ -359,92 +373,6 @@
                 return false;
         });
     }
-
-    /*process*/
-    function UpdatePayRef(){
-        var invoice_ref = $('#invoice_ref').val();
-
-        if(invoice_ref == null || invoice_ref == '') {
-            swal('','No. Referensi belum diisi','info');
-            return false;
-        }
-
-        swal({
-              title: "",
-              text: "Update Payment by Referensi\nApakah anda yakin?",
-              showCancelButton: true,
-              confirmButtonClass: "btn-danger",
-              confirmButtonText: "Yes!",
-              closeOnConfirm: true
-            },
-            function(){
-
-                $.ajax({
-                    url: "<?php echo WS_JQGRID."payment.invoice_receive_controller/updatepaymentref"; ?>" ,
-                    type: "POST",
-                    dataType: "json",
-                    data: {invoice_ref : invoice_ref},
-                    success: function (data) {
-                        if (data.success){
-
-                            swal("", data.message, "success");
-                            filterSup();
-
-                        }else{
-                            swal("", data.message, "warning");
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
-                    }
-                });
-                                
-                return false;
-        });
-    }
-
-    /*process*/
-    function UpdatePay(invoice_id){
-
-        if(invoice_id == null || invoice_id == '') {
-            swal('','No. Tagihan belum dipilih','info');
-            return false;
-        }
-
-        swal({
-              title: "",
-              text: "Update Payment by Referensi\nApakah anda yakin?",
-              showCancelButton: true,
-              confirmButtonClass: "btn-danger",
-              confirmButtonText: "Yes!",
-              closeOnConfirm: true
-            },
-            function(){
-
-                $.ajax({
-                    url: "<?php echo WS_JQGRID."payment.invoice_receive_controller/updatepayment"; ?>" ,
-                    type: "POST",
-                    dataType: "json",
-                    data: {invoice_id : invoice_id},
-                    success: function (data) {
-                        if (data.success){
-
-                            swal("", data.message, "success");
-                            filterSup();
-
-                        }else{
-                            swal("", data.message, "warning");
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
-                    }
-                });
-                                
-                return false;
-        });
-    }
-
 
 </script>
 <script type="text/javascript">
@@ -454,11 +382,12 @@
         var invoice_ref = $('#invoice_ref').val();
 
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."payment.invoice_receive_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."store.storeissuevoucher_controller/read"; ?>',
             postData: {
-                i_search : '',
-                supplier_id : supplier_id,
-                invoice_ref : invoice_ref
+                i_search : ''
+                // ,
+                // supplier_id : supplier_id,
+                // invoice_ref : invoice_ref
             }
         });
         
@@ -468,7 +397,7 @@
     function searchData(){
 
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."payment.invoice_receive_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."store.storeissuevoucher_controller/read"; ?>',
             postData: {
                 i_search : $('#search-data').val()
             }
@@ -482,7 +411,7 @@
         $('#form_data').trigger("reset");
         
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."payment.invoice_receive_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."store.storeissuevoucher_controller/read"; ?>',
             postData: {
                 i_search : ''
             }
