@@ -12,9 +12,9 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Payment</a>
+                    <a href="javascript:;">Gudang</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Adjustment</li>
+                <li class="breadcrumb-item active" aria-current="page">Stock Opname</li>
             </ol>
         </nav>
         
@@ -26,15 +26,12 @@
     <div class="col-12">        
         <div class="card mb-4">
             <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
-                <li class="nav-item w-30 text-center">
+                <li class="nav-item w-50 text-center">
                     <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Adjustment</strong></a>
+                        aria-selected="true"><strong>Stock Opname</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
-                    <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Dokumen Pendukung</strong></a>
-                </li>
-                <li class="nav-item w-20 text-center">
-                    <a class="nav-link" id="tab-3" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
+                    <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
                 </li>
             </ul>
             
@@ -48,84 +45,28 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Adjustment</h5>
+                        <h5 class="mb-4">Form Permintaan Pembelian</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control" id="adj_store_stock_id" name="adj_store_stock_id" placeholder="" autocomplete="off" readonly="" />
+                                    <input class="form-control" id="purchase_request_id" name="purchase_request_id" placeholder="" autocomplete="off" readonly="" />
                                     <span>ID *</span>
                                 </label>
 
-                                <label class="form-group has-float-label  col-md-4">
-                                    <select id="adj_type_id" name="adj_type_id" class="form-control">
-                                        <?php
-                                            $ci = & get_instance();
-                                            $ci->load->model('admin/referencelist');
-                                            $table = $ci->referencelist;
-                                            $items = $table->getReferenceList(4);
-
-                                        ?>
-                                        <?php foreach($items as $item):?>
-                                            <option value="<?php echo $item['reference_list_id'];?>"> <?php echo $item['name'].' - '.$item['val_1'];?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                    <span>Tipe Adjustment *</span>
-                                </label>
-
-                                <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="supplier_name" name="supplier_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Supplier</span>
-                                </label>
-
-                                <div class="col-md-1">
-                                    <button class="btn btn-primary default" type="button" onclick="search_supplier('supplier_id', 'supplier_name')">Cari <i class="simple-icon-question"></i></button>
-                                </div>
-
-                                <input class="form-control" type="hidden" id="supplier_id" name="supplier_id" placeholder="" autocomplete="off" readonly="" />
-
-                            </div>
-
-                            <div class="form-row">
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control" id="invoice_num_ref" name="invoice_num_ref" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>No. Tagihan *</span>
+                                    <input class="form-control" id="code" name="code" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Kode *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control datepicker" id="due_dat_payment" name="due_dat_payment" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Tgl. Jatuh Tempo</span>
-                                </label>
-
-                                <label class="form-group has-float-label col-md-4">
-                                     <select class="form-control select2-single" id="bu_id_dest">
-                                        <!-- <option label="&nbsp;">&nbsp;</option> -->
-                                        <?php
-                                            $ci = & get_instance();
-                                            $ci->load->model('admin/bunit');
-                                            $table = $ci->bunit;
-
-                                            $items = $table->getAll(0,-1,'bu_id','asc');
-
-                                        ?>
-                                        <option value=""> -- Pilih Unit Bisnis -- </option>
-                                        <?php foreach($items as $item):?>
-                                            <option value="<?php echo $item['bu_id'];?>"> <?php echo $item['name'];?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                    <span>Unit Bisnis(Tujuan)</span>
-                                </label>
-
-                            </div>
-
-                            <div class="form-row">
-                                <label class="form-group has-float-label col-md-12">
-                                    <input class="form-control" id="description" name="description" placeholder="" autocomplete="off" autofocus=""  />
-                                    <span>Keterangan</span>
+                                    <input class="form-control datepicker" id="pr_date" name="pr_date" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Tanggal *</span>
                                 </label>
                             </div>
+
 
                             <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
                             <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
@@ -140,15 +81,6 @@
     </div>
 </div>
 
-<?php $this->load->view('lov/lov_supplier'); ?>
-
-<script type="text/javascript">
-    function search_supplier(id, code){
-        modal_lov_supplier_show(id, code);
-    }
-
-    
-</script>
 
 <script>
     jQuery(function($) {
@@ -157,41 +89,29 @@
         var pager_selector = "#grid-pager";
 
         jQuery("#grid-table").jqGrid({
-            url: '<?php echo WS_JQGRID."payment.adj_store_stock_controller/crud"; ?>',
+            url: '<?php echo WS_JQGRID."store.stockopname_controller/crud"; ?>',
             datatype: "json",
             mtype: "POST",
             loadui: "disable",
             colModel: [
-                {label: 'ID', name: 'adj_store_stock_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Jenis Adjustment ID', name: 'adj_type_id', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
-                {label: 'Supplier ID', name: 'supplier_id', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
-                {label: 'Bisnis Unit ID', name: 'bu_id_dest', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
-                {label: '<center>Action (Status)</center>',width: 150, align: "center",
+                {label: 'ID', name: 'stockopname_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'Kode', name: 'info_so_bu', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: '<center>Status</center>',width: 100, align: "center",
                     formatter:function(cellvalue, options, rowObject) {
-                        var status = rowObject['status'];
-                        var adj_store_stock_id = rowObject['adj_store_stock_id'];
-                        
+                        var invoice_id = rowObject['invoice_id'];
 
-                        if(status != 'VERIFIED' && status != 'STOCK-SUM' ){
-                            return '<button class="btn btn-primary btn-xs default" onclick="updateStatus(\''+adj_store_stock_id+'\')">Update</button>';
-                        }else{
-                            return '<strong><p class="text-success">'+status+'</p></strong>';
-                        }
+                            if (rowObject['status'] == 'INITIAL' ){
+                               return '<strong><p class="text-warning">'+rowObject['status']+'</p></strong>'; 
+                            }else{
+                                return '<strong><p class="text-danger">'+rowObject['status']+'</p></strong>'; 
+                            }
                     }
                 },
-                {label: 'Jenis Adjustment', name: 'adj_type_name', width: 240, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Unit Bisnis(Tujuan)', name: 'bu_name', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Supplier', name: 'supplier_name', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Status', name: 'status', width: 150, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Status Pembayaran', name: 'payment_status', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'No. Tagihan', name: 'invoice_num_ref', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Tgl. Jatuh Tempo', name: 'due_dat_payment', width: 150, align: "left", editable: false, search:false, sortable:false},                
-                {label: 'Keterangan', name: 'description', width: 250, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tanggal Stock OP', name: 'stockop_date', width: 150, align: "center", editable: false, search:false, sortable:false},
                 {label: 'Pembuat', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal Dibuat', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Pengubah', name: 'update_by', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Tanggal Diubah', name: 'update_date', width: 100, align: "left", editable: false, search:false, sortable:false},
-                
+                {label: 'Pengubah', name: 'updated_by', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Tanggal Diubah', name: 'update_date', width: 100, align: "left", editable: false, search:false, sortable:false}
             ],
             // height: '100%',
             height: 200,
@@ -202,7 +122,7 @@
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
-            shrinkToFit: false,
+            shrinkToFit: true,
             multiboxonly: true,
             onSelectRow: function (rowid) {
                 /*do something when selected*/
@@ -227,8 +147,8 @@
 
             },
             //memanggil controller jqgrid yang ada di controller crud
-            editurl: '<?php echo WS_JQGRID."payment.adj_store_stock_controller/crud"; ?>',
-            caption: "Adjustment &nbsp;&nbsp;&nbsp; <button type='button' class='btn btn-info btn-xs default' onclick='Process()'>Proses</button> <button type='button' class='btn btn-success btn-xs default' onclick='ProcessAll()'>Proses (Semua)</button>"
+            editurl: '<?php echo WS_JQGRID."transaction.purchase_request_controller/crud"; ?>',
+            caption: "Stock Opname"
 
         });
 
@@ -358,39 +278,13 @@
         ).navButtonAdd('#grid-pager',{
                 caption: "", //Add
                 buttonicon: "simple-icon-plus",
-                onClickButton: function(){ 
-                    $('#grid-ui').hide();
-                    $('#form-ui').slideDown( "slow" );
-                    $('#form_data').trigger("reset");                    
-                     // alert("Adding Row");
-                },
+                onClickButton : generateSTO,
                 position: "last",
                 title: "Add",
                 cursor: "pointer",
                 id : "btn-add"
-        }).navButtonAdd('#grid-pager',{
-                caption: "", //Edit
-                buttonicon: "simple-icon-note",
-                onClickButton: function(rowid){ 
-                    var grid = $('#grid-table');
-                    rowid = grid.jqGrid ('getGridParam', 'selrow');
-                    if(rowid == null) {
-                        swal('','Silakan pilih salah satu baris','info');
-                        return false;
-                    }
-
-                    $('#grid-ui').hide();
-                    $('#form-ui').slideDown( "slow" );
-
-                    setData(rowid);
-
-                    // $('#form-ui').trigger("reset");
-                },
-                position: "last",
-                title: "Edit",
-                cursor: "pointer",
-                id : "btn-edit"
-        }).navButtonAdd('#grid-pager',{
+        })
+        .navButtonAdd('#grid-pager',{
                 caption: "", //Delete
                 buttonicon: "simple-icon-minus",
                 onClickButton: function(){ 
@@ -430,33 +324,20 @@
 
         event.stopPropagation();
         var grid = $('#grid-table');
-        var adj_store_stock_id = grid.jqGrid('getGridParam', 'selrow');
+        var stockopname_id = grid.jqGrid('getGridParam', 'selrow');
+        // var pr_date = grid.jqGrid('getCell', purchase_request_id, 'pr_date');
+        var stopnm_code = grid.jqGrid('getCell', stockopname_id, 'info_so_bu');
 
-        if(adj_store_stock_id == null) {
+        if(stockopname_id == null) {
             swal('','Silakan pilih salah satu baris','info');
             return false;
         }
 
         
-        loadContentWithParams("payment.adj_store_evd", {
-            adj_store_stock_id: adj_store_stock_id
-        });
-    });
-
-    $("#tab-3").on("click", function(event) {
-
-        event.stopPropagation();
-        var grid = $('#grid-table');
-        var adj_store_stock_id = grid.jqGrid('getGridParam', 'selrow');
-
-        if(adj_store_stock_id == null) {
-            swal('','Silakan pilih salah satu baris','info');
-            return false;
-        }
-
-        
-        loadContentWithParams("payment.adj_store_stock_dt", {
-            adj_store_stock_id: adj_store_stock_id
+        loadContentWithParams("store.stockopname_dt", {
+            stockopname_id: stockopname_id,
+            stopnm_code: stopnm_code
+            // pr_date : pr_date
         });
     });
 </script>
@@ -465,20 +346,14 @@
 
     function setData(rowid){
         
-        var adj_type_id = $('#grid-table').jqGrid('getCell', rowid, 'adj_type_id');
-        var supplier_id  = $('#grid-table').jqGrid('getCell', rowid, 'supplier_id');
-        var supplier_name  = $('#grid-table').jqGrid('getCell', rowid, 'supplier_name');
-        var bu_id_dest  = $('#grid-table').jqGrid('getCell', rowid, 'bu_id_dest');
-        var due_dat_payment  = $('#grid-table').jqGrid('getCell', rowid, 'due_dat_payment');
-        var description  = $('#grid-table').jqGrid('getCell', rowid, 'description');
+        var pr_date = $('#grid-table').jqGrid('getCell', rowid, 'pr_date');
+        var amount  = $('#grid-table').jqGrid('getCell', rowid, 'amount');
+        var code  = $('#grid-table').jqGrid('getCell', rowid, 'code');
         
-        $('#adj_store_stock_id').val(rowid);
-        $('#adj_type_id').val(adj_type_id);
-        $('#supplier_id').val(supplier_id);        
-        $('#supplier_name').val(supplier_name);        
-        $('#bu_id_dest').val(bu_id_dest);        
-        $('#due_dat_payment').val(due_dat_payment);        
-        $('#description').val(description);        
+        $('#purchase_request_id').val(rowid);
+        $('#pr_date').val(pr_date);
+        $('#amount').val(amount);        
+        $('#code').val(code);        
 
     }
 
@@ -503,7 +378,7 @@
                 itemJSON = JSON.stringify(del);
 
                 $.ajax({
-                    url: "<?php echo WS_JQGRID."payment.adj_store_stock_controller/crud"; ?>" ,
+                    url: "<?php echo WS_JQGRID."store.stockopname_controller/crud"; ?>" ,
                     type: "POST",
                     dataType: "json",
                     data: {items:itemJSON, oper:'del'},
@@ -533,11 +408,10 @@
 
         e.preventDefault(); 
         var data = new FormData(this);
-        data.append("bu_id_dest", $("#bu_id_dest").val());
-        var adj_store_stock_id = $('#adj_store_stock_id').val();
+        var purchase_request_id = $('#purchase_request_id').val();
             
-        var var_url = '<?php echo WS_JQGRID."payment.adj_store_stock_controller/create"; ?>';
-        if(adj_store_stock_id) var_url = '<?php echo WS_JQGRID."payment.adj_store_stock_controller/update"; ?>';
+        var var_url = '<?php echo WS_JQGRID."transaction.purchase_request_controller/create"; ?>';
+        if(purchase_request_id) var_url = '<?php echo WS_JQGRID."transaction.purchase_request_controller/update"; ?>';
         
         $.ajax({
             type: 'POST',
@@ -570,7 +444,7 @@
     function searchData(){
 
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."payment.adj_store_stock_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."store.stockopname_controller/read"; ?>',
             postData: {
                 i_search : $('#search-data').val()
             }
@@ -584,7 +458,7 @@
         $('#form_data').trigger("reset");
         
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."payment.adj_store_stock_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."store.stockopname_controller/read"; ?>',
             postData: {
                 i_search : ''
             }
@@ -607,10 +481,10 @@
         }
     });
 
-    function updateStatus(adj_store_stock_id){
+    function generateSTO(){
         swal({
-              title: "",
-              text: "[Verifikasi Update Stock]\nApakah anda yakin?",
+              title: "Generate Stock Opname",
+              text: "Apakah anda yakin?",
               showCancelButton: true,
               confirmButtonClass: "btn-danger",
               confirmButtonText: "Yes!",
@@ -619,91 +493,7 @@
             function(){
 
                 $.ajax({
-                    url: "<?php echo WS_JQGRID."payment.adj_store_stock_controller/updateStatus"; ?>" ,
-                    type: "POST",
-                    dataType: "json",
-                    data: { adj_store_stock_id : adj_store_stock_id},
-                    success: function (data) {
-                        if (data.success){
-
-                            swal("", data.message, "success");
-                            resetSearch();
-
-                        }else{
-                            swal("", data.message, "warning");
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
-                    }
-                });
-                                
-                return false;
-        });
-    }
-
-    /*process*/
-    function Process(){
-        var grid = $('#grid-table');
-        var adj_store_stock_id = grid.jqGrid('getGridParam', 'selrow');
-        var invoice_num_ref = grid.jqGrid('getCell', adj_store_stock_id, 'invoice_num_ref');
-
-        if(adj_store_stock_id == null) {
-            swal('','Silakan pilih salah satu baris','info');
-            return false;
-        }
-
-        swal({
-              title: "",
-              text: "Adjustment dengan No. Tagihan "+invoice_num_ref+" akan dimasukan ke stock\nApakah anda yakin?",
-              showCancelButton: true,
-              confirmButtonClass: "btn-danger",
-              confirmButtonText: "Yes!",
-              closeOnConfirm: true
-            },
-            function(){
-
-                var data = { adj_store_stock_id : adj_store_stock_id };
-                itemJSON = JSON.stringify(data);
-
-                $.ajax({
-                    url: "<?php echo WS_JQGRID."payment.adj_store_stock_controller/process"; ?>" ,
-                    type: "POST",
-                    dataType: "json",
-                    data: {items:itemJSON},
-                    success: function (data) {
-                        if (data.success){
-
-                            swal("", data.message, "success");
-                            resetSearch();
-
-                        }else{
-                            swal("", data.message, "warning");
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
-                    }
-                });
-                                
-                return false;
-        });
-    }
-
-    /*process*/
-    function ProcessAll(){
-        swal({
-              title: "",
-              text: "Semua Adjustment dengan status VERIFIED akan ditambahkan ke stock\nApakah anda yakin?",
-              showCancelButton: true,
-              confirmButtonClass: "btn-danger",
-              confirmButtonText: "Yes!",
-              closeOnConfirm: true
-            },
-            function(){
-
-                $.ajax({
-                    url: "<?php echo WS_JQGRID."payment.adj_store_stock_controller/processall"; ?>" ,
+                    url: "<?php echo WS_JQGRID."store.stockopname_controller/generateSTO"; ?>" ,
                     type: "POST",
                     dataType: "json",
                     data: {},
@@ -711,7 +501,7 @@
                         if (data.success){
 
                             swal("", data.message, "success");
-                            resetSearch();
+                            $("#grid-table").trigger("reloadGrid");
 
                         }else{
                             swal("", data.message, "warning");
@@ -720,9 +510,11 @@
                     error: function (xhr, status, error) {
                         swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
                     }
-                });
-                                
-                return false;
+            });
+
+                
+            return false;
         });
+
     }
 </script>
