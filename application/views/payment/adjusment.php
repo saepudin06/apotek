@@ -116,17 +116,18 @@
         var dc = $('#d_c').val();
         
 
-        // if(dc == '1'){
-        //     account_type = 18;
-        // }else if(dc == '-1'){
-        //     account_type = 19;
-        // }else{
+        if(dc == '1'){
+            account_type = 18;
+        }else if(dc == '-1'){
+            account_type = 19;
+        }else{
             account_type = 0;
-        // }
+        }
         
         modal_lov_map_account_show(id, code, account_type);
     }
 
+    
     
 </script>
 

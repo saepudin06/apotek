@@ -9,6 +9,7 @@
             </div>
             <input type="hidden" id="modal_lov_map_account_id_val" value="" />
             <input type="hidden" id="modal_lov_map_account_name_val" value="" />
+            <input type="hidden" id="modal_lov_map_account_masuk" value="" />
 
             <!-- modal body -->
             <div class="modal-body">
@@ -82,6 +83,17 @@
     function modal_lov_map_account_prepare_table(account_type) {
         var grid_selector = "#grid-table-lov_map_account";
         var pager_selector = "#grid-pager-lov_map_account";
+
+        if($('#modal_lov_map_account_masuk').val() == '1'){
+            jQuery("#grid-table-lov_map_account").jqGrid('setGridParam',{
+                url: '<?php echo WS_JQGRID."param.p_map_account_controller/crud"; ?>',
+                postData: {
+                    account_type : account_type
+                }
+            });
+            $("#grid-table-lov_map_account").trigger("reloadGrid");
+            return false;
+        }
 
 
         jQuery("#grid-table-lov_map_account").jqGrid({
@@ -292,11 +304,16 @@
         var i_search_lov_map_account = $('#i_search_lov_map_account').val();
         
         jQuery("#grid-table-lov_map_account").jqGrid('setGridParam',{
-                url: '<?php echo WS_JQGRID."param.p_map_account_controller/read"; ?>',
+                url: '<?php echo WS_JQGRID."param.p_map_account_controller/crud"; ?>',
                 postData: {
                     i_search : i_search_lov_map_account
                 }
             });
             $("#grid-table-lov_map_account").trigger("reloadGrid");
     }
+
+    jQuery('#modal_lov_map_account').on('hide.bs.modal', function(){
+       $('#modal_lov_map_account_masuk').val('1');
+       jQuery("#grid-table-lov_map_account").jqGrid('clearGridData');
+    });
 </script>
