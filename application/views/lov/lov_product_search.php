@@ -77,7 +77,6 @@
         var grid_selector = "#grid-table-lov_product_search";
         var pager_selector = "#grid-pager-lov_product_search";
 
-        $("#grid-table-lov_product_search").trigger("reloadGrid");
         jQuery("#grid-table-lov_product_search").jqGrid({
             url: '<?php echo WS_JQGRID."product.producttariffdetails_controller/readLov"; ?>',
             datatype: "json",

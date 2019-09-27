@@ -11,6 +11,7 @@
             <input type="hidden" id="modal_lov_purchase_order_det_name_val" value="" />
             <input type="hidden" id="modal_lov_purchase_order_det_qty_val" value="" />
             <input type="hidden" id="modal_lov_purchase_order_det_basic_price_val" value="" />
+            <input type="hidden" id="modal_lov_purchase_order_det_masuk" value="" />
 
             <!-- modal body -->
             <div class="modal-body">
@@ -92,6 +93,16 @@
     function modal_lov_purchase_order_det_prepare_table(purchase_order_id) {
         var grid_selector = "#grid-table-lov_purchase_order_det";
         var pager_selector = "#grid-pager-lov_purchase_order_det";
+
+        if($('#modal_lov_purchase_order_det_masuk').val() == '1'){
+            jQuery("#grid-table-lov_purchase_order_det").jqGrid('setGridParam',{
+                url: '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/read"; ?>',
+                postData: { purchase_order_id : purchase_order_id }
+            });
+            $("#grid-table-lov_purchase_order_det").trigger("reloadGrid");
+            return false;
+        }
+
 
         jQuery("#grid-table-lov_purchase_order_det").jqGrid({
             url: '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/read"; ?>',
@@ -308,4 +319,9 @@
             });
             $("#grid-table-lov_purchase_order_det").trigger("reloadGrid");
     }
+
+    jQuery('#modal_lov_purchase_order_det').on('hide.bs.modal', function(){
+       $('#modal_lov_purchase_order_det_masuk').val('1');
+       jQuery("#grid-table-lov_purchase_order_det").jqGrid('clearGridData');
+    });
 </script>
