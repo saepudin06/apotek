@@ -12,9 +12,9 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Payment</a>
+                    <a href="javascript:;">Adjustment</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Adjustment</li>
+                <li class="breadcrumb-item active" aria-current="page">Adjustment(Stock)</li>
             </ol>
         </nav>
         

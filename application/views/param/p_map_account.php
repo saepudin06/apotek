@@ -12,9 +12,9 @@
                     <a href="<?php base_url(); ?>">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="javascript:;">Adjustment</a>
+                    <a href="javascript:;">Parameter</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Adjustment(Stock)</li>
+                <li class="breadcrumb-item active" aria-current="page">Akun</li>
             </ol>
         </nav>
         
@@ -25,18 +25,15 @@
 <div class="row">    
     <div class="col-12">        
         <div class="card mb-4">
-            <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
-                <li class="nav-item w-30 text-center">
+            <!-- <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
+                <li class="nav-item w-50 text-center">
                     <a class="nav-link" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Adjustment</strong></a>
+                        aria-selected="true"><strong>Store Type</strong></a>
                 </li>
                 <li class="nav-item w-50 text-center">
-                    <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Dokumen Pendukung</strong></a>
+                    <a class="nav-link active" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Jenis Produk</strong></a>
                 </li>
-                <li class="nav-item w-20 text-center">
-                    <a class="nav-link active" id="tab-3" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
-                </li>
-            </ul>
+            </ul> -->
             
             <div class="separator mb-2"></div>
             <div class="card-body">            
@@ -48,76 +45,51 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Detail</h5>
+                        <h5 class="mb-4">Form Jenis Produk</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
-                            <input class="form-control" type="hidden" id="adj_store_stock_id" name="adj_store_stock_id" value="<?php echo $this->input->post('adj_store_stock_id');?>" placeholder="" autocomplete="off" readonly="" />
-
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control" id="adj_store_stock_dt_id" name="adj_store_stock_dt_id" placeholder="" autocomplete="off" readonly="" />
+                                <label class="form-group has-float-label col-md-3">
+                                    <input class="form-control" id="p_map_account_id" name="p_map_account_id" placeholder="" autocomplete="off" readonly="" />
                                     <span>ID *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="product_name" name="product_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Produk *</span>
+                                    <input class="form-control" id="acc_num" name="acc_num" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <span>No. Akun *</span>
                                 </label>
-
-                                <div class="col-md-1">
-                                    <button class="btn btn-primary default" type="button" onclick="search_product('product_id', 'product_name','stock_min')">Cari <i class="simple-icon-question"></i></button>
-                                </div>
-
-                                <input type="hidden" name="stock_min" id="stock_min" />
-
-
-                                <input class="form-control" type="hidden" id="product_id" name="product_id" placeholder="" autocomplete="off" readonly="" />
-
 
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="store" name="store" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Info Penyimpanan *</span>
+                                    <input class="form-control" id="acc_name" name="acc_name" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Nama Akun *</span>
                                 </label>
 
-                                <div class="col-md-1">
-                                    <button class="btn btn-primary default" type="button" onclick="search_store('store_id', 'store')">Cari <i class="simple-icon-question"></i></button>
-                                </div>
+                                <label class="form-group has-float-label col-md-3">
+                                    <select class="form-control select2-single" id="account_type" name="account_type">
+                                        <?php
+                                            $ci = & get_instance();
+                                            $ci->load->model('admin/referencelist');
+                                            $table = $ci->referencelist;
+                                            $items = $table->getReferenceList(5);
 
-                                <input class="form-control" type="hidden" id="store_id" name="store_id" placeholder="" autocomplete="off" readonly="" />
-
-                            </div>
-
-                            <div class="form-row">
-                                <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control" onkeypress="return isNumberKey(event)" onkeyup="sumamout()" id="basic_price" name="basic_price" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Harga Awal *</span>
-                                </label>
-
-                                <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control" onkeypress="return isNumberKey(event)" onkeyup="sumamout()" id="qty" name="qty" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Jumlah *</span>
-                                </label>
-
-                                <label class="form-group has-float-label col-md-4">
-                                     <select class="form-control" id="dc" name="dc">
-                                        <option value=""> -- Pilih Debit/Kredit -- </option>
-                                            <option value="1"> Debit </option>
-                                            <option value="-1"> Kredit </option>
+                                        ?>
+                                        <?php foreach($items as $item):?>
+                                            <option value="<?php echo $item['reference_list_id'];?>"> <?php echo $item['name'].' - '.$item['val_1'];?></option>
+                                        <?php endforeach; ?>
                                     </select>
-                                    <span>Debit/Kredit</span>
+                                    <span>Jenis Akun *</span>
                                 </label>
-
+                                
                             </div>
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-12">
-                                    <input class="form-control" id="description" name="description" placeholder="" autocomplete="off" autofocus=""  />
-                                    <span>Keterangan</span>
+                                    <input class="form-control" id="acc_desc" name="acc_desc" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Keterangan *</span>
                                 </label>
                             </div>
-
 
                             <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
                             <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
@@ -132,18 +104,6 @@
     </div>
 </div>
 
-<?php $this->load->view('lov/lov_product'); ?>
-<?php $this->load->view('lov/lov_store_info'); ?>
-
-<script type="text/javascript">
-    function search_product(id, code, stock_min){
-        modal_lov_product_show(id, code, stock_min);
-    }
-
-    function search_store(id, code){
-        modal_lov_store_info_show(id, code);
-    }
-</script>
 
 <script>
     jQuery(function($) {
@@ -152,27 +112,18 @@
         var pager_selector = "#grid-pager";
 
         jQuery("#grid-table").jqGrid({
-            url: '<?php echo WS_JQGRID."payment.adj_store_stock_dt_controller/crud"; ?>',
-            postData: { adj_store_stock_id : '<?php echo $this->input->post('adj_store_stock_id'); ?>'},
+            url: '<?php echo WS_JQGRID."param.p_map_account_controller/crud"; ?>',
             datatype: "json",
             mtype: "POST",
             loadui: "disable",
             colModel: [
-                {label: 'Adjustment Detail ID', name: 'adj_store_stock_dt_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Adjustment ID', name: 'adj_store_stock_id', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
-                {label: 'Product ID', name: 'product_id', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
-                {label: 'Store ID', name: 'store_id', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
-                {label: 'Product', name: 'product_name', width: 240, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Info Penyimpanan', name: 'store', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Harga Awal', name: 'basic_price', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Jumlah', name: 'qty', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Debit/Kredit', name: 'dc_name', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Debit/Kredit', name: 'dc', width: 150, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Keterangan', name: 'description', width: 250, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Pembuat', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Tanggal Dibuat', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Pengubah', name: 'update_by', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Tanggal Diubah', name: 'update_date', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'ID', name: 'p_map_account_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'Bisnis Unit', name: 'bu_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},                
+                {label: 'No. Akun', name: 'acc_num', width: 150, align: "left", editable: false, search:false, sortable:false, hidden: false},
+                {label: 'Nama Akun', name: 'acc_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Jenis Akun', name: 'account_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Jenis Akun ID', name: 'account_type', width: 150, align: "left", editable: false, search:false, sortable:false, hidden:true},
+                {label: 'Keterangan', name: 'acc_desc', width: 150, align: "left", editable: false, search:false, sortable:false},
                 
             ],
             // height: '100%',
@@ -184,7 +135,7 @@
             rownumbers: true, // show row numbers
             rownumWidth: 35, // the width of the row numbers columns
             altRows: true,
-            shrinkToFit: false,
+            shrinkToFit: true,
             multiboxonly: true,
             onSelectRow: function (rowid) {
                 /*do something when selected*/
@@ -209,8 +160,8 @@
 
             },
             //memanggil controller jqgrid yang ada di controller crud
-            editurl: '<?php echo WS_JQGRID."payment.adj_store_stock_dt_controller/crud"; ?>',
-            caption: "Detail"
+            editurl: '<?php echo WS_JQGRID."param.p_map_account_controller/crud"; ?>',
+            caption: "Akun"
 
         });
 
@@ -344,7 +295,9 @@
                     $('#grid-ui').hide();
                     $('#form-ui').slideDown( "slow" );
                     $('#form_data').trigger("reset");                    
-                     // alert("Adding Row");
+                     //alert("Adding Row");
+
+                    $('#account_type').val(null).trigger('change');
                 },
                 position: "last",
                 title: "Add",
@@ -408,53 +361,20 @@
 
 
 <script type="text/javascript">
-    $("#tab-1").on("click", function(event) {
-
-        event.stopPropagation();
-        
-        loadContentWithParams("payment.adj_store_stock", {});
-    });
-
-    $("#tab-2").on("click", function(event) {
-
-        event.stopPropagation();
-        var idd = '<?php echo $this->input->post('adj_store_stock_id');?>';
-        if(idd == null) {
-            swal('','Silakan pilih salah satu baris','info');
-            return false;
-        }
-
-        loadContentWithParams("payment.adj_store_evd", {
-            adj_store_stock_id: idd
-        });
-        
-    });
-</script>
-
-<script type="text/javascript">
 
     function setData(rowid){
         
-        var adj_store_stock_id = $('#grid-table').jqGrid('getCell', rowid, 'adj_store_stock_id');
-        var store_id  = $('#grid-table').jqGrid('getCell', rowid, 'store_id');
-        var store  = $('#grid-table').jqGrid('getCell', rowid, 'store');
-        var product_id  = $('#grid-table').jqGrid('getCell', rowid, 'product_id');
-        var product_name  = $('#grid-table').jqGrid('getCell', rowid, 'product_name');
-        var basic_price  = $('#grid-table').jqGrid('getCell', rowid, 'basic_price');
-        var qty  = $('#grid-table').jqGrid('getCell', rowid, 'qty');
-        var dc  = $('#grid-table').jqGrid('getCell', rowid, 'dc');
-        var description  = $('#grid-table').jqGrid('getCell', rowid, 'description');
+        var acc_num = $('#grid-table').jqGrid('getCell', rowid, 'acc_num');
+        var acc_name = $('#grid-table').jqGrid('getCell', rowid, 'acc_name');
+        var account_type = $('#grid-table').jqGrid('getCell', rowid, 'account_type');
+        var acc_desc = $('#grid-table').jqGrid('getCell', rowid, 'acc_desc');
         
-        $('#adj_store_stock_dt_id').val(rowid);
-        $('#adj_store_stock_id').val(adj_store_stock_id);
-        $('#store_id').val(store_id);        
-        $('#store').val(store);        
-        $('#product_id').val(product_id);        
-        $('#product_name').val(product_name);        
-        $('#basic_price').val(basic_price);        
-        $('#qty').val(qty);        
-        $('#dc').val(dc);        
-        $('#description').val(description);        
+        $('#p_map_account_id').val(rowid);
+        $('#acc_num').val(acc_num);
+        $('#acc_name').val(acc_name);
+        $('#account_type').val(account_type);
+        $('#account_type').trigger('change');
+        $('#acc_desc').val(acc_desc);
 
     }
 
@@ -479,7 +399,7 @@
                 itemJSON = JSON.stringify(del);
 
                 $.ajax({
-                    url: "<?php echo WS_JQGRID."payment.adj_store_stock_dt_controller/crud"; ?>" ,
+                    url: "<?php echo WS_JQGRID."param.p_map_account_controller/crud"; ?>" ,
                     type: "POST",
                     dataType: "json",
                     data: {items:itemJSON, oper:'del'},
@@ -508,12 +428,13 @@
     $("#form_data").on('submit', (function (e) {
 
         e.preventDefault(); 
+
+        // alert($("#product_type_det_id").val());
         var data = new FormData(this);
-        data.append("bu_id_dest", $("#bu_id_dest").val());
-        var adj_store_stock_dt_id = $('#adj_store_stock_dt_id').val();
+        var p_map_account_id = $('#p_map_account_id').val();
             
-        var var_url = '<?php echo WS_JQGRID."payment.adj_store_stock_dt_controller/create"; ?>';
-        if(adj_store_stock_dt_id) var_url = '<?php echo WS_JQGRID."payment.adj_store_stock_dt_controller/update"; ?>';
+        var var_url = '<?php echo WS_JQGRID."param.p_map_account_controller/create"; ?>';
+        if(p_map_account_id) var_url = '<?php echo WS_JQGRID."param.p_map_account_controller/update"; ?>';
         
         $.ajax({
             type: 'POST',
@@ -546,7 +467,7 @@
     function searchData(){
 
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."payment.adj_store_stock_dt_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."param.p_map_account_controller/read"; ?>',
             postData: {
                 i_search : $('#search-data').val()
             }
@@ -560,7 +481,7 @@
         $('#form_data').trigger("reset");
         
         jQuery("#grid-table").jqGrid('setGridParam',{
-            url: '<?php echo WS_JQGRID."payment.adj_store_stock_dt_controller/read"; ?>',
+            url: '<?php echo WS_JQGRID."param.p_map_account_controller/read"; ?>',
             postData: {
                 i_search : ''
             }
@@ -577,17 +498,11 @@
         orientation: 'bottom'
     });
 
-    $(".numeric").keypress(function(e) {
+    $(".numeric").keypress(function(event) {
         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
             return false;
         }
     });
 
-    function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which : event.keyCode
-        if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-
-        return true;
-    }
+    $('.select2-single').select2();
 </script>

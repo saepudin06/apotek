@@ -1,28 +1,28 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
 * Json library
-* @class Adj_store_evd_controller
+* @class Adjustment_evd_controller
 * @version 07/05/2015 12:18:00
 */
-class Adj_store_evd_controller {
+class Adjustment_evd_controller {
 
     function read() {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','adj_store_evd');
+        $sidx = getVarClean('sidx','str','adj_evd_id');
         $sord = getVarClean('sord','str','asc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
         $i_search = getVarClean('i_search','str','');
-        $adj_store_stock_id = getVarClean('adj_store_stock_id','int',0);
+        $adj_id = getVarClean('adj_id','int',0);
 
         try {
 
             $ci = & get_instance();
-            $ci->load->model('payment/adj_store_evd');
-            $table = $ci->adj_store_evd;
+            $ci->load->model('payment/adjustment_evd');
+            $table = $ci->adjustment_evd;
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -40,7 +40,7 @@ class Adj_store_evd_controller {
 
             // Filter Table
             $req_param['where'] = array();
-            $table->setCriteria("adj_store_stock_id=".$adj_store_stock_id);
+            $table->setCriteria("adj_id=".$adj_id);
             
             if(!empty($i_search)) {
                 $table->setCriteria("( upper(description) like upper('%".$i_search."%')
@@ -108,8 +108,8 @@ class Adj_store_evd_controller {
 
 
         $ci = & get_instance();
-        $ci->load->model('payment/adj_store_evd');
-        $table = $ci->adj_store_evd;
+        $ci->load->model('payment/adjustment_evd');
+        $table = $ci->adjustment_evd;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -128,7 +128,7 @@ class Adj_store_evd_controller {
         $config['allowed_types'] = 'jpg|JPG|JPEG|png|PNG|gif|GIF';
         $config['max_size'] = '10000000';
         $config['overwrite'] = TRUE;
-        $config['file_name'] = 'adj_stock_'.date("Ymdhis");
+        $config['file_name'] = 'adj_'.date("Ymdhis");
 
         $ci->load->library('upload');
         $ci->upload->initialize($config);
@@ -210,8 +210,8 @@ class Adj_store_evd_controller {
     function update() {
 
         $ci = & get_instance();
-        $ci->load->model('payment/adj_store_evd');
-        $table = $ci->adj_store_evd;
+        $ci->load->model('payment/adjustment_evd');
+        $table = $ci->adjustment_evd;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -230,7 +230,7 @@ class Adj_store_evd_controller {
         $config['allowed_types'] = 'jpg|JPG|JPEG|png|PNG|gif|GIF';
         $config['max_size'] = '10000000';
         $config['overwrite'] = TRUE;
-        $config['file_name'] = 'adj_stock_'.date("Ymdhis");
+        $config['file_name'] = 'adj_'.date("Ymdhis");
 
         $ci->load->library('upload');
         $ci->upload->initialize($config);
@@ -315,8 +315,8 @@ class Adj_store_evd_controller {
     function destroy() {
 
         $ci = & get_instance();
-        $ci->load->model('payment/adj_store_evd');
-        $table = $ci->adj_store_evd;
+        $ci->load->model('payment/adjustment_evd');
+        $table = $ci->adjustment_evd;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -365,4 +365,4 @@ class Adj_store_evd_controller {
 
 }
 
-/* End of file Adj_store_evd_controller.php */
+/* End of file Adjustment_evd_controller.php */

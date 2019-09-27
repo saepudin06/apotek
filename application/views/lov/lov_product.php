@@ -140,7 +140,7 @@
 
                 setTimeout(function(){
                       $("#grid-table-lov_product").setSelection($("#grid-table-lov_product").getDataIDs()[0],true);
-                      $("#grid-table-lov_product").focus();
+                      // $("#grid-table-lov_product").focus();
                 },500);
 
             },

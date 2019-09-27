@@ -132,7 +132,7 @@
 
                 setTimeout(function(){
                       $("#grid-table-lov_purchase_request").setSelection($("#grid-table-lov_purchase_request").getDataIDs()[0],true);
-                      $("#grid-table-lov_purchase_request").focus();
+                      // $("#grid-table-lov_purchase_request").focus();
                 },500);
 
             },

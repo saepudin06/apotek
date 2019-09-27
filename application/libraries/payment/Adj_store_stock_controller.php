@@ -304,8 +304,8 @@ class Adj_store_stock_controller {
 
 
         $ci = & get_instance();
-        $ci->load->model('payment/adj_store_stock_dt');
-        $table = $ci->adj_store_stock_dt;
+        $ci->load->model('payment/adj_store_stock');
+        $table = $ci->adj_store_stock;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -363,8 +363,8 @@ class Adj_store_stock_controller {
 
 
         $ci = & get_instance();
-        $ci->load->model('payment/adj_store_stock_dt');
-        $table = $ci->adj_store_stock_dt;
+        $ci->load->model('payment/adj_store_stock');
+        $table = $ci->adj_store_stock;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -421,8 +421,8 @@ class Adj_store_stock_controller {
 
 
         $ci = & get_instance();
-        $ci->load->model('payment/adj_store_stock_dt');
-        $table = $ci->adj_store_stock_dt;
+        $ci->load->model('payment/adj_store_stock');
+        $table = $ci->adj_store_stock;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 

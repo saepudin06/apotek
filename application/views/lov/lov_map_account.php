@@ -1,26 +1,24 @@
-<div id="modal_lov_purchase_order_det" class="modal fade" tabindex="-1" style="overflow-y: scroll;">
+<div id="modal_lov_map_account" class="modal fade" tabindex="-1" style="overflow-y: scroll;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <!-- modal title -->
             <div class="modal-header no-padding">
                 <div class="table-header">
-                    <span class="form-add-edit-title"> Data Purchase Order Detail </span>
+                    <span class="form-add-edit-title"> Data Supplier </span>
                 </div>
             </div>
-            <input type="hidden" id="modal_lov_purchase_order_det_id_val" value="" />
-            <input type="hidden" id="modal_lov_purchase_order_det_name_val" value="" />
-            <input type="hidden" id="modal_lov_purchase_order_det_qty_val" value="" />
-            <input type="hidden" id="modal_lov_purchase_order_det_basic_price_val" value="" />
+            <input type="hidden" id="modal_lov_map_account_id_val" value="" />
+            <input type="hidden" id="modal_lov_map_account_name_val" value="" />
 
             <!-- modal body -->
             <div class="modal-body">
                 <div>
-                  <button type="button" class="btn btn-sm btn-success default" id="modal_lov_purchase_order_det_btn_blank">
-                      Blank
+                  <button type="button" class="btn btn-sm btn-success default" id="modal_lov_map_account_btn_blank">
+                      Kosong
                   </button>
 
                   <button class="btn btn-danger btn-sm default" data-dismiss="modal">
-                       Close
+                       Tutup
                   </button>
                 </div>
 
@@ -29,10 +27,10 @@
                     <label class="control-label col-md-2">Pencarian :</label>
                     <div class="col-md-9">
                         <div class="input-group col-md-9">
-                            <!-- <input id="i_search_lov_purchase_order_det" type="text" class="form-control"> -->
-                            <input type="text" class="form-control" id="i_search_lov_purchase_order_det" placeholder="Search">
+                            <!-- <input id="i_search_lov_map_account" type="text" class="form-control"> -->
+                            <input type="text" class="form-control" id="i_search_lov_map_account" placeholder="Search">
                             <span class="input-group-btn">
-                                <button class="btn  btn-primary default" type="button" onclick="filter_lov_purchase_order_det()">Cari</button>
+                                <button class="btn  btn-primary default" type="button" onclick="filter_lov_map_account()">Cari</button>
                             </span>
                         </div>
                     </div>
@@ -40,8 +38,8 @@
                 <div style="padding-bottom: 10px;"></div>
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="grid-table-lov_purchase_order_det"></table>
-                        <div id="grid-pager-lov_purchase_order_det"></div>
+                        <table id="grid-table-lov_map_account"></table>
+                        <div id="grid-pager-lov_map_account"></div>
                     </div>
                 </div>
             </div>
@@ -52,58 +50,52 @@
 
 <script>
     $(function($) {
-        $("#modal_lov_purchase_order_det_btn_blank").on('click', function() {
-            $("#"+ $("#modal_lov_purchase_order_det_id_val").val()).val("");
-            $("#"+ $("#modal_lov_purchase_order_det_name_val").val()).val("");
-            $("#"+ $("#modal_lov_purchase_order_det_qty_val").val()).val("");
-            $("#"+ $("#modal_lov_purchase_order_det_basic_price_val").val()).val("");
-            $("#modal_lov_purchase_order_det").modal("toggle");
+        $("#modal_lov_map_account_btn_blank").on('click', function() {
+            $("#"+ $("#modal_lov_map_account_id_val").val()).val("");
+            $("#"+ $("#modal_lov_map_account_name_val").val()).val("");
+            $("#modal_lov_map_account").modal("toggle");
         });
     });
 
-    function modal_lov_purchase_order_det_show(the_id_field, the_code_field, the_qty_field, the_basic_price_field, purchase_order_id) {
-        modal_lov_purchase_order_det_set_field_value(the_id_field, the_code_field, the_qty_field, the_basic_price_field);
-        $("#modal_lov_purchase_order_det").modal({backdrop: 'static'});
-        modal_lov_purchase_order_det_prepare_table(purchase_order_id);
+    function modal_lov_map_account_show(the_id_field, the_code_field, account_type) {
+        modal_lov_map_account_set_field_value(the_id_field, the_code_field);
+        $("#modal_lov_map_account").modal({backdrop: 'static'});
+        modal_lov_map_account_prepare_table(account_type);
     }
 
 
-    function modal_lov_purchase_order_det_set_field_value(the_id_field, the_code_field, the_qty_field, the_basic_price_field) {
-         $("#modal_lov_purchase_order_det_id_val").val(the_id_field);
-         $("#modal_lov_purchase_order_det_name_val").val(the_code_field);
-         $("#modal_lov_purchase_order_det_qty_val").val(the_qty_field);
-         $("#modal_lov_purchase_order_det_basic_price_val").val(the_basic_price_field);
+    function modal_lov_map_account_set_field_value(the_id_field, the_code_field) {
+         $("#modal_lov_map_account_id_val").val(the_id_field);
+         $("#modal_lov_map_account_name_val").val(the_code_field);
     }
 
-    function modal_lov_purchase_order_det_set_value(the_id_val, the_code_val, the_qty_val, the_basic_price_val) {
-         $("#"+ $("#modal_lov_purchase_order_det_id_val").val()).val(the_id_val);
-         $("#"+ $("#modal_lov_purchase_order_det_name_val").val()).val(the_code_val);
-         $("#"+ $("#modal_lov_purchase_order_det_qty_val").val()).val(the_qty_val);
-         $("#"+ $("#modal_lov_purchase_order_det_basic_price_val").val()).val(the_basic_price_val);
-         $("#modal_lov_purchase_order_det").modal("toggle");
+    function modal_lov_map_account_set_value(the_id_val, the_code_val) {
+         $("#"+ $("#modal_lov_map_account_id_val").val()).val(the_id_val);
+         $("#"+ $("#modal_lov_map_account_name_val").val()).val(the_code_val);
+         $("#modal_lov_map_account").modal("toggle");
 
-         $("#"+ $("#modal_lov_purchase_order_det_id_val").val()).change();
-         $("#"+ $("#modal_lov_purchase_order_det_name_val").val()).change();
-         $("#"+ $("#modal_lov_purchase_order_det_qty_val").val()).change();
-         $("#"+ $("#modal_lov_purchase_order_det_basic_price_val").val()).change();
+         $("#"+ $("#modal_lov_map_account_id_val").val()).change();
+         $("#"+ $("#modal_lov_map_account_name_val").val()).change();
     }
 
 
-    function modal_lov_purchase_order_det_prepare_table(purchase_order_id) {
-        var grid_selector = "#grid-table-lov_purchase_order_det";
-        var pager_selector = "#grid-pager-lov_purchase_order_det";
+    function modal_lov_map_account_prepare_table(account_type) {
+        var grid_selector = "#grid-table-lov_map_account";
+        var pager_selector = "#grid-pager-lov_map_account";
 
-        jQuery("#grid-table-lov_purchase_order_det").jqGrid({
-            url: '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/read"; ?>',
-            postData: { purchase_order_id : purchase_order_id },
+
+        jQuery("#grid-table-lov_map_account").jqGrid({
+            url: '<?php echo WS_JQGRID."param.p_map_account_controller/crud"; ?>',
+            postData: { account_type : account_type },
             datatype: "json",
             mtype: "POST",
             loadui: "disable",
             colModel: [
-                {label: 'Purchase Order ID', name: 'purchase_order_det_id', width: 100, align: "left", editable: false, hidden:true},
-                {label: 'Product Name',name: 'product_name',width: 150, align: "left",editable: false },
-                {label: 'Qty',name: 'qty',width: 150, align: "left",editable: false },                
-                {label: 'basic_price', name: 'basic_price', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'ID', name: 'p_map_account_id', width: 100, align: "left", editable: false, hidden:true},
+                {label: 'No. Akun', name: 'acc_num', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Nama Akun',name: 'acc_name',width: 150, align: "left",editable: false },
+                {label: 'Jenis Akun',name: 'account_type_name',width: 150, align: "left",editable: false },
+                {label: 'Keterangan',name: 'acc_desc',width: 150, align: "left",editable: false },
             ],
             height: '100%',
             width: 750,
@@ -121,18 +113,16 @@
             },
             ondblClickRow: function(rowid) {
 
-                var grid = $('#grid-table-lov_purchase_order_det');
+                var grid = $('#grid-table-lov_map_account');
                 var sel_id = grid.jqGrid('getGridParam', 'selrow');
-                var purchase_order_det_id = grid.jqGrid('getCell', sel_id, 'purchase_order_det_id');
-                var product_name = grid.jqGrid('getCell', sel_id, 'product_name');
-                var qty = grid.jqGrid('getCell', sel_id, 'qty');
-                var basic_price = grid.jqGrid('getCell', sel_id, 'basic_price');
+                var acc_num = grid.jqGrid('getCell', sel_id, 'acc_num');
+                var acc_name = grid.jqGrid('getCell', sel_id, 'acc_name');
 
-                modal_lov_purchase_order_det_set_value(purchase_order_det_id,product_name,qty,basic_price);
+                modal_lov_map_account_set_value(acc_num,acc_name);
 
             },
             sortorder:'',
-            pager: '#grid-pager-lov_purchase_order_det',
+            pager: '#grid-pager-lov_map_account',
             jsonReader: {
                 root: 'rows',
                 id: 'id',
@@ -144,18 +134,17 @@
                 }
 
                 setTimeout(function(){
-                      $("#grid-table-lov_purchase_order_det").setSelection($("#grid-table-lov_purchase_order_det").getDataIDs()[0],true);
-                      // $("#grid-table-lov_purchase_order_det").focus();
+                      $("#grid-table-lov_map_account").setSelection($("#grid-table-lov_map_account").getDataIDs()[0],true);
                 },500);
 
             },
             //memanggil controller jqgrid yang ada di controller crud
-            editurl: '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/crud"; ?>',
+            editurl: '<?php echo WS_JQGRID."param.p_map_account_controller/crud"; ?>',
             caption: ""
 
         });
 
-        jQuery('#grid-table-lov_purchase_order_det').jqGrid('navGrid', '#grid-pager-lov_purchase_order_det',
+        jQuery('#grid-table-lov_map_account').jqGrid('navGrid', '#grid-pager-lov_map_account',
             {   //navbar options
                 edit: false,
                 editicon: 'fa fa-pencil blue bigger-120',
@@ -281,31 +270,33 @@
                 }
             }
         );
+        
+
     }
 
-    $('#i_search_lov_purchase_order_det').on('keyup', function(event){
+    $('#i_search_lov_map_account').on('keyup', function(event){
         event.preventDefault();
         if(event.keyCode === 13) {
-            var i_search_lov_purchase_order_det = $('#i_search_lov_purchase_order_det').val();
-            jQuery("#grid-table-lov_purchase_order_det").jqGrid('setGridParam',{
-                url: '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/read"; ?>',
+            var i_search_lov_map_account = $('#i_search_lov_map_account').val();
+            jQuery("#grid-table-lov_map_account").jqGrid('setGridParam',{
+                url: '<?php echo WS_JQGRID."param.p_map_account_controller/read"; ?>',
                 postData: {
-                    i_search : i_search_lov_purchase_order_det
+                    i_search : i_search_lov_map_account
                 }
             });
-            $("#grid-table-lov_purchase_order_det").trigger("reloadGrid");
+            $("#grid-table-lov_map_account").trigger("reloadGrid");
         }
     });
 
-    function filter_lov_purchase_order_det(){
-        var i_search_lov_purchase_order_det = $('#i_search_lov_purchase_order_det').val();
+    function filter_lov_map_account(){
+        var i_search_lov_map_account = $('#i_search_lov_map_account').val();
         
-        jQuery("#grid-table-lov_purchase_order_det").jqGrid('setGridParam',{
-                url: '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/read"; ?>',
+        jQuery("#grid-table-lov_map_account").jqGrid('setGridParam',{
+                url: '<?php echo WS_JQGRID."param.p_map_account_controller/read"; ?>',
                 postData: {
-                    i_search : i_search_lov_purchase_order_det
+                    i_search : i_search_lov_map_account
                 }
             });
-            $("#grid-table-lov_purchase_order_det").trigger("reloadGrid");
+            $("#grid-table-lov_map_account").trigger("reloadGrid");
     }
 </script>

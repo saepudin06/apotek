@@ -170,7 +170,7 @@
 
                 setTimeout(function(){
                       $("#grid-table-lov_pr_det").setSelection($("#grid-table-lov_pr_det").getDataIDs()[0],true);
-                      $("#grid-table-lov_pr_det").focus();
+                      // $("#grid-table-lov_pr_det").focus();
                 },500);
 
             },

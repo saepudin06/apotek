@@ -1,28 +1,28 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
 * Json library
-* @class Adj_store_evd_controller
+* @class Adjusment_controller
 * @version 07/05/2015 12:18:00
 */
-class Adj_store_evd_controller {
+class Adjusment_controller {
 
     function read() {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','adj_store_evd');
-        $sord = getVarClean('sord','str','asc');
+        $sidx = getVarClean('sidx','str','adj_id');
+        $sord = getVarClean('sord','str','desc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
         $i_search = getVarClean('i_search','str','');
-        $adj_store_stock_id = getVarClean('adj_store_stock_id','int',0);
 
         try {
 
             $ci = & get_instance();
-            $ci->load->model('payment/adj_store_evd');
-            $table = $ci->adj_store_evd;
+            $ci->load->model('payment/adjusment');
+            $table = $ci->adjusment;
+            $userdata = $ci->session->userdata;
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -40,10 +40,12 @@ class Adj_store_evd_controller {
 
             // Filter Table
             $req_param['where'] = array();
-            $table->setCriteria("adj_store_stock_id=".$adj_store_stock_id);
-            
+            $table->setCriteria("bu_id=".$userdata['bu_id']);
+
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(description) like upper('%".$i_search."%')
+                $table->setCriteria("( upper(acc_num) like upper('%".$i_search."%') OR
+                                        upper(status) like upper('%".$i_search."%') OR
+                                        upper(description) like upper('%".$i_search."%') 
                                      )");
             }
 
@@ -108,8 +110,8 @@ class Adj_store_evd_controller {
 
 
         $ci = & get_instance();
-        $ci->load->model('payment/adj_store_evd');
-        $table = $ci->adj_store_evd;
+        $ci->load->model('payment/adjusment');
+        $table = $ci->adjusment;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -124,29 +126,10 @@ class Adj_store_evd_controller {
         $table->actionType = 'CREATE';
         $errors = array();
 
-        $config['upload_path'] = './upload/';
-        $config['allowed_types'] = 'jpg|JPG|JPEG|png|PNG|gif|GIF';
-        $config['max_size'] = '10000000';
-        $config['overwrite'] = TRUE;
-        $config['file_name'] = 'adj_stock_'.date("Ymdhis");
-
-        $ci->load->library('upload');
-        $ci->upload->initialize($config);
-
         if (isset($items[0])){
             $numItems = count($items);
             for($i=0; $i < $numItems; $i++){
                 try{
-
-                    if ($_FILES['path_file']['name'] != ''){
-                        if (!$ci->upload->do_upload("path_file")) {
-                            throw new Exception( $ci->upload->display_errors() );
-                        }else{
-                            $filedata = $ci->upload->data();
-                            $file_name = $filedata['file_name'];
-                            $items[$i]['path_file'] = "upload/".$file_name;
-                        }
-                    }
 
                     $table->db->trans_begin(); //Begin Trans
 
@@ -173,17 +156,6 @@ class Adj_store_evd_controller {
         }else {
 
             try{
-
-                if ($_FILES['path_file']['name'] != ''){
-                    if (!$ci->upload->do_upload("path_file")) {
-                        throw new Exception( $ci->upload->display_errors() );
-                    }else{
-                        $filedata = $ci->upload->data();
-                        $file_name = $filedata['file_name'];
-                        $items['path_file'] = "upload/".$file_name;
-                    }
-                }
-
                 $table->db->trans_begin(); //Begin Trans
 
                     $table->setRecord($items);
@@ -210,8 +182,8 @@ class Adj_store_evd_controller {
     function update() {
 
         $ci = & get_instance();
-        $ci->load->model('payment/adj_store_evd');
-        $table = $ci->adj_store_evd;
+        $ci->load->model('payment/adjusment');
+        $table = $ci->adjusment;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -226,32 +198,12 @@ class Adj_store_evd_controller {
 
         $table->actionType = 'UPDATE';
 
-        $config['upload_path'] = './upload/';
-        $config['allowed_types'] = 'jpg|JPG|JPEG|png|PNG|gif|GIF';
-        $config['max_size'] = '10000000';
-        $config['overwrite'] = TRUE;
-        $config['file_name'] = 'adj_stock_'.date("Ymdhis");
-
-        $ci->load->library('upload');
-        $ci->upload->initialize($config);
-
         if (isset($items[0])){
             
             $errors = array();
             $numItems = count($items);
             for($i=0; $i < $numItems; $i++){
                 try{
-
-                    if ($_FILES['path_file']['name'] != ''){
-                        if (!$ci->upload->do_upload("path_file")) {
-                            throw new Exception( $ci->upload->display_errors() );
-                        }else{
-                            $filedata = $ci->upload->data();
-                            $file_name = $filedata['file_name'];
-                            $items[$i]['path_file'] = "upload/".$file_name;
-                        }
-                    }
-
                     $table->db->trans_begin(); //Begin Trans
 
                         $table->setRecord($items[$i]);
@@ -278,17 +230,6 @@ class Adj_store_evd_controller {
         }else {
             
             try{
-
-                if ($_FILES['path_file']['name'] != ''){
-                    if (!$ci->upload->do_upload("path_file")) {
-                        throw new Exception( $ci->upload->display_errors() );
-                    }else{
-                        $filedata = $ci->upload->data();
-                        $file_name = $filedata['file_name'];
-                        $items['path_file'] = "upload/".$file_name;
-                    }
-                }
-
                 $table->db->trans_begin(); //Begin Trans
 
                     $table->setRecord($items);
@@ -315,8 +256,8 @@ class Adj_store_evd_controller {
     function destroy() {
 
         $ci = & get_instance();
-        $ci->load->model('payment/adj_store_evd');
-        $table = $ci->adj_store_evd;
+        $ci->load->model('payment/adjusment');
+        $table = $ci->adjusment;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
@@ -362,7 +303,69 @@ class Adj_store_evd_controller {
         return $data;
     }
 
+    function updateStatus() {
+
+
+        $ci = & get_instance();
+        $ci->load->model('payment/adjusment');
+        $table = $ci->adjusment;
+
+        $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
+
+        $adj_id = getVarClean('adj_id','int',0);
+        $null =  null;
+
+
+        $userdata = $ci->session->userdata;
+        try{
+
+             
+            $sql = "BEGIN "
+                    . " PRC_UPDATE_ADJ ("
+                    . " :i_adj_id, "
+                    . " :i_bu_id,"
+                    . " :i_status,"
+                    . " :i_user,"
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
+
+            $stmt = oci_parse($table->db->conn_id, $sql);
+
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_adj_id', $adj_id);
+            oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
+            oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);
+            oci_bind_by_name($stmt, ':i_status', $null);
+            
+
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
+
+
+            ociexecute($stmt);
+
+            if($o_msg_code == 0){
+                $data['rows'] = array();
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+            }else{
+                $data['rows'] = array();
+                $data['success'] = false;
+                $data['message'] = $o_msg;
+            }
+
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+            $data['rows'] = array();
+        }
+
+        return $data;
+
+    }
+
 
 }
 
-/* End of file Adj_store_evd_controller.php */
+/* End of file Adjusment_controller.php */

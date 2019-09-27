@@ -131,7 +131,7 @@
 
                 setTimeout(function(){
                       $("#grid-table-lov_supplier").setSelection($("#grid-table-lov_supplier").getDataIDs()[0],true);
-                      $("#grid-table-lov_supplier").focus();
+                      // $("#grid-table-lov_supplier").focus();
                 },500);
 
             },
