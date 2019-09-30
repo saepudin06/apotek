@@ -18,7 +18,8 @@ class Adj_store_stock extends Abstract_model {
                                 'invoice_num_ref'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'No. Referensi'),    
                                 'payment_status'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Status Pembayaran'),    
                                 'status'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Status'),    
-                                'due_dat_payment'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Tgl. Jatuh Tempo'),    
+                                'due_dat_payment'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Tgl. Jatuh Tempo'),   
+                                'p_map_account_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'No. Akun atau Nama Akun'),  
                                 'description'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Keterangan'),    
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
@@ -42,7 +43,10 @@ class Adj_store_stock extends Abstract_model {
                                 payment_status,
                                 supplier_name,
                                 bu_name,
-                                adj_type_name";
+                                adj_type_name,
+                                p_map_account_id,
+                                acc_num,
+                                acc_name";
 
     public $fromClause      = "vw_adj_store_stock";
 

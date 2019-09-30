@@ -41,6 +41,8 @@ class Adj_store_stock_controller {
             $req_param['where'] = array();
             if(!empty($i_search)) {
                 $table->setCriteria("( upper(supplier_name) like upper('%".$i_search."%') OR
+                                        upper(acc_num) like upper('%".$i_search."%') OR
+                                        upper(acc_name) like upper('%".$i_search."%') OR
                                         upper(bu_name) like upper('%".$i_search."%') OR
                                         upper(status) like upper('%".$i_search."%') 
                                      )");

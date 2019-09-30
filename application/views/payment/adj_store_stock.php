@@ -121,6 +121,25 @@
                             </div>
 
                             <div class="form-row">
+                                <label class="form-group has-float-label col-md-5">
+                                    <input class="form-control" id="acc_num" name="acc_num" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <span>No. Akun</span>
+                                </label>
+
+                                <label class="form-group has-float-label col-md-6">
+                                    <input class="form-control" id="acc_name" name="acc_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <span>Nama Akun</span>
+                                </label>
+
+                                <div class="col-md-1">
+                                    <button class="btn btn-primary default" type="button" onclick="search_acc('acc_num', 'acc_name','p_map_account_id')">Cari <i class="simple-icon-question"></i></button>
+                                </div>
+
+                                <input class="form-control" type="hidden" id="p_map_account_id" name="p_map_account_id" placeholder="" autocomplete="off" readonly="" />
+
+                            </div>
+
+                            <div class="form-row">
                                 <label class="form-group has-float-label col-md-12">
                                     <input class="form-control" id="description" name="description" placeholder="" autocomplete="off" autofocus=""  />
                                     <span>Keterangan</span>
@@ -141,8 +160,26 @@
 </div>
 
 <?php $this->load->view('lov/lov_supplier'); ?>
+<?php $this->load->view('lov/lov_map_account'); ?>
 
 <script type="text/javascript">
+    function search_acc(id, code, p_map_account_id){
+        var account_type = 0;
+        var dc = 0;
+        
+
+        if(dc == '1'){
+            account_type = 18;
+        }else if(dc == '-1'){
+            account_type = 19;
+        }else{
+            account_type = 0;
+        }
+        
+        modal_lov_map_account_show(id, code, p_map_account_id, account_type);
+    }
+
+
     function search_supplier(id, code){
         modal_lov_supplier_show(id, code);
     }
@@ -164,6 +201,7 @@
             colModel: [
                 {label: 'ID', name: 'adj_store_stock_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Jenis Adjustment ID', name: 'adj_type_id', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
+                {label: 'Map Account ID', name: 'p_map_account_id', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Supplier ID', name: 'supplier_id', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Bisnis Unit ID', name: 'bu_id_dest', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: '<center>Action (Status)</center>',width: 150, align: "center",
@@ -179,6 +217,8 @@
                         }
                     }
                 },
+                {label: 'No. Akun', name: 'acc_num', width: 240, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Nama Akun', name: 'acc_name', width: 240, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Jenis Adjustment', name: 'adj_type_name', width: 240, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Unit Bisnis(Tujuan)', name: 'bu_name', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Supplier', name: 'supplier_name', width: 150, align: "left", editable: false, search:false, sortable:false},

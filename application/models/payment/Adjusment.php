@@ -15,7 +15,7 @@ class Adjusment extends Abstract_model {
                                 'd_c'   => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Debit/Kredit'),                                
                                 'amount'   => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Total'),                                
                                 'bu_id'   => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Unit Bisnis'),                                
-                                'p_map_account_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'No. Akun'),     
+                                'p_map_account_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'No. Akun atau Nama Akun'),     
                                 'status'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Status'),    
                                 'adj_date'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Tanggal'),    
                                 'description'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Keterangan'),    
