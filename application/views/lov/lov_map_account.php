@@ -9,6 +9,7 @@
             </div>
             <input type="hidden" id="modal_lov_map_account_id_val" value="" />
             <input type="hidden" id="modal_lov_map_account_name_val" value="" />
+            <input type="hidden" id="modal_lov_map_account_idmap_val" value="" />
             <input type="hidden" id="modal_lov_map_account_masuk" value="" />
 
             <!-- modal body -->
@@ -58,25 +59,28 @@
         });
     });
 
-    function modal_lov_map_account_show(the_id_field, the_code_field, account_type) {
-        modal_lov_map_account_set_field_value(the_id_field, the_code_field);
+    function modal_lov_map_account_show(the_id_field, the_code_field, the_idmap_field, account_type) {
+        modal_lov_map_account_set_field_value(the_id_field, the_code_field, the_idmap_field);
         $("#modal_lov_map_account").modal({backdrop: 'static'});
         modal_lov_map_account_prepare_table(account_type);
     }
 
 
-    function modal_lov_map_account_set_field_value(the_id_field, the_code_field) {
+    function modal_lov_map_account_set_field_value(the_id_field, the_code_field, the_idmap_field) {
          $("#modal_lov_map_account_id_val").val(the_id_field);
          $("#modal_lov_map_account_name_val").val(the_code_field);
+         $("#modal_lov_map_account_idmap_val").val(the_idmap_field);
     }
 
-    function modal_lov_map_account_set_value(the_id_val, the_code_val) {
+    function modal_lov_map_account_set_value(the_id_val, the_code_val, the_idmap_val) {
          $("#"+ $("#modal_lov_map_account_id_val").val()).val(the_id_val);
          $("#"+ $("#modal_lov_map_account_name_val").val()).val(the_code_val);
+         $("#"+ $("#modal_lov_map_account_idmap_val").val()).val(the_idmap_val);
          $("#modal_lov_map_account").modal("toggle");
 
          $("#"+ $("#modal_lov_map_account_id_val").val()).change();
          $("#"+ $("#modal_lov_map_account_name_val").val()).change();
+         $("#"+ $("#modal_lov_map_account_idmap_val").val()).change();
     }
 
 
@@ -129,8 +133,9 @@
                 var sel_id = grid.jqGrid('getGridParam', 'selrow');
                 var acc_num = grid.jqGrid('getCell', sel_id, 'acc_num');
                 var acc_name = grid.jqGrid('getCell', sel_id, 'acc_name');
+                var p_map_account_id = grid.jqGrid('getCell', sel_id, 'p_map_account_id');
 
-                modal_lov_map_account_set_value(acc_num,acc_name);
+                modal_lov_map_account_set_value(acc_num,acc_name,p_map_account_id);
 
             },
             sortorder:'',

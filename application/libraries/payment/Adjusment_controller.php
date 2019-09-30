@@ -44,6 +44,7 @@ class Adjusment_controller {
 
             if(!empty($i_search)) {
                 $table->setCriteria("( upper(acc_num) like upper('%".$i_search."%') OR
+                                        upper(acc_name) like upper('%".$i_search."%') OR
                                         upper(status) like upper('%".$i_search."%') OR
                                         upper(description) like upper('%".$i_search."%') 
                                      )");

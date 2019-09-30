@@ -51,12 +51,12 @@
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-4">
+                                <label class="form-group has-float-label col-md-2">
                                     <input class="form-control" id="adj_id" name="adj_id" placeholder="" autocomplete="off" readonly="" />
                                     <span>ID *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-4">
+                                <label class="form-group has-float-label col-md-3">
                                      <select class="form-control" id="d_c" name="d_c" onchange="dcChange()">
                                         <option value=""> -- Pilih Debit/Kredit -- </option>
                                             <option value="1"> Debit </option>
@@ -66,21 +66,26 @@
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="acc_name" name="acc_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <input class="form-control" id="acc_num" name="acc_num" placeholder="" autocomplete="off" autofocus="" readonly="" />
                                     <span>No. Akun</span>
                                 </label>
 
+                                <label class="form-group has-float-label col-md-3">
+                                    <input class="form-control" id="acc_name" name="acc_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
+                                    <span>Nama Akun</span>
+                                </label>
+
                                 <div class="col-md-1">
-                                    <button class="btn btn-primary default" type="button" onclick="search_acc('acc_num', 'acc_name')">Cari <i class="simple-icon-question"></i></button>
+                                    <button class="btn btn-primary default" type="button" onclick="search_acc('acc_num', 'acc_name','p_map_account_id')">Cari <i class="simple-icon-question"></i></button>
                                 </div>
 
-                                <input class="form-control" type="hidden" id="acc_num" name="acc_num" placeholder="" autocomplete="off" readonly="" />
+                                <input class="form-control" type="hidden" id="p_map_account_id" name="p_map_account_id" placeholder="" autocomplete="off" readonly="" />
 
                             </div>
 
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control datepicker" id="adj_date" name="adj_date" placeholder="" autocomplete="off" autofocus="" />
+                                <label class="form-group has-float-label col-md-2">
+                                    <input class="form-control datepicker" id="adj_date" name="adj_date" placeholder="" autocomplete="off"  readonly="" />
                                     <span>Tanggal</span>
                                 </label>
 
@@ -89,7 +94,7 @@
                                     <span>Total *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-6">
+                                <label class="form-group has-float-label col-md-7">
                                     <input class="form-control" id="description" name="description" placeholder="" autocomplete="off" autofocus=""  />
                                     <span>Keterangan</span>
                                 </label>
@@ -111,7 +116,7 @@
 <?php $this->load->view('lov/lov_map_account'); ?>
 
 <script type="text/javascript">
-    function search_acc(id, code){
+    function search_acc(id, code, p_map_account_id){
         var account_type = 0;
         var dc = $('#d_c').val();
         
@@ -124,7 +129,7 @@
             account_type = 0;
         }
         
-        modal_lov_map_account_show(id, code, account_type);
+        modal_lov_map_account_show(id, code, p_map_account_id, account_type);
     }
 
     
@@ -145,6 +150,7 @@
             colModel: [
                 {label: 'ID', name: 'adj_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Bisnis Unit ID', name: 'bu_id', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
+                {label: 'Map Account ID', name: 'p_map_account_id', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Debit/Kredit', name: 'd_c', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Status', name: 'status', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: '<center>Action (Status)</center>',width: 150, align: "center",
@@ -445,6 +451,7 @@
         var adj_date  = $('#grid-table').jqGrid('getCell', rowid, 'adj_date');
         var description  = $('#grid-table').jqGrid('getCell', rowid, 'description');
         var d_c  = $('#grid-table').jqGrid('getCell', rowid, 'd_c');
+        var p_map_account_id  = $('#grid-table').jqGrid('getCell', rowid, 'p_map_account_id');
         
         $('#adj_id').val(rowid);
         $('#bu_id').val(bu_id);
@@ -454,6 +461,7 @@
         $('#adj_date').val(adj_date);        
         $('#description').val(description);        
         $('#d_c').val(d_c);        
+        $('#p_map_account_id').val(p_map_account_id);        
 
     }
 
@@ -574,6 +582,7 @@
         autoclose: true,
         orientation: 'bottom'
     });
+
 
     $(".numeric").keypress(function(e) {
         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
