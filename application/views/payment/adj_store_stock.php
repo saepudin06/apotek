@@ -103,10 +103,11 @@
                                      <select class="form-control select2-single" id="bu_id_dest">
                                         <!-- <option label="&nbsp;">&nbsp;</option> -->
                                         <?php
+                                            $userdata = $ci->session->userdata;
                                             $ci = & get_instance();
                                             $ci->load->model('admin/bunit');
                                             $table = $ci->bunit;
-
+                                            $table->setCriteria("bu_id <> ".$userdata['bu_id']);
                                             $items = $table->getAll(0,-1,'bu_id','asc');
 
                                         ?>
