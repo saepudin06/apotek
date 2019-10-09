@@ -458,10 +458,10 @@
         $(pager_selector).jqGrid( 'setGridWidth', parent_column.width() );
 
     }
-
-    $(window).bind('resize', function() {
-        responsive_jqgrid('#grid-table', '#grid-pager');    
-    }).trigger('resize');
+    
+    $(window).on("resize", function(event) {
+       responsive_jqgrid('#grid-table', '#grid-pager');  
+    });
 
 </script>
 

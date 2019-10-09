@@ -146,7 +146,7 @@
                         var CANCELED = "CANCELED";
                         var RETURN = "RETURN";
 
-                        if(status == '' || status == null || status == 'null'){
+                        if(status == '' || status == null || status == 'null' || status == 'INITIAL'){
                             return '<button class="btn btn-primary btn-xs default" onclick="updateStatus('+rowid+',\''+PASSED+'\')">PASSED</button> <button class="btn btn-warning btn-xs default" onclick="updateStatus('+rowid+',\''+CANCELED+'\')">CANCELED</button> <button class="btn btn-danger btn-xs default" onclick="updateStatus('+rowid+',\''+RETURN+'\')">RETURN</button>';
                         }else{
                             return status;
@@ -372,9 +372,9 @@
             .jqGrid("setFrozenColumns")
             .trigger("reloadGrid", [{ current: true}]);
 
-    $(window).bind('resize', function() {
-        responsive_jqgrid('#grid-table', '#grid-pager');    
-    }).trigger('resize');
+    $(window).on("resize", function(event) {
+       responsive_jqgrid('#grid-table', '#grid-pager');  
+    });
 
 </script>
 
