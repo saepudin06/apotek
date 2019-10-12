@@ -491,13 +491,13 @@
         var stock_min = $('#stock_min').val();
         var qty = $('#qty').val();
 
-        if(qty > stock_min){
-            swal('','Jumlah Stok melebihi Min. stok['+stock_min+'] yang ditentukan','info');
-            $('#qty').val(0);
-            $('#amount').val(0);
-            return false;
+        // if(qty > stock_min){
+        //     swal('','Jumlah Stok melebihi Min. stok['+stock_min+'] yang ditentukan','info');
+        //     $('#qty').val(0);
+        //     $('#amount').val(0);
+        //     return false;
 
-        }
+        // }
 
         var data = new FormData(this);
         var purchase_order_det_id = $('#purchase_order_det_id').val();
