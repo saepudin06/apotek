@@ -122,6 +122,9 @@ class Purchase_order_controller {
             return $data;
         }
 
+        $table->actionType = 'CREATE';
+        $table->setRecord($items);
+
         $errors = array();
         $userdata = $ci->session->userdata;
         $action = 'I';
@@ -190,6 +193,9 @@ class Purchase_order_controller {
             return $data;
         }
 
+        $table->actionType = 'UPDATE';
+        $table->setRecord($items);
+        
         $userdata = $ci->session->userdata;
         $action = 'U';
         try{

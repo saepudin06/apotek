@@ -123,6 +123,8 @@ class Goods_recieve_nt_controller {
         }
 
         $table->actionType = 'CREATE';
+        $table->setRecord($items);
+
         $errors = array();
         $userdata = $ci->session->userdata;
         $action = 'I';
@@ -196,6 +198,8 @@ class Goods_recieve_nt_controller {
 
         //exit;
         $table->actionType = 'UPDATE';
+        $table->setRecord($items);
+        
         $userdata = $ci->session->userdata;
         $action = 'U';
         try{
