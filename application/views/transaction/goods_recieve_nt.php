@@ -60,8 +60,8 @@
                                 </label>
                                 
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control datepicker" id="grn_date" name="grn_date" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Tanggal *</span>
+                                    <input class="form-control datepicker" id="due_date_payment" name="due_date_payment" placeholder="" autocomplete="off" autofocus="" />
+                                    <span>Tgl. Jatuh Tempo *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
@@ -433,7 +433,7 @@
 
     function setData(rowid){
         
-        var grn_date = $('#grid-table').jqGrid('getCell', rowid, 'grn_date');
+        var due_date_payment = $('#grid-table').jqGrid('getCell', rowid, 'due_date_payment');
         var invoice_num_ref  = $('#grid-table').jqGrid('getCell', rowid, 'invoice_num_ref');
         var purchase_order_id  = $('#grid-table').jqGrid('getCell', rowid, 'purchase_order_id');
         var notes  = $('#grid-table').jqGrid('getCell', rowid, 'notes');
@@ -441,7 +441,7 @@
         
         $('#goods_recieve_nt_id').val(rowid);
         $('#purchase_order_id').val(purchase_order_id);
-        $('#grn_date').val(grn_date);
+        $('#due_date_payment').val(due_date_payment);
         $('#notes').val(notes);         
         $('#invoice_num_ref').val(invoice_num_ref);         
         $('#po_num').val(po_num);         
