@@ -606,12 +606,12 @@
                 onClickButton: function(){ 
                     var grid = $('#grid-table-detail');
 
-                    alert($('#irow').val());
-                    alert($('#icolumn').val());
+                    // alert($('#irow').val());
+                    // alert($('#icolumn').val());
 
-                    grid.jqGrid('setGridParam', {cellEdit: true});
-                    grid.jqGrid('editCell', $('#irow').val(), $('#icolumn').val(), true);
-                    grid.jqGrid('setGridParam', {cellEdit: false});
+                    // grid.jqGrid('setGridParam', {cellEdit: true});
+                    // grid.jqGrid('editCell', $('#irow').val(), $('#icolumn').val(), true);
+                    // grid.jqGrid('setGridParam', {cellEdit: false});
 
                     rowid = grid.jqGrid ('getRowData');
                     if(rowid == null) {
@@ -697,7 +697,7 @@
     }
 
     function edit_product(rowid){    
-        console.log(rowid);
+        // console.log(rowid);
         var var_url = '<?php echo WS_JQGRID."transaction.purchase_req_det_controller/update"; ?>';
 
         swal({
