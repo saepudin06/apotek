@@ -776,6 +776,16 @@
     }
 
     function searchDataReq(){
+        jQuery("#grid-table-detail").jqGrid('setGridParam',{
+            url: '<?php echo WS_JQGRID."transaction.purchase_req_det_controller/crud"; ?>',
+            postData: { 
+                purchase_request_id : '<?php echo $this->input->post('purchase_request_id'); ?>',
+                product_name : $('#prod_name_req').val()
+            }
+        });
+        
+        $("#grid-table-detail").trigger("reloadGrid");
 
+        responsive_jqgrid('#grid-table-detail', '#grid-pager-detail');
     }
 </script>

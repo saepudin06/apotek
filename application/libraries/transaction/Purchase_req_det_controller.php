@@ -17,6 +17,7 @@ class Purchase_req_det_controller {
 
         $i_search = getVarClean('i_search','str','');
         $purchase_request_id = getVarClean('purchase_request_id','int',0);
+        $product_name = getVarClean('product_name','str','');
 
         try {
 
@@ -42,10 +43,8 @@ class Purchase_req_det_controller {
             $req_param['where'] = array();
 
             $table->setCriteria("purchase_request_id=".$purchase_request_id);
-            if(!empty($i_search)) {
-                $table->setCriteria("( upper(product_name) like upper('%".$i_search."%') OR 
-                                       upper(status_code) like upper('%".$i_search."%')
-                                     )");
+            if(!empty($product_name)) {
+                $table->setCriteria("upper(product_name) like upper('%".$product_name."%')");
             }
 
             $table->setJQGridParam($req_param);
