@@ -122,6 +122,7 @@ class Goods_recieve_nt_controller {
             return $data;
         }
 
+        $table->actionType = 'CREATE';
         $errors = array();
         $userdata = $ci->session->userdata;
         $action = 'I';
@@ -194,7 +195,7 @@ class Goods_recieve_nt_controller {
         }
 
         //exit;
-
+        $table->actionType = 'UPDATE';
         $userdata = $ci->session->userdata;
         $action = 'U';
         try{
