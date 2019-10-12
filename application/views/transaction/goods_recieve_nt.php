@@ -25,13 +25,16 @@
 <div class="row">    
     <div class="col-12">        
         <div class="card mb-4">
-            <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
-                <li class="nav-item w-50 text-center">
+            <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-6" role="tablist">
+                <li class="nav-item w-40 text-center">
                     <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
                         aria-selected="true"><strong>Pengecekan Barang</strong></a>
                 </li>
-                <li class="nav-item w-50 text-center">
+                <li class="nav-item w-20 text-center">
                     <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
+                </li>
+                <li class="nav-item w-40 text-center">
+                    <a class="nav-link" id="tab-3" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Dokumen Pendukung</strong></a>
                 </li>
             </ul>
             
@@ -397,6 +400,27 @@
 
         
         loadContentWithParams("transaction.goods_recieve_nt_dt", {
+            goods_recieve_nt_id: goods_recieve_nt_id,
+            invoice_num_ref : invoice_num_ref,
+            purchase_order_id : purchase_order_id
+        });
+    });
+
+    $("#tab-3").on("click", function(event) {
+
+        event.stopPropagation();
+        var grid = $('#grid-table');
+        goods_recieve_nt_id = grid.jqGrid('getGridParam', 'selrow');
+        invoice_num_ref = grid.jqGrid('getCell', goods_recieve_nt_id, 'invoice_num_ref');
+        purchase_order_id = grid.jqGrid('getCell', goods_recieve_nt_id, 'purchase_order_id');
+
+        if(goods_recieve_nt_id == null) {
+            swal('','Silakan pilih salah satu baris','info');
+            return false;
+        }
+
+        
+        loadContentWithParams("transaction.goods_rcv_nt_evd", {
             goods_recieve_nt_id: goods_recieve_nt_id,
             invoice_num_ref : invoice_num_ref,
             purchase_order_id : purchase_order_id

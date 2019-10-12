@@ -55,7 +55,7 @@
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-6">
-                                    <input class="form-control" id="adj_store_stock_id" name="adj_store_stock_id" placeholder="" autocomplete="off" readonly="" />
+                                    <input class="form-control" id="adj_store_evd" name="adj_store_evd" placeholder="" autocomplete="off" readonly="" />
                                     <span>ID *</span>
                                 </label>
 
