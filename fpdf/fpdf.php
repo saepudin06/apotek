@@ -11,61 +11,61 @@ define('FPDF_VERSION','1.81');
 
 class FPDF
 {
-protected $page;               // current page number
-protected $n;                  // current object number
-protected $offsets;            // array of object offsets
-protected $buffer;             // buffer holding in-memory PDF
-protected $pages;              // array containing pages
-protected $state;              // current document state
-protected $compress;           // compression flag
-protected $k;                  // scale factor (number of points in user unit)
-protected $DefOrientation;     // default orientation
-protected $CurOrientation;     // current orientation
-protected $StdPageSizes;       // standard page sizes
-protected $DefPageSize;        // default page size
-protected $CurPageSize;        // current page size
-protected $CurRotation;        // current page rotation
-protected $PageInfo;           // page-related data
-protected $wPt, $hPt;          // dimensions of current page in points
-protected $w, $h;              // dimensions of current page in user unit
-protected $lMargin;            // left margin
-protected $tMargin;            // top margin
-protected $rMargin;            // right margin
-protected $bMargin;            // page break margin
-protected $cMargin;            // cell margin
-protected $x, $y;              // current position in user unit
-protected $lasth;              // height of last printed cell
-protected $LineWidth;          // line width in user unit
-protected $fontpath;           // path containing fonts
-protected $CoreFonts;          // array of core font names
-protected $fonts;              // array of used fonts
-protected $FontFiles;          // array of font files
-protected $encodings;          // array of encodings
-protected $cmaps;              // array of ToUnicode CMaps
-protected $FontFamily;         // current font family
-protected $FontStyle;          // current font style
-protected $underline;          // underlining flag
-protected $CurrentFont;        // current font info
-protected $FontSizePt;         // current font size in points
-protected $FontSize;           // current font size in user unit
-protected $DrawColor;          // commands for drawing color
-protected $FillColor;          // commands for filling color
-protected $TextColor;          // commands for text color
-protected $ColorFlag;          // indicates whether fill and text colors are different
-protected $WithAlpha;          // indicates whether alpha channel is used
-protected $ws;                 // word spacing
-protected $images;             // array of used images
-protected $PageLinks;          // array of links in pages
-protected $links;              // array of internal links
-protected $AutoPageBreak;      // automatic page breaking
-protected $PageBreakTrigger;   // threshold used to trigger page breaks
-protected $InHeader;           // flag set when processing header
-protected $InFooter;           // flag set when processing footer
-protected $AliasNbPages;       // alias for total number of pages
-protected $ZoomMode;           // zoom display mode
-protected $LayoutMode;         // layout display mode
-protected $metadata;           // document properties
-protected $PDFVersion;         // PDF version number
+public $page;               // current page number
+public $n;                  // current object number
+public $offsets;            // array of object offsets
+public $buffer;             // buffer holding in-memory PDF
+public $pages;              // array containing pages
+public $state;              // current document state
+public $compress;           // compression flag
+public $k;                  // scale factor (number of points in user unit)
+public $DefOrientation;     // default orientation
+public $CurOrientation;     // current orientation
+public $StdPageSizes;       // standard page sizes
+public $DefPageSize;        // default page size
+public $CurPageSize;        // current page size
+public $CurRotation;        // current page rotation
+public $PageInfo;           // page-related data
+public $wPt, $hPt;          // dimensions of current page in points
+public $w, $h;              // dimensions of current page in user unit
+public $lMargin;            // left margin
+public $tMargin;            // top margin
+public $rMargin;            // right margin
+public $bMargin;            // page break margin
+public $cMargin;            // cell margin
+public $x, $y;              // current position in user unit
+public $lasth;              // height of last printed cell
+public $LineWidth;          // line width in user unit
+public $fontpath;           // path containing fonts
+public $CoreFonts;          // array of core font names
+public $fonts;              // array of used fonts
+public $FontFiles;          // array of font files
+public $encodings;          // array of encodings
+public $cmaps;              // array of ToUnicode CMaps
+public $FontFamily;         // current font family
+public $FontStyle;          // current font style
+public $underline;          // underlining flag
+public $CurrentFont;        // current font info
+public $FontSizePt;         // current font size in points
+public $FontSize;           // current font size in user unit
+public $DrawColor;          // commands for drawing color
+public $FillColor;          // commands for filling color
+public $TextColor;          // commands for text color
+public $ColorFlag;          // indicates whether fill and text colors are different
+public $WithAlpha;          // indicates whether alpha channel is used
+public $ws;                 // word spacing
+public $images;             // array of used images
+public $PageLinks;          // array of links in pages
+public $links;              // array of internal links
+public $AutoPageBreak;      // automatic page breaking
+public $PageBreakTrigger;   // threshold used to trigger page breaks
+public $InHeader;           // flag set when processing header
+public $InFooter;           // flag set when processing footer
+public $AliasNbPages;       // alias for total number of pages
+public $ZoomMode;           // zoom display mode
+public $LayoutMode;         // layout display mode
+public $metadata;           // document properties
+public $PDFVersion;         // PDF version number
 
 /*******************************************************************************
 *                               Public methods                                 *
@@ -1030,6 +1030,136 @@ function Output($dest='', $name='', $isUTF8=false)
 	return '';
 }
 
+public function SetWidths($w)
+    {
+        //Set the array of column widths
+        $this->widths=$w;
+    }
+
+    function SetAligns($a)
+    {
+        //Set the array of column alignments
+        $this->aligns=$a;
+    }
+
+    function Row($data)
+    {
+        //Calculate the height of the row
+        $nb=0;
+        for($i=0;$i<count($data);$i++)
+            $nb=max($nb, $this->NbLines($this->widths[$i], $data[$i]));
+        $h=5*$nb;
+        //Issue a page break first if needed
+        $this->CheckPageBreak($h);
+        //Draw the cells of the row
+        for($i=0;$i<count($data);$i++)
+        {
+            $w=$this->widths[$i];
+            $a=isset($this->aligns[$i]) ? $this->aligns[$i] : 'L';
+            //Save the current position
+            $x=$this->GetX();
+            $y=$this->GetY();
+            //Draw the border
+            $this->Rect($x, $y, $w, $h);
+            //Print the text
+            $this->MultiCell($w, 5, $data[$i], 0, $a);
+            //Put the position to the right of the cell
+            $this->SetXY($x+$w, $y);
+        }
+        //Go to the next line
+        $this->Ln($h);
+    }
+
+    function CheckPageBreak($h)
+    {
+        //If the height h would cause an overflow, add a new page immediately
+        if($this->GetY()+$h>$this->PageBreakTrigger)
+            $this->AddPage($this->CurOrientation);
+    }
+    
+    function RowMultiBorderWithHeight($data, $border = array(),$height)
+    {
+        //Calculate the height of the row
+        $nb=0;
+        for($i=0;$i<count($data);$i++)
+            $nb=max($nb,$this->NbLines($this->widths[$i],$data[$i]));
+        $h=$height*$nb;
+        //Issue a page break first if needed
+        $this->CheckPageBreak($h);
+        //Draw the cells of the row
+        for($i=0;$i<count($data);$i++)
+        {
+            $w=$this->widths[$i];
+            $a=isset($this->aligns[$i]) ? $this->aligns[$i] : 'L';
+            //Save the current position
+            $x=$this->GetX();
+            $y=$this->GetY();
+            //Draw the border
+            //$this->Rect($x,$y,$w,$h);
+            $this->Cell($w, $h, '', isset($border[$i]) ? $border[$i] : 1, 0);
+            $this->SetXY($x,$y);
+            //Print the text
+            $this->MultiCell($w,$height,$data[$i],0,$a);
+            //Put the position to the right of the cell
+            $this->SetXY($x+$w,$y);
+        }
+        //Go to the next line
+        $this->Ln($h);
+    }
+    
+    function NbLines($w, $txt)
+    {
+        //Computes the number of lines a MultiCell of width w will take
+        $cw=&$this->CurrentFont['cw'];
+        if($w==0)
+            $w=$this->w-$this->rMargin-$this->x;
+        $wmax=($w-2*$this->cMargin)*1000/$this->FontSize;
+        $s=str_replace("\r", '', $txt);
+        $nb=strlen($s);
+        if($nb>0 and $s[$nb-1]=="\n")
+            $nb--;
+        $sep=-1;
+        $i=0;
+        $j=0;
+        $l=0;
+        $nl=1;
+        while($i<$nb)
+        {
+            $c=$s[$i];
+            if($c=="\n")
+            {
+                $i++;
+                $sep=-1;
+                $j=$i;
+                $l=0;
+                $nl++;
+                continue;
+            }
+            if($c==' ')
+                $sep=$i;
+            $l+=$cw[$c];
+            if($l>$wmax)
+{
+                if($sep==-1)
+                {
+                    if($i==$j)
+                        $i++;
+                }
+                else
+                    $i=$sep+1;
+                $sep=-1;
+                $j=$i;
+                $l=0;
+                $nl++;
+            }
+            else
+                $i++;
+        }
+        return $nl;
+    }
+
+
+
 /*******************************************************************************
 *                              Protected methods                               *
 *******************************************************************************/
@@ -1064,7 +1194,7 @@ protected function _checkoutput()
 	}
 }
 
-protected function _getpagesize($size)
+public function _getpagesize($size)
 {
 	if(is_string($size))
 	{

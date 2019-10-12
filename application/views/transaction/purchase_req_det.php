@@ -75,7 +75,7 @@
                     <div class="col-md-3">
                         <button class="btn btn-secondary default" type="button" onclick="searchDataReq()">Filter</button>
                         <button class="btn btn-primary default" type="button" onclick="download_excel()">Excel</button>
-                        <button class="btn btn-danger default" type="button">PDF</button>
+                        <button class="btn btn-danger default" type="button" onclick="download_pdf()">PDF</button>
                     </div>                
                 </div>
 
@@ -798,6 +798,18 @@
             url += "&purchase_request_id="+purchase_request_id;
 
         window.location = url;    
+
+    }
+
+    function download_pdf(){
+
+        var purchase_request_id = <?php echo $this->input->post('purchase_request_id'); ?>;
+        
+        var url = "<?php echo base_url() . "purchase_req_det_pdf/pdf/?"; ?>";
+            url += "<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
+            url += "&purchase_request_id="+purchase_request_id;
+
+        window.open(url);    
 
     }
 </script>
