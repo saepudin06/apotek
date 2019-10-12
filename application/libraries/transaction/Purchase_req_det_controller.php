@@ -113,8 +113,11 @@ class Purchase_req_det_controller {
         $table = $ci->purchase_req_det;
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
+        
 
-        $items = $_POST;
+        $items = $_POST['data'];
+
+        // print_r($items['data'][0]['product_id']); exit;
 
         if (!is_array($items)){
             $data['message'] = 'Invalid items parameter';
@@ -125,48 +128,56 @@ class Purchase_req_det_controller {
         $action = 'I';
         try{
 
-            $sql = "BEGIN "
-                    . " P_CRUD_PURCHASE_REQ_DET("
-                    . " :i_action, "
-                    . " :i_purchase_req_det_id,"
-                    . " :i_purchase_request_id,"
-                    . " :i_product_id,"
-                    . " :i_amount,"
-                    . " :i_qty,"
-                    . " :i_basic_price,"
-                    . " :i_user,"
-                    . " :o_msg_code,"
-                    . " :o_msg"
-                    . "); END;";
+            $success = 0;
+            $failed = 0;
+            $msg = '';
+            for($i=0; $i<count($items); $i++){
+                $sql = "BEGIN "
+                        . " P_CRUD_PURCHASE_REQ_DET("
+                        . " :i_action, "
+                        . " :i_purchase_req_det_id,"
+                        . " :i_purchase_request_id,"
+                        . " :i_product_id,"
+                        . " :i_amount,"
+                        . " :i_qty,"
+                        . " :i_basic_price,"
+                        . " :i_user,"
+                        . " :o_msg_code,"
+                        . " :o_msg"
+                        . "); END;";
 
-            $stmt = oci_parse($table->db->conn_id, $sql);
+                $stmt = oci_parse($table->db->conn_id, $sql);
 
-            //  Bind the input parameter
-            oci_bind_by_name($stmt, ':i_action', $action);
-            oci_bind_by_name($stmt, ':i_purchase_req_det_id', $items['purchase_req_det_id']);
-            oci_bind_by_name($stmt, ':i_purchase_request_id', $items['purchase_request_id']);
-            oci_bind_by_name($stmt, ':i_product_id', $items['product_id']);
-            oci_bind_by_name($stmt, ':i_amount', $items['amount']);
-            oci_bind_by_name($stmt, ':i_qty', $items['qty']);
-            oci_bind_by_name($stmt, ':i_basic_price', $items['basic_price']);
-            oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
+                //  Bind the input parameter
+                oci_bind_by_name($stmt, ':i_action', $action);
+                oci_bind_by_name($stmt, ':i_purchase_req_det_id', $items[$i]['purchase_req_det_id']);
+                oci_bind_by_name($stmt, ':i_purchase_request_id', $items[$i]['purchase_request_id']);
+                oci_bind_by_name($stmt, ':i_product_id', $items[$i]['product_id']);
+                oci_bind_by_name($stmt, ':i_amount', $items[$i]['amount']);
+                oci_bind_by_name($stmt, ':i_qty', $items[$i]['qty']);
+                oci_bind_by_name($stmt, ':i_basic_price', $items[$i]['basic_price']);
+                oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
 
-            // Bind the output parameter
-            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
-            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
+                // Bind the output parameter
+                oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+                oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
 
 
-            ociexecute($stmt);
+                ociexecute($stmt);
 
-            if($o_msg_code == 0){
-                $data['rows'] = $items;
-                $data['success'] = true;
-                $data['message'] = $o_msg;
-            }else{
-                $data['rows'] = $items;
-                $data['success'] = false;
-                $data['message'] = $o_msg;
+                if($o_msg_code == 0){
+                    $success = $success + 1;
+                }else{
+                    $msg .= "\n1 Produk gagal disimpan : ".$o_msg;
+                }
             }
+
+            
+
+            $data['rows'] = $items;
+            $data['success'] = true;
+            $data['message'] = $success." Produk berhasil disimpan".$msg;
+
 
         }catch (Exception $e) {
             $data['message'] = $e->getMessage();
@@ -185,7 +196,7 @@ class Purchase_req_det_controller {
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
-        $items = $_POST;
+        $items = $_POST['data'];
 
         if (!is_array($items)){
             $data['message'] = 'Invalid items parameter';
@@ -196,49 +207,67 @@ class Purchase_req_det_controller {
         $action = 'U';
         $status = null;
         try{
-            
-            $sql = "BEGIN "
-                    . " P_CRUD_PURCHASE_REQ_DET("
-                    . " :i_action, "
-                    . " :i_purchase_req_det_id,"
-                    . " :i_purchase_request_id,"
-                    . " :i_product_id,"
-                    . " :i_amount,"
-                    . " :i_qty,"
-                    . " :i_basic_price,"
-                    . " :i_user,"
-                    . " :o_msg_code,"
-                    . " :o_msg"
-                    . "); END;";
-
-            $stmt = oci_parse($table->db->conn_id, $sql);
-
-            //  Bind the input parameter
-            oci_bind_by_name($stmt, ':i_action', $action);
-            oci_bind_by_name($stmt, ':i_purchase_req_det_id', $items['purchase_req_det_id']);
-            oci_bind_by_name($stmt, ':i_purchase_request_id', $items['purchase_request_id']);
-            oci_bind_by_name($stmt, ':i_product_id', $items['product_id']);
-            oci_bind_by_name($stmt, ':i_amount', $items['amount']);
-            oci_bind_by_name($stmt, ':i_qty', $items['qty']);
-            oci_bind_by_name($stmt, ':i_basic_price', $items['basic_price']);
-            oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
-
-            // Bind the output parameter
-            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
-            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
 
 
-            ociexecute($stmt);
+            $success = 0;
+            $failed = 0;
+            $msg = '';
+            for($i=0; $i<count($items); $i++){
+                $sql = "BEGIN "
+                        . " P_CRUD_PURCHASE_REQ_DET("
+                        . " :i_action, "
+                        . " :i_purchase_req_det_id,"
+                        . " :i_purchase_request_id,"
+                        . " :i_product_id,"
+                        . " :i_amount,"
+                        . " :i_qty,"
+                        . " :i_basic_price,"
+                        . " :i_user,"
+                        . " :o_msg_code,"
+                        . " :o_msg"
+                        . "); END;";
 
-            if($o_msg_code == 0){
-                $data['rows'] = $items;
-                $data['success'] = true;
-                $data['message'] = $o_msg;
-            }else{
-                $data['rows'] = $items;
-                $data['success'] = false;
-                $data['message'] = $o_msg;
+                $stmt = oci_parse($table->db->conn_id, $sql);
+
+                $amount = (int)$items[$i]['qty'] * (int)$items[$i]['basic_price'];
+
+                //  Bind the input parameter
+                oci_bind_by_name($stmt, ':i_action', $action);
+                oci_bind_by_name($stmt, ':i_purchase_req_det_id', $items[$i]['purchase_req_det_id']);
+                oci_bind_by_name($stmt, ':i_purchase_request_id', $items[$i]['purchase_request_id']);
+                oci_bind_by_name($stmt, ':i_product_id', $items[$i]['product_id']);
+                oci_bind_by_name($stmt, ':i_amount', $amount);
+                oci_bind_by_name($stmt, ':i_qty', $items[$i]['qty']);
+                oci_bind_by_name($stmt, ':i_basic_price', $items[$i]['basic_price']);
+                oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
+
+                // Bind the output parameter
+                oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+                oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
+
+
+                ociexecute($stmt);
+
+                if($o_msg_code == 0){
+                    $success = $success + 1;
+                }else{
+                    $msg .= "\n1 Produk gagal disimpan : ".$o_msg;
+                }
             }
+
+            $data['rows'] = $items;
+            $data['success'] = true;
+            $data['message'] = $success." Produk berhasil disimpan".$msg;
+
+            // if($o_msg_code == 0){
+            //     $data['rows'] = $items;
+            //     $data['success'] = true;
+            //     $data['message'] = $o_msg;
+            // }else{
+            //     $data['rows'] = $items;
+            //     $data['success'] = false;
+            //     $data['message'] = $o_msg;
+            // }
 
         }catch (Exception $e) {
             $data['message'] = $e->getMessage();
@@ -261,6 +290,9 @@ class Purchase_req_det_controller {
 
         $items['purchase_req_det_id'] = $data["id_"];
         $items['purchase_request_id'] = $data["purchase_request_id"];
+        $items['product_id'] = $data["product_id"];
+
+        // print_r($items); exit;
 
         $userdata = $ci->session->userdata;
         $action = 'D';
@@ -287,7 +319,7 @@ class Purchase_req_det_controller {
             oci_bind_by_name($stmt, ':i_action', $action);
             oci_bind_by_name($stmt, ':i_purchase_req_det_id', $items['purchase_req_det_id']);
             oci_bind_by_name($stmt, ':i_purchase_request_id', $items['purchase_request_id']);
-            oci_bind_by_name($stmt, ':i_product_id', $null);
+            oci_bind_by_name($stmt, ':i_product_id', $items['product_id']);
             oci_bind_by_name($stmt, ':i_amount', $null);
             oci_bind_by_name($stmt, ':i_qty', $null);
             oci_bind_by_name($stmt, ':i_basic_price', $null);

@@ -382,6 +382,101 @@ class Products_controller {
         return $data;
     }
 
+    function readListProduct() {
+
+        $page = getVarClean('page','int',1);
+        $limit = getVarClean('rows','int',5);
+        $sidx = getVarClean('sidx','str','name');
+        $sord = getVarClean('sord','str','asc');
+
+        $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
+
+        $stock_qty = getVarClean('stock_qty','str','');
+        $product_name = getVarClean('product_name','str','');
+        $purchase_request_id = getVarClean('purchase_request_id','int', 0);
+        
+
+        try {
+
+            $ci = & get_instance();
+            $ci->load->model('product/products');
+            $table = $ci->products;
+            $userdata = $ci->session->userdata;
+
+            $req_param = array(
+                "sort_by" => $sidx,
+                "sord" => $sord,
+                "limit" => null,
+                "field" => null,
+                "where" => null,
+                "where_in" => null,
+                "where_not_in" => null,
+                "search" => $_REQUEST['_search'],
+                "search_field" => isset($_REQUEST['searchField']) ? $_REQUEST['searchField'] : null,
+                "search_operator" => isset($_REQUEST['searchOper']) ? $_REQUEST['searchOper'] : null,
+                "search_str" => isset($_REQUEST['searchString']) ? $_REQUEST['searchString'] : null
+            );
+
+            // Filter Table
+            $req_param['where'] = array();
+            $table->setCriteria("bu_id=".$userdata['bu_id']);
+
+            if(!empty($product_name)) {
+                $table->setCriteria("( upper(name) like upper('%".$product_name."%'))");
+            }
+
+            if(!empty($stock_qty)) {
+
+                if($stock_qty == 'min'){
+                    $table->setCriteria("stock_store <= stock_min");
+                }
+
+                if($stock_qty == 'max'){
+                    $table->setCriteria("stock_store >= stock_min");
+                }
+                
+            }
+
+            if($purchase_request_id != 0){
+                $table->setCriteria("not exists (
+                                                select 1 
+                                                from purchase_req_det b
+                                                where  vw_info_product.product_id = b.product_id
+                                                and b.purchase_request_id = ".$purchase_request_id."
+                                                )");
+            }
+
+            $table->setJQGridParam($req_param);
+            $count = $table->countAll();
+
+            if ($count > 0) $total_pages = ceil($count / $limit);
+            else $total_pages = 1;
+
+            if ($page > $total_pages) $page = $total_pages;
+            $start = $limit * $page - ($limit); // do not put $limit*($page - 1)
+
+            $req_param['limit'] = array(
+                'start' => $start,
+                'end' => $limit
+            );
+
+            $table->setJQGridParam($req_param);
+
+            if ($page == 0) $data['page'] = 1;
+            else $data['page'] = $page;
+
+            $data['total'] = $total_pages;
+            $data['records'] = $count;
+
+            $data['rows'] = $table->getAll();
+            $data['success'] = true;
+            
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+        }
+
+        return $data;
+    }
 
 }
 

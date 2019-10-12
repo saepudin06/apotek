@@ -62,7 +62,7 @@
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="product_id" name="product_id" value="<?php echo $this->input->post('product_name','');?>" placeholder="" autocomplete="off" readonly="" />
+                                    <input class="form-control" id="product_name" name="product_name" value="<?php echo $this->input->post('product_name','');?>" placeholder="" autocomplete="off" readonly="" />
                                     <span>Nama Produk *</span>
                                 </label>
 
