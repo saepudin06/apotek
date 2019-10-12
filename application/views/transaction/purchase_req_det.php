@@ -74,7 +74,7 @@
                     </label>
                     <div class="col-md-3">
                         <button class="btn btn-secondary default" type="button" onclick="searchDataReq()">Filter</button>
-                        <button class="btn btn-primary default" type="button">Excel</button>
+                        <button class="btn btn-primary default" type="button" onclick="download_excel()">Excel</button>
                         <button class="btn btn-danger default" type="button">PDF</button>
                     </div>                
                 </div>
@@ -787,5 +787,17 @@
         $("#grid-table-detail").trigger("reloadGrid");
 
         responsive_jqgrid('#grid-table-detail', '#grid-pager-detail');
+    }
+
+    function download_excel(){
+
+        var purchase_request_id = <?php echo $this->input->post('purchase_request_id'); ?>;
+        
+        var url = "<?php echo WS_JQGRID . "transaction.purchase_req_det_controller/download_excel/?"; ?>";
+            url += "<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
+            url += "&purchase_request_id="+purchase_request_id;
+
+        window.location = url;    
+
     }
 </script>

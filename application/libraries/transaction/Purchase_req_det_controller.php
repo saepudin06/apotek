@@ -429,6 +429,98 @@ class Purchase_req_det_controller {
         return $data;
     }
 
+    function download_excel() {
+            set_time_limit(0);
+            ini_set('max_execution_time', 0);
+            
+            $purchase_request_id = getVarClean('purchase_request_id','int',0);
+
+            $ci = & get_instance();
+            $ci->load->model('transaction/purchase_req_det');
+            $table = $ci->purchase_req_det;
+            $table->setCriteria("purchase_request_id=".$purchase_request_id);
+
+            $count = $table->countAll();
+            $items = $table->getAll(0, -1);
+
+            $filename = "Deftar_permintaan_pembelian_".date('Ymdhis').".xls";
+
+            include 'phpexcel/PHPExcel.php';
+            include 'phpexcel/PHPExcel/IOFactory.php';  
+
+            $excel = new PHPExcel();
+
+            $style_col = array( 'font' => array('bold' => true), // Set font nya jadi bold      
+                                'alignment' => array( 'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah
+                                'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)      
+                                ),      
+                                'borders' => array('allborders' => array(
+                                        'style' => PHPExcel_Style_Border::BORDER_THIN
+                                    )) 
+                                );
+
+            $style_row = array('alignment' => array( 'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)      
+                                                         ),      
+                                                       'borders' => array('allborders' => array(
+                                                                'style' => PHPExcel_Style_Border::BORDER_THIN
+                                                            ))    
+                                                        );
+
+            $style_total = array('font' => array('bold' => true),
+                                 'alignment' => array( 'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)      
+                                                     ),      
+                                'borders' => array('allborders' => array(
+                                        'style' => PHPExcel_Style_Border::BORDER_THIN
+                                    ))   
+                                );
+
+            $excel->setActiveSheetIndex(0)->setCellValue('A1', "Produk");
+            $excel->setActiveSheetIndex(0)->setCellValue('B1', "Harga Awal");
+            $excel->setActiveSheetIndex(0)->setCellValue('C1', "Jumlah");
+            $excel->setActiveSheetIndex(0)->setCellValue('D1', "Total");
+
+            $excel->getActiveSheet()->getStyle('A1:D1')->applyFromArray($style_col);  
+
+            $numrow = 2;
+            foreach($items as $item) {   
+
+                $excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $item['product_name']);
+                $excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, (float)$item['basic_price']);
+                $excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, (float)$item['qty']);
+                $excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, (float)$item['amount']);
+
+                $excel->getActiveSheet()->getStyle('A'.$numrow.':D'.$numrow)->applyFromArray($style_row);
+                $excel->getActiveSheet()->getStyle('B'.$numrow)->getNumberFormat()->setFormatCode('#,##0.00'); 
+                $excel->getActiveSheet()->getStyle('C'.$numrow)->getNumberFormat()->setFormatCode('#,##0.00'); 
+                $excel->getActiveSheet()->getStyle('D'.$numrow)->getNumberFormat()->setFormatCode('#,##0.00'); 
+
+                $numrow++;        
+
+            
+            }
+
+            // Set width kolom    
+            foreach(range('A','D') as $columnID)
+            {
+                $excel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            }
+
+
+
+            // Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)   
+            $excel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
+
+
+            $excel->getActiveSheet(0)->setTitle('Permintaan_pembelian');
+            $excel->setActiveSheetIndex(0);
+            header('Content-Type: application/vnd.ms-excel');
+            header("Content-Disposition: attachment; filename=$filename");
+            header('Cache-Control: max-age=0');
+            $write = PHPExcel_IOFactory::createWriter($excel, 'Excel5');
+            $write->save('php://output');
+
+    }
+
 }
 
 /* End of file Purchase_req_det_controller.php */
