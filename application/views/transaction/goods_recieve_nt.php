@@ -160,7 +160,7 @@
                 var status = $('#grid-table').jqGrid('getCell', rowid, 'status');
                 console.log(status);
 
-                if(status != 'INITAL'){
+                if(status != 'INITIAL'){
                     $('#btn-edit').hide();
                     $('#btn-delete').hide();
                 }else{
