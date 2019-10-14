@@ -106,7 +106,16 @@
             colModel: [
                 {label: 'ID', name: 'grn_evd_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Good rvc nt ID', name: 'g_rn_id', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
-                {label: 'Upload', name: 'path_file', width: 150, align: "left", editable: false, search:false, sortable:false},                
+                {name: '<center>Options</center>',width: 100, align: "center",
+                    formatter:function(cellvalue, options, rowObject) {
+
+                        var location  = rowObject['path_file'];
+                        //var location  = path_file;
+                        
+                        return '<button class="btn btn-primary btn-xs default" type="button"  onclick="download(\''+location+'\')">Download</button>';
+                    }
+                },
+                {label: 'Path', name: 'path_file', width: 250, align: "left", editable: false, search:false, sortable:false},                
                 {label: 'Keterangan', name: 'description', width: 250, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Pembuat', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal Dibuat', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false},
@@ -477,4 +486,16 @@
             return false;
         }
     });
+
+    function download(location){
+
+
+       var url = "<?php echo base_url();?>DownloadFile/download?";
+        url += "location=" + location;
+        url += "&<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
+        
+        window.location = url;
+        
+        return;
+    }
 </script>
