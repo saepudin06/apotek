@@ -61,7 +61,7 @@
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" type="file" id="path_file" name="path_file" placeholder="" autocomplete="off" />
-                                    <span>Upload </span>
+                                    <span>Upload (format : jpg/jpeg/png/gif) </span>
                                 </label>
 
                                 <input class="form-control" type="hidden" id="g_rn_id" name="g_rn_id" value="<?php echo $this->input->post('goods_recieve_nt_id');?>" placeholder="" autocomplete="off" readonly="" />

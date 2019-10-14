@@ -58,7 +58,7 @@
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" type="file" id="path_file" name="path_file" placeholder="" autocomplete="off" />
-                                    <span>Upload </span>
+                                    <span>Upload (format : jpg/jpeg/png/gif) </span>
                                 </label>
 
                                 <input class="form-control" type="hidden" id="adj_id" name="adj_id" value="<?php echo $this->input->post('adj_id');?>" placeholder="" autocomplete="off" readonly="" />
