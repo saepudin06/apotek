@@ -18,7 +18,7 @@
                         <button type="button" class="btn btn-danger default" onclick="searchProd()">Cari Produk (F9)</button>
                     </div> 
 
-                    <div class="input-group col-md-2 mb-3">
+                    <div class="input-group col-md-2 mb-4">
                         <div class="input-group-prepend">
                             <button type="button" class="btn btn-secondary default" onclick="qtyadd('min')"><strong>-</strong></button>
                         </div>
