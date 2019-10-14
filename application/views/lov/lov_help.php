@@ -6,6 +6,13 @@
                 <div class="table-header">
                     <span class="form-add-edit-title"> Help </span>
                 </div>
+                <div class="float-sm-right text-zero">
+                    <div class="d-inline-block float-md-left mr-1 mb-1 align-top">
+                        <button class="btn btn-danger btn-xs default" data-dismiss="modal">
+                           Tutup (Esc)
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- modal body -->

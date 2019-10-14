@@ -13,13 +13,25 @@
                             <span>Product Label *</span>
                         </label>
                     </div>   
-                    <div class="col-md-1">
-                        <label class="form-group has-float-label">
-                            <input class="form-control" id="qty" name="qty" value="1" autocomplete="off" placeholder="" readonly="" />
-                            <span>Qty *</span>
-                        </label>
+
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-danger default" onclick="searchProd()">Cari Produk (F9)</button>
                     </div> 
-                    <div class="col-md-6" style="text-align: right;">
+
+                    <div class="input-group col-md-2 mb-3">
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn btn-secondary default" onclick="qtyadd('min')"><strong>-</strong></button>
+                        </div>
+                        <input class="form-control" style="text-align: center;" id="qty" name="qty" value="1" autocomplete="off" placeholder="" readonly="" />
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn btn-secondary default" onclick="qtyadd('add')"><strong>+</strong></button>
+                        </div>
+                    </div> 
+                    <!-- <div class="col-md-1">
+                        <button type="button" class="btn btn-success default">+</button>
+                    </div> -->
+
+                    <div class="col-md-3" style="text-align: right;">
                         <input type="hidden" name="total_qty" id="total_qty" value="0" />
                         <input type="hidden" name="subtotal" id="subtotal" value="0" />
                         <h1><label class="control-label" id="sub-total">Sub Total : 0 </label></h1>
@@ -29,7 +41,11 @@
                         <div id="grid-pager"></div>
                     </div>
 
-                    <div class="col-md-12"><strong>F1 : Help &nbsp; | &nbsp; Esc : Close</strong></div>
+                    <!-- <div class="col-md-12"><strong>F1 : Help &nbsp; | &nbsp; Esc : Close</strong></div> -->
+                </div>
+                <div class="row">
+                    <div class="col-md-2" style="padding-top: 5px;"><button type="button" class="btn btn-secondary btn-sm mb-1 default" onclick="help()">Help (F1)</button></div>
+                    <div class="col-md-10" style="padding-top: 5px; text-align: right;"><button type="button" class="btn btn-success btn-sm mb-1 default" onclick="bayar()">Bayar (F2)</button></div>
                 </div>
 
 
@@ -317,7 +333,17 @@
                     var form = $(e[0]);
                 }
             }
-        );
+        ).navButtonAdd('#grid-pager',{
+                caption: "", //Delete
+                buttonicon: "simple-icon-minus",
+                onClickButton: function(){ 
+                    deleteProd();
+                },
+                position: "last",
+                title: "Delete",
+                cursor: "pointer",
+                id : "btn-delete"
+        });
 
     });
 
@@ -342,7 +368,7 @@
         if(event.keyCode == 112) {
             event.preventDefault();
             // alert('Anda menekan tombol F1');
-            modal_lov_help_show();
+            help();
         }
 
         /* tombol F4 */
@@ -355,7 +381,7 @@
         /* tombol F9 */
         if(event.keyCode == 120) {
             event.preventDefault();
-            modal_lov_product_search_show('product_label');
+            searchProd();
         }
 
         /* tombol Esc */
@@ -368,7 +394,7 @@
         if(event.keyCode == 46) {
             event.preventDefault();
 
-            modal_secret_key_show();
+            deleteProd();
             
             
         }
@@ -376,10 +402,7 @@
         /* tombol F2 */
         if(event.keyCode == 113) {
             event.preventDefault();
-            var subtot = $('#subtotal').val();
-            if(subtot > 0){
-                modal_payment_show(subtot);
-            }
+            bayar();
             // $("#product_label").focus();
         }
 
@@ -399,7 +422,62 @@
         /* tombol Enter */
         if(event.keyCode == 13) {
             event.preventDefault();
-            var cash = $('#cash').val();
+            submitPay();
+            
+            // $("#product_label").focus();
+        }
+
+
+        /* tombol shift */
+        if(event.keyCode == 16) {
+            event.preventDefault();
+            $("#grid-table-lov_product_search").setSelection($("#grid-table-lov_product_search").getDataIDs()[0],true);
+            $("#grid-table-lov_product_search").focus();
+            
+        }
+
+        /* tombol ctrl */
+        if(event.keyCode == 17) {
+            event.preventDefault();
+            $("#i_search_lov_product_search").focus();
+            
+        }
+
+    }
+
+    function qtyadd(st){
+        var i = 0;
+
+        if(st == 'min'){
+            i = parseInt($('#qty').val()) - 1;
+
+            if(i < 1){
+                $('#qty').val(1);
+            }else{
+                $('#qty').val(i);    
+            }
+            
+        }else{
+            i = parseInt($('#qty').val()) + 1;
+            $('#qty').val(i);
+        }
+
+        $('#product_label').focus();
+    }
+
+    function help(){
+        modal_lov_help_show();
+    }
+
+    function bayar(){
+        var subtot = $('#subtotal').val();
+        if(subtot > 0){
+            modal_payment_show(subtot);
+        }
+    }
+
+    function submitPay(){
+        var cash = $('#cash').val();
             var subtotal = $('#subtotal').val();
             var total_qty = $('#total_qty').val();
 
@@ -431,25 +509,13 @@
 
                 
             }
-            
-            // $("#product_label").focus();
-        }
+    }
 
+    function searchProd(){
+        modal_lov_product_search_show('product_label');
+    }
 
-        /* tombol shift */
-        if(event.keyCode == 16) {
-            event.preventDefault();
-            $("#grid-table-lov_product_search").setSelection($("#grid-table-lov_product_search").getDataIDs()[0],true);
-            $("#grid-table-lov_product_search").focus();
-            
-        }
-
-        /* tombol ctrl */
-        if(event.keyCode == 17) {
-            event.preventDefault();
-            $("#i_search_lov_product_search").focus();
-            
-        }
-
+    function deleteProd(){
+        modal_secret_key_show();
     }
 </script>

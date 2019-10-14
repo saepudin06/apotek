@@ -24,7 +24,7 @@
                     <label class="control-label col-md-7" id="change" style="font-weight: bold;text-align: right;font-size: 17px;"></label>
                 </div>
                 <div class="row">
-                    <button class="btn btn-danger btn-sm default col-md-12" type="button">OK(Enter)</button>  
+                    <button class="btn btn-danger btn-sm default col-md-12" type="button" onclick="submitPay()">OK (Enter)</button>  
                 </div>
             </div>
 

@@ -22,7 +22,7 @@ class Barcode extends CI_Controller
 
     function generate_barcode() {
 
-        $text = $this->input->get('text');
+        $text = $this->input->get('label');
         $scale=6; 
         $fontsize=18; 
         $thickness=30;

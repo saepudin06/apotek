@@ -150,7 +150,16 @@
                 {label: 'ID', name: 'prd_details_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Product ID', name: 'product_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Nama Produk', name: 'product_name', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Label', name: 'product_label', width: 100, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Label', name: 'product_label', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
+                {name: '<center>Barcode</center>',width: 100, align: "center",
+                    formatter:function(cellvalue, options, rowObject) {
+
+                        var label  = rowObject['product_label'];
+                        //var location  = path_file;
+                        
+                        return '<button class="btn btn-primary btn-xs default" type="button"  onclick="downloadBarcode(\''+label+'\')">'+label+'</button>';
+                    }
+                },
                 {label: 'Tanggal Dibuat', name: 'production_date', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal Mulai Penjualan', name: 'sales_start_date', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal Akhir Penjualan', name: 'sales_end_date', width: 150, align: "left", editable: false, search:false, sortable:false},
@@ -533,4 +542,14 @@
     });
 
     $('.select2-single').select2();
+
+    function downloadBarcode(label){
+        var url = "<?php echo base_url();?>Barcode/generate_barcode?";
+        url += "label=" + label;
+        url += "&<?php echo $this->security->get_csrf_token_name(); ?>=<?php echo $this->security->get_csrf_hash(); ?>";
+        
+        window.location = url;
+        
+        return;
+    }
 </script>

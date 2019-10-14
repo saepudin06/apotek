@@ -6,8 +6,16 @@
                 <div class="table-header">
                     <span class="form-add-edit-title"> Data Product </span>
                 </div>
+                <div class="float-sm-right text-zero">
+                    <div class="d-inline-block float-md-left mr-1 mb-1 align-top">
+                        <button class="btn btn-danger btn-xs default" data-dismiss="modal">
+                           Tutup (Esc)
+                        </button>
+                    </div>
+                </div>
             </div>
             <input type="hidden" id="modal_lov_product_search_id_val" value="" />
+            <input type="hidden" id="modal_lov_product_search_masuk" value="" />
 
             <!-- modal body -->
             <div class="modal-body">
@@ -33,7 +41,7 @@
                 <div style="padding-bottom: 10px;"></div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div style="font-weight: bold;">Shift : Select Grid   |  Enter : Select one row | Ctrl : search</div>
+                        <div style="font-weight: bold;">Shift : Select Grid   |  Enter/Klik 2x : Select one row | Ctrl : search</div>
                     </div>
                 </div>
             </div>
@@ -77,6 +85,19 @@
         var grid_selector = "#grid-table-lov_product_search";
         var pager_selector = "#grid-pager-lov_product_search";
 
+        if($('#modal_lov_product_search_masuk').val() == '1'){
+            $('#i_search_lov_product_search').val('');
+
+            jQuery("#grid-table-lov_product_search").jqGrid('setGridParam',{
+                url: '<?php echo WS_JQGRID."product.producttariffdetails_controller/readLov"; ?>',
+                postData: {
+                    i_search : ''
+                }
+            });
+            $("#grid-table-lov_product_search").trigger("reloadGrid");
+            return false;
+        }
+
         jQuery("#grid-table-lov_product_search").jqGrid({
             url: '<?php echo WS_JQGRID."product.producttariffdetails_controller/readLov"; ?>',
             datatype: "json",
@@ -104,12 +125,9 @@
             },
             ondblClickRow: function(rowid) {
 
-                // var grid = $('#grid-table-lov_product_search');
-                // var sel_id = grid.jqGrid('getGridParam', 'selrow');
-                // var product_id = grid.jqGrid('getCell', sel_id, 'product_id');
-                // var product_name = grid.jqGrid('getCell', sel_id, 'name');
-
-                // modal_lov_product_search_set_value(product_id,product_name);
+                var grid = $('#grid-table-lov_product_search');
+                var product_label = grid.jqGrid('getCell', rowid, 'product_label');
+                modal_lov_product_search_set_value(product_label);
 
             },
             sortorder:'',
@@ -287,4 +305,9 @@
             });
             $("#grid-table-lov_product_search").trigger("reloadGrid");
     }
+
+    jQuery('#modal_lov_product_search').on('hide.bs.modal', function(){
+       $('#modal_lov_product_search_masuk').val('1');
+       jQuery("#grid-table-lov_product_search").jqGrid('clearGridData');
+    });
 </script>
