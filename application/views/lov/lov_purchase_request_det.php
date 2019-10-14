@@ -14,6 +14,7 @@
             <input type="hidden" id="modal_lov_pr_det_total_val" value="" />
             <input type="hidden" id="modal_lov_pr_det_min_stock_val" value="" />
             <input type="hidden" id="modal_lov_pr_det_idd_val" value="" />
+            <input type="hidden" id="modal_lov_pr_det_masuk" value="" />
 
             <!-- modal body -->
             <div class="modal-body">
@@ -70,10 +71,10 @@
     
 
 
-    function modal_lov_pr_det_show(the_id_field, the_code_field, the_basic_price_field, the_qty_field, the_total_field,the_min_stock_field, the_det_id_field, purchase_request_id) {
+    function modal_lov_pr_det_show(the_id_field, the_code_field, the_basic_price_field, the_qty_field, the_total_field,the_min_stock_field, the_det_id_field, purchase_request_id, purchase_order_id) {
         modal_lov_pr_det_set_field_value(the_id_field, the_code_field, the_basic_price_field, the_qty_field, the_total_field,the_min_stock_field, the_det_id_field);
         $("#modal_lov_pr_det").modal({backdrop: 'static'});
-        modal_lov_pr_det_prepare_table(purchase_request_id);
+        modal_lov_pr_det_prepare_table(purchase_request_id, purchase_order_id);
     }
 
 
@@ -107,13 +108,26 @@
     }
 
 
-    function modal_lov_pr_det_prepare_table(purchase_request_id) {
+    function modal_lov_pr_det_prepare_table(purchase_request_id, purchase_order_id) {
         var grid_selector = "#grid-table-lov_pr_det";
         var pager_selector = "#grid-pager-lov_pr_det";
 
+        if($('#modal_lov_pr_det_masuk').val() == '1'){
+            jQuery("#grid-table-lov_pr_det").jqGrid('setGridParam',{
+                url: '<?php echo WS_JQGRID."transaction.purchase_req_det_controller/readLov"; ?>',
+                postData: {
+                    purchase_request_id : purchase_request_id,
+                    purchase_order_id : purchase_order_id
+                }
+            });
+            $("#grid-table-lov_pr_det").trigger("reloadGrid");
+            return false;
+        }
+
         jQuery("#grid-table-lov_pr_det").jqGrid({
             url: '<?php echo WS_JQGRID."transaction.purchase_req_det_controller/readLov"; ?>',
-            postData: { purchase_request_id : '<?php echo $this->input->post('purchase_request_id'); ?>'},
+            postData: { purchase_request_id : purchase_request_id,
+                        purchase_order_id : purchase_order_id},
             datatype: "json",
             mtype: "POST",
             loadui: "disable",
@@ -333,4 +347,9 @@
             });
             $("#grid-table-lov_pr_det").trigger("reloadGrid");
     }
+
+    jQuery('#modal_lov_pr_det').on('hide.bs.modal', function(){
+       $('#modal_lov_pr_det_masuk').val('1');
+       jQuery("#grid-table-lov_pr_det").jqGrid('clearGridData');
+    });
 </script>

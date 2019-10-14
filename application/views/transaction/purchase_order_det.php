@@ -124,7 +124,8 @@
 <script type="text/javascript">
     function search_product(id, code, basic_price, qty, amount, min_stock, purchase_req_det_id){
         var purchase_request_id = "<?php echo $this->input->post('purchase_request_id'); ?>";
-        modal_lov_pr_det_show(id, code, basic_price, qty, amount, min_stock, purchase_req_det_id, purchase_request_id)
+        var purchase_order_id = "<?php echo $this->input->post('purchase_order_id'); ?>";
+        modal_lov_pr_det_show(id, code, basic_price, qty, amount, min_stock, purchase_req_det_id, purchase_request_id, purchase_order_id)
     }
 
     function sumamout() {

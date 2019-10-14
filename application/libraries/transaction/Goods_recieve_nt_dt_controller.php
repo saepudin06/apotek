@@ -115,7 +115,8 @@ class Goods_recieve_nt_dt_controller {
         }
 
         //exit;
-
+        $table->actionType = 'UPDATE';
+        $table->setRecord($items);
         $userdata = $ci->session->userdata;
         
         try{
