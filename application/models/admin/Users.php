@@ -18,7 +18,7 @@ class Users extends Abstract_model {
                                 'user_password'      => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Password'),
                                 'user_status'     => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Status'),
                                 'role_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Role'),
-                                'p_employee_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Pegawai'),
+                                'p_employee_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Pegawai'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'updated_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),

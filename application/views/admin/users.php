@@ -114,7 +114,7 @@
                                     <option value="<?php echo $item['emp_id'];?>"> <?php echo $item['name'];?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <span>Pegawai *</span>
+                            <span>Pegawai </span>
                         </label>
 
 
