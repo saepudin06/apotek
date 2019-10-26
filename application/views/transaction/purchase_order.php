@@ -30,9 +30,9 @@
                     <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
                         aria-selected="true"><strong>Pembelian Barang</strong></a>
                 </li>
-                <li class="nav-item w-50 text-center">
+                <!-- <li class="nav-item w-50 text-center">
                     <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
-                </li>
+                </li> -->
             </ul>
             
             <div class="separator mb-2"></div>
@@ -48,6 +48,10 @@
                         <h5 class="mb-4">Form Pembelian Barang</h5>
 
                         <form method="post" id="form_data">
+                            <input type="hidden" name="icolumn" id="icolumn">
+                            <input type="hidden" name="irow" id="irow">
+                            <input type="hidden" name="gridtable" id="gridtable">
+
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
                             <div class="form-row">
@@ -123,6 +127,7 @@
             colModel: [
                 {label: 'ID', name: 'purchase_order_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Supplier Id', name: 'supplier_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
+                {label: 'Status GRN', name: 'status_grn', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Unit Bisnis', name: 'bu_name', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'PO Date', name: 'po_date', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Kode Pembelian', name: 'code', width: 200, align: "left", editable: false, search:false, sortable:false},
@@ -137,7 +142,7 @@
                 
             ],
             // height: '100%',
-            height: 200,
+            height: 300,
             autowidth: true,
             viewrecords: true,
             rowNum: 10,
@@ -149,6 +154,34 @@
             multiboxonly: true,
             // multiselect: true,
             // multiPageSelection: true,
+            subGrid: true, // set the subGrid property to true to show expand buttons for each row
+            subGridRowExpanded: showChildGrid, // javascript function that will take care of showing the child grid
+            subGridOptions : {
+                 // load the subgrid data only once
+                 // and the just show/hide
+                 reloadOnExpand :false,
+                 // select the row when the expand column is clicked
+                 selectOnExpand : true,
+                 plusicon : "ui-icon iconsmind-Maximize",
+                 minusicon  : "ui-icon iconsmind-Minimize"
+                // openicon : "ace-icon fa fa-chevron-right center orange"
+            },  // batas sub group
+            subGridBeforeExpand: function(divid, rowid) {
+                
+                // var grid = $('#grid-table_'+rowid+'_table');
+                // // var grid = $('#'+$('#gridtable').val());
+
+                //     grid.jqGrid('setGridParam', {cellEdit: true});
+                //     grid.jqGrid('editCell', $('#irow').val(), $('#icolumn').val()-1, true);
+                //     grid.jqGrid('setGridParam', {cellEdit: false});
+
+                var expanded = jQuery("td.sgexpanded", "#grid-table")[0];
+                  if(expanded) {
+                    setTimeout(function(){
+                        $(expanded).trigger("click");
+                    }, 100);
+                  }
+            },
             onSelectRow: function (rowid) {
                 /*do something when selected*/
                 // setData(rowid);
@@ -355,6 +388,131 @@
 
     });
 
+    function showChildGrid(parentRowID, parentRowKey) {
+        var childGridID = parentRowID + "_table";
+        var childGridPagerID = parentRowID + "_pager";
+        
+
+        var purchase_order_id  = $('#grid-table').jqGrid('getCell', parentRowKey, 'purchase_order_id');
+        var status_grn  = $('#grid-table').jqGrid('getCell', parentRowKey, 'status_grn');
+        var title = '';
+
+        if (status_grn == 'Y') {
+            title = '<button type="button" class="btn btn-danger btn-xs default" disabled="">Submit Pembelanjaan</button>';
+        }else{
+            title = '<button type="button" class="btn btn-primary btn-xs default" onclick="submitPembelanjaan(\''+childGridID+'\')">Submit Pembelanjaan</button>';
+        }
+
+        
+        var childGridURL = "<?php echo WS_JQGRID."transaction.purchase_order_det_controller/readChild"; ?>";
+
+        
+        $('#' + parentRowID).append('<table id=' + childGridID + '></table><div id=' + childGridPagerID + ' class=scroll></div>');
+
+        $("#" + childGridID).jqGrid({
+            url: childGridURL,
+            mtype: "POST",
+            datatype: "json",
+            page: 1,
+            rownumbers: true, // show row numbers
+            rownumWidth: 35,
+            shrinkToFit: false,
+            loadui: "disable",
+            multiboxonly: true,            
+            // cellEdit : true,
+            cellsubmit : 'clientArray',
+            postData:{
+                        purchase_order_id : encodeURIComponent(purchase_order_id)
+                     },
+            colModel: [
+                {label: 'ID', name: 'purchase_order_det_id', width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'PQR ID', name: 'purchase_req_det_id', width: 100, sorttype: 'number', editable: true, hidden: true},
+                {label: 'PO ID', name: 'purchase_order_id', width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: '<center>Status Beli?</center>', name: 'status', align: "center", width: 100, editable: true, edittype: 'select', 
+                        editoptions: { value: "Ya:Ya;Tidak:Tidak"}
+                 },
+                {label: 'Min. Stok', name: 'stock_min', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Purchase Request ID', name: 'purchase_request_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Product ID', name: 'product_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Produk', name: 'product_name', width: 400, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Harga Awal', name: 'basic_price', width: 100, align: "right", editable: true, search:false, sortable:false, cellEdit: true, 
+                    formatter: 'currency', 
+                    formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."},
+                    editrules:{number:true}, 
+                    edittype:"text", editoptions:
+                        {
+                            size: 25, maxlengh: 30,
+                            dataInit: function(element)
+                            {
+                                $(element).keypress(function(e)
+                                {
+                                    if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                                        return false;
+                                    }
+                                });
+                            }
+                        }
+                },
+                {label: 'Jumlah', name: 'qty', width: 100, align: "right", editable: true, search:false, sortable:false, cellEdit: true, edittype:"text", editrules:{number:true}, 
+                    formatter: 'currency', 
+                    formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."},
+                    edittype:"text", editoptions:
+                    {
+                        size: 25, maxlengh: 30,
+                        dataInit: function(element)
+                        {
+                            $(element).keypress(function(e)
+                            {
+                                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                                    return false;
+                                }
+                            });
+                        }
+                    }
+                },
+                {label: 'Total', name: 'amount', width: 100, align: "right", editable: false, search:false, sortable:false, editrules:{number:true},
+                    formatter: 'currency', 
+                    formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."},
+                },
+            ],
+            // width: "100%",
+            autowidth: true,
+            height: '100%',
+            ondblClickRow: function (rowid, iRow, iCol) {
+                var $this = $(this);
+                $this.jqGrid('setGridParam', {cellEdit: true});
+                $this.jqGrid('editCell', iRow, iCol, true);
+                $this.jqGrid('setGridParam', {cellEdit: false});
+
+
+                $('#irow').val(iRow);
+                $('#icolumn').val(iCol);
+            },
+            afterEditCell: function (rowid, cellName, cellValue, iRow) {
+                var cellDOM = this.rows[iRow], oldKeydown,
+                    $cellInput = $('input, select, textarea', cellDOM),
+                    events = $cellInput.data('events'),
+                    $this = $(this);
+                if (events && events.keydown && events.keydown.length) {
+                    oldKeydown = events.keydown[0].handler;
+                    $cellInput.unbind('keydown', oldKeydown);
+                    $cellInput.bind('keydown', function (e) {
+                        $this.jqGrid('setGridParam', {cellEdit: true});
+                        oldKeydown.call(this, e);
+                        $this.jqGrid('setGridParam', {cellEdit: false});
+                    });
+                }
+            },
+            caption: title,
+            jsonReader: {
+                root: 'rows',
+                id: 'id',
+                repeatitems: false
+            }
+        });
+
+    }
+
     function responsive_jqgrid(grid_selector, pager_selector) {
 
         var parent_column = $(grid_selector).closest('[class*="col-"]');
@@ -422,6 +580,55 @@
         $('#form-ui').hide();
         $('#grid-ui').slideDown( "slow" );
     });
+
+    function submitPembelanjaan(param){
+        var grid = $('#'+param);
+        // console.log($('#icolumn').val()-1);
+        if($('#irow').val() != ''){
+            grid.jqGrid('setGridParam', {cellEdit: true});
+            grid.jqGrid('editCell', $('#irow').val(), 8, true);
+            grid.jqGrid('setGridParam', {cellEdit: false});
+        }
+        
+        rowid = grid.jqGrid ('getRowData');
+        if(rowid == null) {
+            swal('','Data tidak ditemukan','info');
+            return false;
+        }
+        
+        var var_url = '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/crudAll"; ?>';
+
+        swal({
+              title: "",
+              text: "apakah anda yakin?",
+              showCancelButton: true,
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Yes!",
+              closeOnConfirm: true
+            },
+            function(){
+                $.ajax({
+                    type: 'POST',
+                    dataType: "json",
+                    url: var_url,
+                    data: { data : rowid },
+                    success: function(data) {
+                        //console.log(data);
+                        if(data.success) {                    
+                            $("#grid-table").trigger("reloadGrid");
+                            grid.trigger("reloadGrid");
+                            swal("", data.message, "success");
+                        }else{
+                            swal("", data.message, "warning");
+                        }
+                       
+                    }
+                });
+
+            return false;
+        });
+        // console.log(rowid);          
+    }
 
     /*delete*/
     function delete_data(rowid){

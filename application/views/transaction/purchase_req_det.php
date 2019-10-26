@@ -394,6 +394,8 @@
                         }
                 },
                 {label: 'Jumlah', name: 'qty', width: 100, align: "right", editable: true, search:false, sortable:false, cellEdit: true, edittype:"text", editrules:{number:true}, 
+                    formatter: 'currency', 
+                    formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."},
                     edittype:"text", editoptions:
                     {
                         size: 25, maxlengh: 30,
@@ -408,7 +410,7 @@
                         }
                     }
                 },
-                {label: 'Total', name: 'amount', width: 100, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Total', name: 'amount', width: 100, align: "right", editable: false, search:false, sortable:false, editrules:{number:true}},
                 
             ],
             // height: '100%',
@@ -437,6 +439,7 @@
 
                 $('#irow').val(iRow);
                 $('#icolumn').val(iCol);
+                // console.log(iRow +' - '+ iCol);
             },
             afterEditCell: function (rowid, cellName, cellValue, iRow) {
                 var cellDOM = this.rows[iRow], oldKeydown,
@@ -606,12 +609,12 @@
                 onClickButton: function(){ 
                     var grid = $('#grid-table-detail');
 
-                    // alert($('#irow').val());
-                    // alert($('#icolumn').val());
-
-                    // grid.jqGrid('setGridParam', {cellEdit: true});
-                    // grid.jqGrid('editCell', $('#irow').val(), $('#icolumn').val(), true);
-                    // grid.jqGrid('setGridParam', {cellEdit: false});
+                    // console.log($('#icolumn').val()-1);
+                    if($('#irow').val() != ''){
+                        grid.jqGrid('setGridParam', {cellEdit: true});
+                        grid.jqGrid('editCell', $('#irow').val(), 5, true);
+                        grid.jqGrid('setGridParam', {cellEdit: false});
+                    }
 
                     rowid = grid.jqGrid ('getRowData');
                     if(rowid == null) {

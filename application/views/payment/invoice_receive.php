@@ -121,7 +121,7 @@
                 {label: 'No. Tagihan', name: 'invoice_num', width: 150, align: "left", editable: false, search:false, sortable:false},                    
                 {label: 'No. Tagihan (Referensi)', name: 'invoice_ref', width: 150, align: "left", editable: false, search:false, sortable:false},                    
                 {label: 'Tempo Pembayaran', name: 'due_date_payment', width: 150, align: "left", editable: false, search:false, sortable:false},                    
-                {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
                 {label: 'Pembuat', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal Dibuat', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Pengubah', name: 'update_by', width: 100, align: "left", editable: false, search:false, sortable:false},

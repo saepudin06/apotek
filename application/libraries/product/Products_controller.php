@@ -123,58 +123,67 @@ class Products_controller {
 
 
         $table->actionType = 'CREATE';
+        $table->setRecord($items);
+
         $errors = array();
+        $userdata = $ci->session->userdata;
+        $action = 'I';
 
-        if (isset($items[0])){
-            $numItems = count($items);
-            for($i=0; $i < $numItems; $i++){
-                try{
+        try{
 
-                    $table->db->trans_begin(); //Begin Trans
+            $sql = "BEGIN "
+                    . " P_CRUD_INSERT_PRODUCTS("
+                    . " :i_action, "
+                    . " :i_product_id,"
+                    . " :i_product_type_id,"
+                    . " :i_measure_type_id,"
+                    . " :i_package_type_id,"
+                    . " :i_stock_min,"
+                    . " :i_initial_stock,"
+                    . " :i_name,"
+                    . " :i_bu_id,"
+                    . " :i_user,"
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
 
-                        $table->setRecord($items[$i]);
-                        $table->create();
+            $stmt = oci_parse($table->db->conn_id, $sql);
 
-                    $table->db->trans_commit(); //Commit Trans
 
-                }catch(Exception $e){
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_action', $action);
+            oci_bind_by_name($stmt, ':i_product_id', $items['product_id']);
+            oci_bind_by_name($stmt, ':i_product_type_id', $items['product_type_id']);
+            oci_bind_by_name($stmt, ':i_measure_type_id', $items['measure_type_id']);
+            oci_bind_by_name($stmt, ':i_package_type_id', $items['package_type_id']);
+            oci_bind_by_name($stmt, ':i_stock_min', $items['stock_min']);
+            oci_bind_by_name($stmt, ':i_initial_stock', $items['initial_stock']);
+            oci_bind_by_name($stmt, ':i_name', $items['name']);
+            oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);            
+            oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
 
-                    $table->db->trans_rollback(); //Rollback Trans
-                    $errors[] = $e->getMessage();
-                }
-            }
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
 
-            $numErrors = count($errors);
-            if ($numErrors > 0){
-                $data['message'] = $numErrors." from ".$numItems." record(s) failed to be saved.<br/><br/><b>System Response:</b><br/>- ".implode("<br/>- ", $errors)."";
-            }else{
-                $data['success'] = true;
-                $data['message'] = 'Data added successfully';
-            }
-            $data['rows'] =$items;
-        }else {
 
-            try{
+            ociexecute($stmt);
 
-                $table->db->trans_begin(); //Begin Trans
-
-                    $table->setRecord($items);
-                    $table->create();
-
-                $table->db->trans_commit(); //Commit Trans
-
-                $data['success'] = true;
-                $data['message'] = 'Data added successfully';
-                
-
-            }catch (Exception $e) {
-                $table->db->trans_rollback(); //Rollback Trans
-
-                $data['message'] = $e->getMessage();
+            if($o_msg_code == 0){
                 $data['rows'] = $items;
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+            }else{
+                $data['rows'] = $items;
+                $data['success'] = false;
+                $data['message'] = $o_msg;
             }
 
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+            $data['rows'] = $items;
         }
+
         return $data;
 
     }
@@ -197,60 +206,64 @@ class Products_controller {
         //exit;
 
         $table->actionType = 'UPDATE';
+        $table->setRecord($items);
+        
+        $userdata = $ci->session->userdata;
+        $action = 'U';
+        try{
 
-        if (isset($items[0])){
-            
-            $errors = array();
-            $numItems = count($items);
-            for($i=0; $i < $numItems; $i++){
-                try{
+            $sql = "BEGIN "
+                    . " P_CRUD_INSERT_PRODUCTS("
+                    . " :i_action, "
+                    . " :i_product_id,"
+                    . " :i_product_type_id,"
+                    . " :i_measure_type_id,"
+                    . " :i_package_type_id,"
+                    . " :i_stock_min,"
+                    . " :i_initial_stock,"
+                    . " :i_name,"
+                    . " :i_bu_id,"
+                    . " :i_user,"
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
 
-                    $table->db->trans_begin(); //Begin Trans
+            $stmt = oci_parse($table->db->conn_id, $sql);
 
-                        $table->setRecord($items[$i]);
-                        $table->update();
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_action', $action);
+            oci_bind_by_name($stmt, ':i_product_id', $items['product_id']);
+            oci_bind_by_name($stmt, ':i_product_type_id', $items['product_type_id']);
+            oci_bind_by_name($stmt, ':i_measure_type_id', $items['measure_type_id']);
+            oci_bind_by_name($stmt, ':i_package_type_id', $items['package_type_id']);
+            oci_bind_by_name($stmt, ':i_stock_min', $items['stock_min']);
+            oci_bind_by_name($stmt, ':i_initial_stock', $items['initial_stock']);
+            oci_bind_by_name($stmt, ':i_name', $items['name']);
+            oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);            
+            oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
 
-                    $table->db->trans_commit(); //Commit Trans
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
 
-                    $items[$i] = $table->get($items[$i][$table->pkey]);
-                }catch(Exception $e){
-                    $table->db->trans_rollback(); //Rollback Trans
 
-                    $errors[] = $e->getMessage();
-                }
-            }
+            ociexecute($stmt);
 
-            $numErrors = count($errors);
-            if ($numErrors > 0){
-                $data['message'] = $numErrors." from ".$numItems." record(s) failed to be saved.<br/><br/><b>System Response:</b><br/>- ".implode("<br/>- ", $errors)."";
-            }else{
-                $data['success'] = true;
-                $data['message'] = 'Data update successfully';
-            }
-            $data['rows'] =$items;
-        }else {
-            
-            try{
-
-                $table->db->trans_begin(); //Begin Trans
-
-                    $table->setRecord($items);
-                    $table->update();
-
-                $table->db->trans_commit(); //Commit Trans
-
-                $data['success'] = true;
-                $data['message'] = 'Data update successfully';
-                
-                $data['rows'] = $table->get($items[$table->pkey]);
-            }catch (Exception $e) {
-                $table->db->trans_rollback(); //Rollback Trans
-
-                $data['message'] = $e->getMessage();
+            if($o_msg_code == 0){
                 $data['rows'] = $items;
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+            }else{
+                $data['rows'] = $items;
+                $data['success'] = false;
+                $data['message'] = $o_msg;
             }
 
+        }catch (Exception $e) {
+            $data['message'] = $e->getMessage();
+            $data['rows'] = $items;
         }
+
         return $data;
 
     }
@@ -266,42 +279,71 @@ class Products_controller {
         $jsonItems = getVarClean('items', 'str', '');
         $data = jsonDecode($jsonItems);
 
+        $userdata = $ci->session->userdata;
         $items = $data["id_"];
+        $action = 'D';
+        $null = null;
 
         try{
-            $table->db->trans_begin(); //Begin Trans
 
-            $total = 0;
-            if (is_array($items)){
-                foreach ($items as $key => $value){
-                    if (empty($value)) throw new Exception('Empty parameter');
-                    $table->remove($value);
-                    $data['rows'][] = array($table->pkey => $value);
-                    $total++;
-                }
+            $sql = "BEGIN "
+                    . " P_CRUD_INSERT_PRODUCTS("
+                    . " :i_action, "
+                    . " :i_product_id,"
+                    . " :i_product_type_id,"
+                    . " :i_measure_type_id,"
+                    . " :i_package_type_id,"
+                    . " :i_stock_min,"
+                    . " :i_initial_stock,"
+                    . " :i_name,"
+                    . " :i_bu_id,"
+                    . " :i_user,"
+                    . " :o_msg_code,"
+                    . " :o_msg"
+                    . "); END;";
+
+            $stmt = oci_parse($table->db->conn_id, $sql);
+
+            //  Bind the input parameter
+            oci_bind_by_name($stmt, ':i_action', $action);
+            oci_bind_by_name($stmt, ':i_product_id', $items['product_id']);
+            oci_bind_by_name($stmt, ':i_product_type_id', $null);
+            oci_bind_by_name($stmt, ':i_measure_type_id', $null);
+            oci_bind_by_name($stmt, ':i_package_type_id', $null);
+            oci_bind_by_name($stmt, ':i_stock_min', $null);
+            oci_bind_by_name($stmt, ':i_initial_stock', $null);
+            oci_bind_by_name($stmt, ':i_name', $null);
+            oci_bind_by_name($stmt, ':i_bu_id', $null);            
+            oci_bind_by_name($stmt, ':i_user', $null);
+
+            // Bind the output parameter
+            oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
+            oci_bind_by_name($stmt, ':o_msg', $o_msg, 2000000);
+
+
+            ociexecute($stmt);
+
+            if($o_msg_code == 0){
+                $data['rows'] = null;
+                $data['success'] = true;
+                $data['message'] = $o_msg;
+                $data['total'] = 1;
+                $data['records'] = 0;
+                $data['page'] = 1;
             }else{
-                $items = (int) $items;
-                if (empty($items)){
-                    throw new Exception('Empty parameter');
-                }
-                $table->remove($items);
-                $data['rows'][] = array($table->pkey => $items);
-                $data['total'] = $total = 1;
+                $data['rows'] = null;
+                $data['success'] = false;
+                $data['message'] = $o_msg;
+                $data['total'] = 1;
+                $data['records'] = 0;
+                $data['page'] = 1;
             }
 
-            $data['records'] = 0;
-            $data['page'] = 1;
-            $data['success'] = true;
-            $data['message'] = $total.' Data deleted successfully';
-            
-            $table->db->trans_commit(); //Commit Trans
-
         }catch (Exception $e) {
-            $table->db->trans_rollback(); //Rollback Trans
             $data['message'] = $e->getMessage();
-            $data['rows'] = array();
-            $data['total'] = 0;
+            $data['rows'] = $items;
         }
+
         return $data;
     }
 

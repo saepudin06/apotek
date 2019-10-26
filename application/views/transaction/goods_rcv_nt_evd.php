@@ -30,9 +30,9 @@
                     <a class="nav-link" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
                         aria-selected="true"><strong>Pengecekan Barang</strong></a>
                 </li>
-                <li class="nav-item w-20 text-center">
+               <!--  <li class="nav-item w-20 text-center">
                     <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail</strong></a>
-                </li>
+                </li> -->
                 <li class="nav-item w-40 text-center">
                     <a class="nav-link active" id="tab-3" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Dokumen Pendukung</strong></a>
                 </li>

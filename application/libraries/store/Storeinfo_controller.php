@@ -300,6 +300,21 @@ class Storeinfo_controller {
         return $data;
     }
 
+    function combo(){
+        //$code = getVarClean('code', 'str', '');
+        $ci = & get_instance();
+        $ci->load->model('store/storeinfo');
+        $table = $ci->storeinfo;
+        $items = $table->getAll(0, -1);
+
+        echo '<select>';
+        foreach($items  as $item){
+            echo '<option value="'.$item['store_info_id'].'">'.$item['store_info_id'].' - '.$item['name'].'</option>';
+        }
+        echo '</select>';
+        exit;
+    }
+
 }
 
 /* End of file Storeinfo_controller.php */

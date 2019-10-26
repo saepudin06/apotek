@@ -35,7 +35,8 @@ class Purchase_order extends Abstract_model {
                                TO_CHAR (update_date, 'dd/mm/yyyy') update_date, 
                                update_by, 
                                created_by,
-                               amount";
+                               amount,
+                               status_grn";
     public $fromClause      = "vw_po_info";
 
     public $refs            = array();
