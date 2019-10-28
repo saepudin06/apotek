@@ -66,6 +66,7 @@ class Cashier_controller {
                     . " :i_status,"
                     . " :i_cus_payment,"
                     . " :i_user,"
+                    . " :i_bu_id,"
                     . " :o_transactionorder_id,"
                     . " :o_msg_code,"
                     . " :o_msg"
@@ -79,6 +80,7 @@ class Cashier_controller {
             oci_bind_by_name($stmt, ':i_status', $status);
             oci_bind_by_name($stmt, ':i_cus_payment', $items['cash']);            
             oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
+            oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);
 
             // Bind the output parameter
             oci_bind_by_name($stmt, ':o_transactionorder_id', $o_transactionorder_id, 2000000);
@@ -89,22 +91,6 @@ class Cashier_controller {
 
             if($o_msg_code == 0){
 
-                $company = getCompany();
-
-                $connector = new WindowsPrintConnector("PR58 Printer");
-
-                /* Print a "Hello world" receipt" */
-                $printer = new Printer($connector);
-
-                $printer->setJustification(Printer::JUSTIFY_CENTER);
-                $printer->text($company['name']."\n");
-                $printer->text($company['address']."\n");
-                $printer->text("No. telp: ".$company['no_telp']."\n\n"); 
-
-                $printer->setJustification(Printer::JUSTIFY_LEFT);
-                $printer->text();
-                $printer->text(date("d/m/Y h:i:s")." (".$userdata['user_name'].")\n");
-                $printer->text("--------------------------------\n");
 
                 for ($i=0; $i < count($items['details']); $i++) { 
                     $det = $items['details'][$i];
@@ -137,29 +123,9 @@ class Cashier_controller {
 
                     ociexecute($stmt_detail);
 
-                    $printer->setJustification(Printer::JUSTIFY_LEFT);
-                    $printer->text($det['product_name']."\n");
-                    $printer->setJustification(Printer::JUSTIFY_RIGHT);
-                    $printer->text($det['product_price']."*".$det['qty']."             ".$det['total']."\n");
+                    
 
                 }                
-
-                $printer->text("--------------------------------\n");
-                $printer->setJustification(Printer::JUSTIFY_RIGHT);
-                $printer->text("Total :  ".$items['subtotal']."\n");
-                $printer->setJustification(Printer::JUSTIFY_RIGHT);
-                $printer->text("Cash  :  ".$items['cash']."\n");
-                $printer->setJustification(Printer::JUSTIFY_RIGHT);
-                $change = (float)$items['subtotal'] - (float)$items['cash'];
-                $printer->text("Change :  ".$change."\n\n");
-
-                $printer->setJustification(Printer::JUSTIFY_CENTER);
-                $printer->text("Terima kasih atas kunjungan anda\n");
-                $printer->text("Semoga lekas sembuh\n\n\n");
-                // $printer->cut();
-                
-                /* Close printer */
-                $printer->close();
 
                 $data['success'] = true;                
                 $data['message'] = $o_msg;

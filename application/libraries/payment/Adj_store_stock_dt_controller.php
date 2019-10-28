@@ -125,6 +125,8 @@ class Adj_store_stock_dt_controller {
 
         $userdata = $ci->session->userdata;
         $action = 'I';
+        $table->actionType = 'CREATE';
+        $table->setRecord($items);
         try{
 
              
@@ -201,6 +203,8 @@ class Adj_store_stock_dt_controller {
 
         $userdata = $ci->session->userdata;
         $action = 'U';
+        $table->actionType = 'UPDATE';
+        $table->setRecord($items);
         try{
 
             $sql = "BEGIN "

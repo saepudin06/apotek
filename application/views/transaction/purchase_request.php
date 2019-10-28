@@ -97,7 +97,7 @@
                 {label: 'ID', name: 'purchase_request_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Kode', name: 'code', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal', name: 'pr_date', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
                 {label: 'Pembuat', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal Dibuat', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Pengubah', name: 'update_by', width: 100, align: "left", editable: false, search:false, sortable:false},

@@ -12,12 +12,12 @@ class Adjusment extends Abstract_model {
 
     public $fields          = array(
                                 'adj_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'ID'),                             
-                                'd_c'   => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Debit/Kredit'),                                
-                                'amount'   => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Total'),                                
+                                'd_c'   => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Debit/Kredit'),                                
+                                'amount'   => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Total'),                                
                                 'bu_id'   => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Unit Bisnis'),                                
-                                'p_map_account_id'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'No. Akun atau Nama Akun'),     
+                                'p_map_account_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'No. Akun atau Nama Akun'),     
                                 'status'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Status'),    
-                                'adj_date'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Tanggal'),    
+                                'adj_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Tanggal'),    
                                 'description'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Keterangan'),    
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),

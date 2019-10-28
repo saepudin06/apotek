@@ -92,7 +92,7 @@
                 {label: 'Purchase Request ID', name: 'purchase_request_id', width: 100, align: "left", editable: false, hidden:true},
                 {label: 'Kode',name: 'code',width: 150, align: "left",editable: false },
                 {label: 'Tanggal',name: 'pr_date',width: 150, align: "left",editable: false },                
-                {label: 'Total', name: 'amount', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Total', name: 'amount', width: 150, align: "left", editable: false, search:false, sortable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
             ],
             height: '100%',
             width: 750,

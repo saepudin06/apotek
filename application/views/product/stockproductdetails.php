@@ -71,7 +71,7 @@
                 {label: 'Jenis Transaksi', name: 'trx_type_name', width: 200, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Kode Transaksi', name: 'trx_source', width: 200, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Produk', name: 'product_name', width: 200, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Jumlah', name: 'qty', width: 100, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Jumlah', name: 'qty', width: 100, align: "right", editable: false, search:false, sortable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
                 {label: 'Debit/Kredit', name: 'dc_name', width: 120, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tgl. Jatuh Tempo', name: 'exp_date', width: 120, align: "left", editable: false, search:false, sortable:false},
                 

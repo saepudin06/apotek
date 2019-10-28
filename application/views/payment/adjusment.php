@@ -62,17 +62,17 @@
                                             <option value="1"> Debit </option>
                                             <option value="-1"> Kredit </option>
                                     </select>
-                                    <span>Debit/Kredit</span>
+                                    <span>Debit/Kredit *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" id="acc_num" name="acc_num" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>No. Akun</span>
+                                    <span>No. Akun *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" id="acc_name" name="acc_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Nama Akun</span>
+                                    <span>Nama Akun *</span>
                                 </label>
 
                                 <div class="col-md-1">
@@ -86,11 +86,11 @@
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-2">
                                     <input class="form-control datepicker" id="adj_date" name="adj_date" placeholder="" autocomplete="off"  readonly="" />
-                                    <span>Tanggal</span>
+                                    <span>Tanggal *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="amount" name="amount" onkeypress="return isNumberKey(event)" placeholder="" autocomplete="off" autofocus="" />
+                                    <input class="form-control" id="amount" name="amount" onkeyup="formatRupiah(this, '')" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Total *</span>
                                 </label>
 
@@ -170,7 +170,7 @@
                 {label: 'No. Akun', name: 'acc_num', width: 240, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Nama Akun', name: 'acc_name', width: 240, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Unit Bisnis', name: 'bu_name', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false, hidden: true},       
+                {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false, hidden: false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},       
                 {label: 'Keterangan', name: 'description', width: 250, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Pembuat', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal Dibuat', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false},
@@ -456,8 +456,10 @@
         $('#adj_id').val(rowid);
         $('#bu_id').val(bu_id);
         $('#acc_name').val(acc_name);        
-        $('#acc_num').val(acc_num);        
-        $('#amount').val(amount);        
+        $('#acc_num').val(acc_num);     
+
+        $('#amount').val(amount).trigger('keyup');
+    
         $('#adj_date').val(adj_date);        
         $('#description').val(description);        
         $('#d_c').val(d_c);        
@@ -515,6 +517,7 @@
     $("#form_data").on('submit', (function (e) {
 
         e.preventDefault(); 
+        rupiah('#amount');
         var data = new FormData(this);
         var adj_id = $('#adj_id').val();
             

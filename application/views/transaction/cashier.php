@@ -34,7 +34,7 @@
                     <div class="col-md-3" style="text-align: right;">
                         <input type="hidden" name="total_qty" id="total_qty" value="0" />
                         <input type="hidden" name="subtotal" id="subtotal" value="0" />
-                        <h1><label class="control-label" id="sub-total">Sub Total : 0 </label></h1>
+                        <h1><label class="control-label" id="sub-total">Total : 0 </label></h1>
                     </div>
                     <div class="col-md-12" id="grid-ui">         
                         <table id="grid-table"></table>
@@ -83,13 +83,14 @@
 
 
     function addprod(){
+
         var obj_id = data.rows.length;
         // var id = obj_id + 1;
         var product_label = $('#product_label').val();
         
         var qty = $('#qty').val();
 
-        if(product_label.length > 5){
+        if(product_label.length > 4){
 
             $.ajax({
                 url: "<?php echo WS_JQGRID."transaction.cashier_controller/getProduct"; ?>" ,
@@ -144,9 +145,9 @@
                 {label: 'Product ID', name: 'product_id', width: 5, sorttype: 'number', editable: true, hidden: true},
                 {label: 'Barcode', name: 'product_label', width: 120, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Nama Produk', name: 'product_name', width: 120, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Qty', name: 'qty', width: 120, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Harga', name: 'product_price', width: 120, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Total', name: 'total', width: 120, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Qty', name: 'qty', width: 120, align: "right", editable: false, search:false, sortable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
+                {label: 'Harga', name: 'product_price', width: 120, align: "right", editable: false, search:false, sortable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
+                {label: 'Total', name: 'total', width: 120, align: "right", editable: false, search:false, sortable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
                 
             ],
             height: 210,
@@ -190,8 +191,10 @@
 
                 // $('#total').text(total_amount);
                 $('#total_qty').val(total_qty);
+                
                 $('#subtotal').val(total_amount);
-                $('#sub-total').text('Sub Total : '+total_amount);
+
+                $('#sub-total').text('Total : '+formatRupiahTxt(total_amount.toString(), ''));
                 
 
             },
@@ -362,6 +365,10 @@
 </script>
 
 <script type="text/javascript">
+    $('#app-container').on("keydown", function(event){
+        myFunction(event);        
+    });
+
     function myFunction(event){
         // console.log(event.keyCode);
         /* tombol F1 */
@@ -407,17 +414,18 @@
         }
 
         /* tombol * */
-         if(event.keyCode == 56) {
-            event.preventDefault();
+        // if(event.keyCode == 56) {
+        //     event.preventDefault();
             
-            var product_label = $('#product_label').val();
-            if(product_label != 0){
-                $('#qty').val(product_label);
-                $('#product_label').val('');
-                $('#product_label').focus();
-            }
+        //     var product_label = $('#product_label').val();
+        //     if(product_label != 0){
+        //         console.log('masuk1');
+        //         $('#qty').val(product_label);
+        //         $('#product_label').val('');
+        //         $('#product_label').focus();
+        //     }
             
-        }
+        // }
 
         /* tombol Enter */
         if(event.keyCode == 13) {
@@ -446,6 +454,7 @@
     }
 
     function qtyadd(st){
+        console.log('masuk2');
         var i = 0;
 
         if(st == 'min'){
@@ -477,9 +486,9 @@
     }
 
     function submitPay(){
-        var cash = $('#cash').val();
-            var subtotal = $('#subtotal').val();
-            var total_qty = $('#total_qty').val();
+        var cash = $('#cash').val().split(".").join("");
+            var subtotal = $('#subtotal').val().split(".").join("");
+            var total_qty = $('#total_qty').val().split(".").join("");
 
             if(cash > 0){
                 // alert(cash);
@@ -500,7 +509,12 @@
                        if(data.success){
                            $('#modal_payment').modal('toggle');
                            setTimeout(function() {
-                                loadContentWithParams("transaction.cashier", {});
+                                loadContentWithParams("transaction.print_invoice", {
+                                    transactionorder_id : data.transactionorder_id,
+                                    cash : cash,
+                                    subtotal : subtotal,
+                                    total_qty : total_qty
+                                });
                             }, 1000);
                        }
                        

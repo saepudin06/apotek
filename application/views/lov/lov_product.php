@@ -175,7 +175,7 @@
                 closeAfterEdit: true,
                 closeOnEscape:true,
                 recreateForm: true,
-                serializeEditData: serializeJSON,
+                // serializeEditData: serializeJSON,
                 width: 'auto',
                 errorTextFormat: function (data) {
                     return 'Error: ' + data.responseText
@@ -206,7 +206,7 @@
                 errorTextFormat: function (data) {
                     return 'Error: ' + data.responseText
                 },
-                serializeEditData: serializeJSON,
+                // serializeEditData: serializeJSON,
                 viewPagerButtons: false,
                 beforeShowForm: function (e, form) {
                     var form = $(e[0]);
@@ -234,7 +234,7 @@
             },
             {
                 //delete record form
-                serializeDelData: serializeJSON,
+                // serializeDelData: serializeJSON,
                 recreateForm: true,
                 beforeShowForm: function (e) {
                     var form = $(e[0]);

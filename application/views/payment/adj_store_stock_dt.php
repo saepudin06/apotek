@@ -91,12 +91,12 @@
 
                             <div class="form-row">
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control" onkeypress="return isNumberKey(event)" onkeyup="sumamout()" id="basic_price" name="basic_price" placeholder="" autocomplete="off" autofocus="" />
+                                    <input class="form-control" onkeyup="formatRupiah(this, '')" id="basic_price" name="basic_price" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Harga Awal *</span>
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control" onkeypress="return isNumberKey(event)" onkeyup="sumamout()" id="qty" name="qty" placeholder="" autocomplete="off" autofocus="" />
+                                    <input class="form-control" onkeyup="formatRupiah(this, '')" id="qty" name="qty" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Jumlah *</span>
                                 </label>
 
@@ -164,8 +164,8 @@
                 {label: 'Store ID', name: 'store_id', width: 240, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Product', name: 'product_name', width: 240, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Info Penyimpanan', name: 'store', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Harga Awal', name: 'basic_price', width: 150, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Jumlah', name: 'qty', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Harga Awal', name: 'basic_price', width: 150, align: "right", editable: false, search:false, sortable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
+                {label: 'Jumlah', name: 'qty', width: 150, align: "right", editable: false, search:false, sortable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
                 {label: 'Debit/Kredit', name: 'dc_name', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Debit/Kredit', name: 'dc', width: 150, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Keterangan', name: 'description', width: 250, align: "left", editable: false, search:false, sortable:false},
@@ -451,8 +451,8 @@
         $('#store').val(store);        
         $('#product_id').val(product_id);        
         $('#product_name').val(product_name);        
-        $('#basic_price').val(basic_price);        
-        $('#qty').val(qty);        
+        $('#basic_price').val(basic_price).trigger('keyup');        
+        $('#qty').val(qty).trigger('keyup');        
         $('#dc').val(dc);        
         $('#description').val(description);        
 
@@ -508,6 +508,9 @@
     $("#form_data").on('submit', (function (e) {
 
         e.preventDefault(); 
+
+        rupiah('#basic_price');
+        rupiah('#qty');
         var data = new FormData(this);
         data.append("bu_id_dest", $("#bu_id_dest").val());
         var adj_store_stock_dt_id = $('#adj_store_stock_dt_id').val();

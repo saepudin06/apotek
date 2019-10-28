@@ -95,7 +95,7 @@
                                 </label>
 
                                 <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control datepicker" id="due_dat_payment" name="due_dat_payment" placeholder="" autocomplete="off" autofocus="" />
+                                    <input class="form-control datepicker" id="due_dat_payment" name="due_dat_payment" placeholder="" autocomplete="off" autofocus="" readonly="" />
                                     <span>Tgl. Jatuh Tempo</span>
                                 </label>
 

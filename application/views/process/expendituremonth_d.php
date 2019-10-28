@@ -73,7 +73,7 @@
             colModel: [
                 {label: 'ID', name: 'keyid', key: true, width: 5, sorttype: 'text', editable: true, hidden: true},
                 {label: 'Group Acc', name: 'group_acc', width: 100, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Amount', name: 'amount', width: 100,formatter:'number', align: "right", editable: false, search:false, sortable:false, hidden: false},
+                {label: 'Amount', name: 'amount', width: 100, align: "right", editable: false, search:false, sortable:false, hidden: false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
                 {label: 'BU Name', name: 'bu_name', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Period Expenditure', name: 'period_expenditure', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Period Trans', name: 'period_trans', width: 100, align: "left", editable: false, search:false, sortable:false},
@@ -282,13 +282,14 @@
             rownumbers: true, // show row numbers
             rownumWidth: 35,
             shrinkToFit: true,
+            loadui: "disable",
 //            scrollbar : false,
             postData:{celValue:encodeURIComponent(parentRowKey)},
             colModel: [
                 { label: 'ID', name: 'keyid', key: true, width:100, editable: false,hidden:true },
                 { label: 'Acc.Num', name: 'account_num', width:200, align:"left", editable:false},
                 { label: 'Acc.Desc', name: 'acc_desc', width:300, align:"left", editable:false},
-                { label: 'Amount', name: 'amount', width:100, align:"right", editable:false},
+                { label: 'Amount', name: 'amount', width:100, align:"right", editable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
                 { label: 'Create By', name: 'created_by', width:100, align:"left", editable:false},
                 { label: 'Create Date', name: 'created_date', width:100, align:"left", editable:false},
                 { label: 'Update Date', name: 'update_date', width:100, align:"left", editable:false},

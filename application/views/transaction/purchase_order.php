@@ -134,7 +134,7 @@
                 {label: 'Supplier', name: 'sup_name', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Purchase Request ID', name: 'purchase_request_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Rencana Pembelian', name: 'pr_code', width: 200, align: "left", editable: false, search:false, sortable:false},                
-                {label: 'Amount', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false},
+                {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
                 {label: 'Pembuat', name: 'created_by', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal Dibuat', name: 'created_date', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Pengubah', name: 'update_by', width: 100, align: "left", editable: false, search:false, sortable:false},

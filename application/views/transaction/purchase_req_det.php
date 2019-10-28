@@ -117,8 +117,8 @@
                 {label: 'Jenis Produk', name: 'product_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Satuan',name: 'package_type_name',width: 150, align: "left",editable: false, hidden: true},
                 {label: 'Ukuran',name: 'measure_type_name',width: 150, align: "left",editable: false, hidden: true},
-                {label: 'Jumlah Stok',name: 'stock_store',width: 100, align: "right",editable: false },
-                {label: 'Min. Stok',name: 'stock_min',width: 100, align: "right",editable: false },
+                {label: 'Jumlah Stok',name: 'stock_store',width: 100, align: "right",editable: false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
+                {label: 'Min. Stok',name: 'stock_min',width: 100, align: "right",editable: false , formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
                 
             ],
             height: 200,
@@ -384,7 +384,7 @@
                             size: 25, maxlengh: 30,
                             dataInit: function(element)
                             {
-                                $(element).keypress(function(e)
+                                $(element).keyup(function(e)
                                 {
                                     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                                         return false;
@@ -410,7 +410,7 @@
                         }
                     }
                 },
-                {label: 'Total', name: 'amount', width: 100, align: "right", editable: false, search:false, sortable:false, editrules:{number:true}},
+                {label: 'Total', name: 'amount', width: 100, align: "right", editable: false, search:false, sortable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
                 
             ],
             // height: '100%',
