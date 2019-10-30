@@ -95,6 +95,8 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'purchase_request_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
+                {label: 'Status', name: 'status', width: 150, align: "left", editable: false, search:false, sortable:false, hidden:true},
+                {label: 'Status', name: 'status_code', width: 150, align: "left", editable: false, search:false, sortable:false, hidden:false},
                 {label: 'Kode', name: 'code', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal', name: 'pr_date', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
@@ -347,12 +349,17 @@
         var purchase_request_id = grid.jqGrid('getGridParam', 'selrow');
         var pr_date = grid.jqGrid('getCell', purchase_request_id, 'pr_date');
         var pr_code = grid.jqGrid('getCell', purchase_request_id, 'code');
+        var status = grid.jqGrid('getCell', purchase_request_id, 'status');
 
         if(purchase_request_id == null) {
             swal('','Silakan pilih salah satu baris','info');
             return false;
         }
 
+        if(status == 'Y') {
+            swal('','Permintaan Pembelian Sudah CLOSE','info');
+            return false;
+        }
         
         loadContentWithParams("transaction.purchase_req_det", {
             purchase_request_id: purchase_request_id,
