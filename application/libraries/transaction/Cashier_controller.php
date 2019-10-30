@@ -23,7 +23,10 @@ class Cashier_controller {
                 FROM products a
                 LEFT JOIN productdetails b ON a.product_id = b.product_id
                 LEFT JOIN producttariffdetails c ON b.prd_details_id = c.prd_details_id
-                WHERE b.product_label = ?";
+                WHERE b.product_label = ?
+                AND trunc(SYSDATE) BETWEEN c.start_date
+                                               AND NVL (c.end_date,
+                                                        SYSDATE + 1)";
 
         $result = $table->db->query($sql, array($product_label));
         $rows = $result->row_array();
