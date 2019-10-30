@@ -119,6 +119,7 @@
                 {label: 'Ukuran',name: 'measure_type_name',width: 150, align: "left",editable: false, hidden: true},
                 {label: 'Jumlah Stok',name: 'stock_store',width: 100, align: "right",editable: false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
                 {label: 'Min. Stok',name: 'stock_min',width: 100, align: "right",editable: false , formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
+                {label: 'Harga Awal',name: 'basic_price',width: 100, align: "right",editable: false , formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
                 
             ],
             height: 200,
@@ -664,7 +665,7 @@
                            'purchase_req_det_id' : null,
                            'amount' : 0,
                            'qty' : 0,
-                           'basic_price' : 0,
+                           'basic_price' : grid.jqGrid('getCell', value, 'basic_price'),
                        });
         });
 
