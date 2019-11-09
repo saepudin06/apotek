@@ -86,7 +86,7 @@
 
                                 <label class="form-group has-float-label col-md-4">
                                     <input class="form-control" onkeypress="return isNumberKey(event)" id="tax" name="tax" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Tax *</span>
+                                    <span>Pajak *</span>
                                 </label>
                             </div>
 

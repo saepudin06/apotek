@@ -151,7 +151,7 @@
                 {label: 'Product ID', name: 'product_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Nama Produk', name: 'product_name', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Label', name: 'product_label', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
-                {name: '<center>Barcode</center>',width: 100, align: "center",
+                {name: '<center>Label</center>',width: 100, align: "center",
                     formatter:function(cellvalue, options, rowObject) {
 
                         var label  = rowObject['product_label'];

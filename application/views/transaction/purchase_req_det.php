@@ -606,7 +606,8 @@
             }
         ).navButtonAdd('#grid-pager-detail',{
                 caption: "", //Edit
-                buttonicon: "simple-icon-note",
+                // buttonicon: "simple-icon-note",
+                buttonicon: "glyph-icon iconsmind-Save",
                 onClickButton: function(){ 
                     var grid = $('#grid-table-detail');
 
@@ -625,7 +626,7 @@
                     edit_product(rowid);
                 },
                 position: "last",
-                title: "Edit",
+                title: "Save",
                 cursor: "pointer",
                 id : "btn-edit"
         }).navButtonAdd('#grid-pager-detail',{
