@@ -35,7 +35,7 @@
                 <?php
                     $sqla = "SELECT transactionorder_id,
                                     to_char(trx_date, 'dd/mm/yyyy hh24:mi:ss') trx_date,
-                                    created_date,
+                                    to_char(created_date, 'yyyymmddhh24miss') created_date,
                                     updated_date,
                                     update_by,
                                     created_by,
@@ -62,7 +62,7 @@
                         Pegawai : <strong><?php echo strtoupper($row['created_by']);?></strong>
                     </div>
                     <div class="col-md-6" style="text-align:right">
-                        Nomor Invoice : <strong><?php echo "INV-".date("Ymdhis").$row['transactionorder_id'];?></strong>
+                        Nomor Invoice : <strong><?php echo "INV-".$row['created_date'].$row['transactionorder_id'];?></strong>
                     </div>
                 </div>
                 
@@ -140,6 +140,24 @@
 
     function printStruck(){
         var transactionorder_id = "<?php echo $this->input->post('transactionorder_id');?>";
-        alert(transactionorder_id);
+        $.ajax({
+            url: "<?php echo WS_JQGRID."transaction.cashier_controller/printStruk"; ?>" ,
+            type: "POST",
+            dataType: "json",
+            data: {transactionorder_id:transactionorder_id},
+            success: function (data) {
+                if (data.success){
+
+                    swal("", data.message, "success");
+
+                }else{
+                    swal("", data.message, "warning");
+                }
+            },
+            error: function (xhr, status, error) {
+                swal({title: "Error!", text: xhr.responseText, html: true, type: "error"});
+            }
+        });
+        // alert(transactionorder_id);
     }
 </script>

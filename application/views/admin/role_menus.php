@@ -51,10 +51,13 @@
                             $ci->load->model('admin/menus');
                             $table = $ci->menus;
                             $items = $table->getMenu();
-
+                            $no = 1;
                         ?>
-                        <?php foreach($items as $item):?>
-                            <p class="text-muted text-small"><?php echo $item['menu_title'];?></p>   
+                        <div class="row">
+
+                        <?php foreach($items as $item):?>                            
+                            <div class="col-3">
+                            <p class="text-muted text-big" style="padding-left: 12px;"><?php echo $no.'.  '.$item['menu_title'];?></p>   
                             <div class="form-row">   
                                 <ul class="list-unstyled mb-5" style="padding-left: 20px;">
                                 <?php
@@ -75,9 +78,11 @@
                                 <?php endforeach; ?>
                                 </ul>
                             </div>
-                        <?php endforeach; ?>
-                        
-                        <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            </div>                            
+                        <?php $no++; endforeach; ?>
+                        </div>
+
+                        <button class="btn btn-success" type="submit" id="btn-submit">OK</button>
                         <button class="btn btn-primary" type="button" id="btn-refresh">Refresh Semua</button>
                     </form>
                 </div>

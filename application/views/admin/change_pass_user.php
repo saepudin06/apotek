@@ -69,7 +69,7 @@
                             <span>Re-password *</span>
                         </label>
 
-                        <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                        <button class="btn btn-success" type="submit" id="btn-submit">OK</button>
 
                     </form>
                 </div>

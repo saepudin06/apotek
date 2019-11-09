@@ -93,7 +93,7 @@
                             </div>
                             
 
-                            <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                            <button class="btn btn-success" type="submit" id="btn-submit">OK</button>
                             <button class="btn btn-danger" type="button" id="btn-cancel">Batal</button>
 
                         </form>

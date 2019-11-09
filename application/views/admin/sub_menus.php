@@ -86,7 +86,7 @@
                         
 
                         <button class="btn btn-primary" type="reset" id="btn-add">Tambah</button>
-                        <button class="btn btn-secondary" type="submit" id="btn-submit">OK</button>
+                        <button class="btn btn-success" type="submit" id="btn-submit">OK</button>
                         <button class="btn btn-danger" type="button" id="btn-delete">Hapus</button>
                     </form>
                 </div>

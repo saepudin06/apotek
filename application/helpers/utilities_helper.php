@@ -81,4 +81,18 @@ function getSecretKey(){
     return $rows;
 }
 
+function getPrinterName(){
+    $ci = & get_instance();
+    $ci->load->model('admin/globalparam');
+    $table = $ci->globalparam;
+
+    $sql = "SELECT   value
+            FROM   globalparam WHERE code = 'PRINTER_NAME' and rownum = 1";
+
+    $result = $table->db->query($sql);
+    $rows = $result->row_array();
+
+    return $rows;
+}
+
 ?>

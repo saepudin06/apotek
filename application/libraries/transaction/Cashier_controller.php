@@ -147,6 +147,94 @@ class Cashier_controller {
     }
 
 
+    function printStruk(){
+        
+        $ci = & get_instance();
+        $ci->load->model('transaction/cashier');
+        $table = $ci->cashier;
+        $userdata = $ci->session->userdata;
+
+        $transactionorder_id = getVarClean('transactionorder_id','int',0);
+
+        try {
+            $printer = getPrinterName();
+            $company = getCompany();
+
+            $connector = new WindowsPrintConnector($printer['value']);
+
+            /* Print a "Hello world" receipt" */
+            $printer = new Printer($connector);
+
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->text($company['name']."\n");
+            $printer->text($company['address']."\n");
+            $printer->text("No. telp: ".$company['no_telp']."\n\n"); 
+
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            $printer->text();
+            $printer->text(date("d/m/Y h:i:s")." (".$userdata['user_name'].")\n");
+            $printer->text("--------------------------------\n");
+
+            $sql = "SELECT * FROM vw_transactionorder_dt WHERE transactionorder_id = ?";
+            $q = $ci->db->query($sql, array($transactionorder_id));
+            $items = $q->result_array();
+
+            $no = 1;
+            foreach ($items as $item) {
+                $printer->setJustification(Printer::JUSTIFY_LEFT);
+                $printer->text($item['product_name']."\n");
+                $printer->setJustification(Printer::JUSTIFY_RIGHT);
+                $printer->text($item['sell_price']."*".number_format($item['qty'],0,",",".")."             ".number_format($item['amount'],0,",",".")."\n");
+            }
+
+            $sqla = "SELECT transactionorder_id,
+                            to_char(trx_date, 'dd/mm/yyyy hh24:mi:ss') trx_date,
+                            to_char(created_date, 'yyyymmddhh24miss') created_date,
+                            updated_date,
+                            update_by,
+                            created_by,
+                            qty,
+                            ttl_amount,
+                            status,
+                            cus_payment,
+                            bu_id,
+                            status_posting
+                     FROM transactionorder 
+                     WHERE transactionorder_id = ?";
+            $qa = $ci->db->query($sqla, array($transactionorder_id));
+            $row = $qa->row_array();
+
+            $change = (float)$row["cus_payment"] - (float)$row["ttl_amount"];
+
+            $printer->text("--------------------------------\n");
+            $printer->setJustification(Printer::JUSTIFY_RIGHT);
+            $printer->text("Total :  ".number_format($row["ttl_amount"],0,",",".")."\n");
+            $printer->setJustification(Printer::JUSTIFY_RIGHT);
+            $printer->text("Cash  :  ".number_format($row["cus_payment"],0,",",".")."\n");
+            $printer->setJustification(Printer::JUSTIFY_RIGHT);
+            $printer->text("Change :  ".number_format($change,0,",",".")."\n\n");
+
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->text("Terima kasih atas kunjungan anda\n");
+            $printer->text("Semoga lekas sembuh\n\n\n");
+            // $printer->cut();
+            
+            /* Close printer */
+            $printer->close();
+
+            $data['success'] = true;                
+            $data['message'] = 'berhasil cetak struk';
+
+        } catch (Exception $e) {
+            $data['success'] = false;                
+            $data['message'] = 'gagal cetak struk :'.$e->getMessage();            
+        }
+
+        echo json_encode($data);
+        exit;
+    }
+
+
 }
 
 /* End of file Cashier_controller.php */
