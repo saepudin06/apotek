@@ -84,7 +84,7 @@
         var pager_selector = "#grid-pager-lov_purchase_request";
 
         jQuery("#grid-table-lov_purchase_request").jqGrid({
-            url: '<?php echo WS_JQGRID."transaction.purchase_request_controller/crud"; ?>',
+            url: '<?php echo WS_JQGRID."transaction.purchase_request_controller/readLov"; ?>',
             datatype: "json",
             mtype: "POST",
             loadui: "disable",
@@ -275,7 +275,7 @@
         if(event.keyCode === 13) {
             var i_search_lov_purchase_request = $('#i_search_lov_purchase_request').val();
             jQuery("#grid-table-lov_purchase_request").jqGrid('setGridParam',{
-                url: '<?php echo WS_JQGRID."transaction.purchase_request_controller/read"; ?>',
+                url: '<?php echo WS_JQGRID."transaction.purchase_request_controller/readLov"; ?>',
                 postData: {
                     i_search : i_search_lov_purchase_request
                 }
@@ -288,7 +288,7 @@
         var i_search_lov_purchase_request = $('#i_search_lov_purchase_request').val();
         
         jQuery("#grid-table-lov_purchase_request").jqGrid('setGridParam',{
-                url: '<?php echo WS_JQGRID."transaction.purchase_request_controller/read"; ?>',
+                url: '<?php echo WS_JQGRID."transaction.purchase_request_controller/readLov"; ?>',
                 postData: {
                     i_search : i_search_lov_purchase_request
                 }
