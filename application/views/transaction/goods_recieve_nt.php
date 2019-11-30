@@ -67,14 +67,6 @@
                                     <span>Tgl. Jatuh Tempo *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-4">
-                                    <input class="form-control" id="invoice_num_ref" name="invoice_num_ref" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>No. Tagihan *</span>
-                                </label>
-
-                            </div>
-
-                            <div class="form-row">
                                 <label class="form-group has-float-label col-md-3">
                                     <input class="form-control" id="po_num" name="po_num" placeholder="" autocomplete="off" autofocus="" readonly="" />
                                     <span>Kode Pembelian *</span>
@@ -84,9 +76,14 @@
                                     <button class="btn btn-primary default" type="button" onclick="search_po('purchase_order_id', 'po_num')">Search</button>
                                 </div>
 
+                            </div>
+
+                            <div class="form-row">
+                                
+
                                 <input class="form-control" type="hidden" id="purchase_order_id" name="purchase_order_id" placeholder="" autocomplete="off" readonly="" />
 
-                                <label class="form-group has-float-label col-md-8">
+                                <label class="form-group has-float-label col-md-12">
                                     <input class="form-control" id="notes" name="notes" placeholder="" autocomplete="off" autofocus=""  />
                                     <span>Catatan</span>
                                 </label>
@@ -132,7 +129,6 @@
                 {label: 'Kode Pengecekan', name: 'code', width: 200, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Tanggal', name: 'grn_date', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Kode Pembelian', name: 'po_num', width: 200, align: "left", editable: false, search:false, sortable:false, hidden:false},
-                {label: 'No. Tagihan', name: 'invoice_num_ref', width: 150, align: "left", editable: false, search:false, sortable:false},                    
                 {label: 'Tempo Pembayaran', name: 'due_date_payment', width: 150, align: "left", editable: false, search:false, sortable:false},                    
                 {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
                 {label: 'Status', name: 'status', width: 100, align: "left", editable: false, search:false, sortable:false},
@@ -442,10 +438,10 @@
                 },
                 {label: 'Goods Recieve Note ID', name: 'goods_recieve_nt_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Store Info', name: 'store_info_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Supplier', name: 'supplier_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
-                {label: 'Invoice Num', name: 'invoice_num_ref', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Supplier', name: 'supplier_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},                
                 {label: 'Produk', name: 'product_name', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Supplier', name: 'supplier_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'No. Tagihan', name: 'invoice_num_ref', width: 100, align: "left", editable: true, search:false, sortable:false},
                 {label: 'Info Penyimpanan', name: 'store_info', width: 150, align: "left", editable: true, search:false, sortable:false,
                     edittype: 'select', 
                     editoptions: {
@@ -573,7 +569,6 @@
     function setData(rowid){
         
         var due_date_payment = $('#grid-table').jqGrid('getCell', rowid, 'due_date_payment');
-        var invoice_num_ref  = $('#grid-table').jqGrid('getCell', rowid, 'invoice_num_ref');
         var purchase_order_id  = $('#grid-table').jqGrid('getCell', rowid, 'purchase_order_id');
         var notes  = $('#grid-table').jqGrid('getCell', rowid, 'notes');
         var po_num  = $('#grid-table').jqGrid('getCell', rowid, 'po_num');
@@ -581,8 +576,7 @@
         $('#goods_recieve_nt_id').val(rowid);
         $('#purchase_order_id').val(purchase_order_id);
         $('#due_date_payment').val(due_date_payment);
-        $('#notes').val(notes);         
-        $('#invoice_num_ref').val(invoice_num_ref);         
+        $('#notes').val(notes);               
         $('#po_num').val(po_num);         
 
     }

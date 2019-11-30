@@ -19,6 +19,7 @@ class Goods_recieve_nt_dt extends Abstract_model {
                                 'note'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Catatan'),
                                 'supplier_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Supplier'),
                                 'store_info_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Info Penyimpanan'),
+                                'invoice_num_ref'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'No. tagihan'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),
@@ -43,7 +44,8 @@ class Goods_recieve_nt_dt extends Abstract_model {
                                amount,
                                store_info_id,
                                supplier_id,
-                               supplier_name";
+                               supplier_name,
+                               invoice_num_ref";
                                
     public $fromClause      = "vw_list_grn_dt";
 

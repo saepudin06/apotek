@@ -136,7 +136,6 @@ class Goods_recieve_nt_controller {
                     . " :i_action, "
                     . " :i_bu_id,"
                     . " :i_user,"
-                    . " :i_invoice_num_ref,"
                     . " to_date(:i_due_date_payment, 'DD/MM/YYYY'),"
                     . " :i_purchase_order_id,"
                     . " :i_grn_id,"
@@ -150,7 +149,6 @@ class Goods_recieve_nt_controller {
             oci_bind_by_name($stmt, ':i_action', $action);
             oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);  
             oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
-            oci_bind_by_name($stmt, ':i_invoice_num_ref', $items['invoice_num_ref']);
             oci_bind_by_name($stmt, ':i_due_date_payment', $items['due_date_payment']);    
             oci_bind_by_name($stmt, ':i_purchase_order_id', $items['purchase_order_id']);
             oci_bind_by_name($stmt, ':i_grn_id', $items['goods_recieve_nt_id']);
@@ -209,7 +207,6 @@ class Goods_recieve_nt_controller {
                     . " :i_action, "
                     . " :i_bu_id,"
                     . " :i_user,"
-                    . " :i_invoice_num_ref,"
                     . " to_date(:i_due_date_payment, 'DD/MM/YYYY'),"
                     . " :i_purchase_order_id,"
                     . " :i_grn_id,"
@@ -223,7 +220,6 @@ class Goods_recieve_nt_controller {
             oci_bind_by_name($stmt, ':i_action', $action);
             oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);  
             oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
-            oci_bind_by_name($stmt, ':i_invoice_num_ref', $items['invoice_num_ref']);
             oci_bind_by_name($stmt, ':i_due_date_payment', $items['due_date_payment']);    
             oci_bind_by_name($stmt, ':i_purchase_order_id', $items['purchase_order_id']);
             oci_bind_by_name($stmt, ':i_grn_id', $items['goods_recieve_nt_id']);
@@ -277,7 +273,6 @@ class Goods_recieve_nt_controller {
                     . " :i_action, "
                     . " :i_bu_id,"
                     . " :i_user,"
-                    . " :i_invoice_num_ref,"
                     . " to_date(:i_due_date_payment, 'DD/MM/YYYY'),"
                     . " :i_purchase_order_id,"
                     . " :i_grn_id,"
@@ -291,7 +286,6 @@ class Goods_recieve_nt_controller {
             oci_bind_by_name($stmt, ':i_action', $action);
             oci_bind_by_name($stmt, ':i_bu_id', $null);  
             oci_bind_by_name($stmt, ':i_user', $null);
-            oci_bind_by_name($stmt, ':i_invoice_num_ref', $null);
             oci_bind_by_name($stmt, ':i_due_date_payment', $null);    
             oci_bind_by_name($stmt, ':i_purchase_order_id', $null);
             oci_bind_by_name($stmt, ':i_grn_id', $items);

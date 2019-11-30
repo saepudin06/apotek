@@ -130,6 +130,7 @@ class Goods_recieve_nt_dt_controller {
                     . " :i_store_info_id,"
                     . " :i_note,"
                     . " to_date(:i_exp_date, 'DD/MM/YYYY'),"
+                    . " :i_invoice_num_ref,"
                     . " :o_msg_code,"
                     . " :o_msg"
                     . "); END;";
@@ -144,6 +145,7 @@ class Goods_recieve_nt_dt_controller {
             oci_bind_by_name($stmt, ':i_store_info_id', $items['store_info_id']);              
             oci_bind_by_name($stmt, ':i_note', $items['note']);
             oci_bind_by_name($stmt, ':i_exp_date', $items['exp_date']);   
+            oci_bind_by_name($stmt, ':i_invoice_num_ref', $items['invoice_num_ref']);   
 
             // Bind the output parameter
             oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
