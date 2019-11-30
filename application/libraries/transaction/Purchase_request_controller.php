@@ -45,8 +45,7 @@ class Purchase_request_controller {
             $table->setCriteria("bu_id=".$userdata['bu_id']);
 
             if(!empty($status)) {
-                $table->setCriteria("( upper(status) like upper('%".$status."%')
-                                     )");
+                $table->setCriteria("status= '".$status."'");
             }
 
             if(!empty($i_search)) {

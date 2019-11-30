@@ -10,12 +10,13 @@ class Goods_recieve_nt_controller {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','grn_date');
+        $sidx = getVarClean('sidx','str','goods_recieve_nt_id');
         $sord = getVarClean('sord','str','desc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
         $i_search = getVarClean('i_search','str','');
+        $status = getVarClean('status','str','');   
 
         try {
 
@@ -42,9 +43,12 @@ class Goods_recieve_nt_controller {
             $req_param['where'] = array();
             $table->setCriteria("bu_id=".$userdata['bu_id']);
 
+            if(!empty($status)) {
+                $table->setCriteria("nvl(status,'IN-PROCESS')= '".$status."'");
+            }
+
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(invoice_num_ref) like upper('%".$i_search."%') OR
-                                       upper(code) like upper('%".$i_search."%') OR
+                $table->setCriteria("( upper(code) like upper('%".$i_search."%') OR
                                        upper(status) like upper('%".$i_search."%')
                                      )");
             }

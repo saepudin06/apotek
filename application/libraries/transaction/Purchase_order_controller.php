@@ -10,11 +10,12 @@ class Purchase_order_controller {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','po_date');
+        $sidx = getVarClean('sidx','str','purchase_order_id');
         $sord = getVarClean('sord','str','desc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
+        $status = getVarClean('status','str','');        
         $i_search = getVarClean('i_search','str','');
 
         try {
@@ -23,6 +24,7 @@ class Purchase_order_controller {
             $ci->load->model('transaction/purchase_order');
             $table = $ci->purchase_order;
             $userdata = $ci->session->userdata;
+
 
             $req_param = array(
                 "sort_by" => $sidx,
@@ -41,6 +43,10 @@ class Purchase_order_controller {
             // Filter Table
             $req_param['where'] = array();
             $table->setCriteria("bu_id=".$userdata['bu_id']);
+
+            if(!empty($status)) {
+                $table->setCriteria("status_grn= '".$status."'");
+            }
 
             if(!empty($i_search)) {
                 $table->setCriteria("( upper(code) like upper('%".$i_search."%') OR

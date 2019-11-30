@@ -41,6 +41,17 @@
             <div class="separator mb-2"></div>
             <div class="card-body">            
                 
+                <div class="form-row" id="filter-grid-ui">
+                    <label class="form-group has-float-label col-md-3">
+                        <select class="form-control" id="status">
+                            <option value="IN-PROCESS"> IN-PROCESS </option>
+                            <option value="CLOSED"> CLOSED </option>
+                            <option value="STOCK-ADDED"> STOCK-ADDED </option>
+                        </select>
+                        <span>Filter Status GR *</span>
+                    </label>
+                </div>    
+
                 <div class="row">
                     <div class="col-md-12" id="grid-ui">         
                         <table id="grid-table"></table>
@@ -120,6 +131,7 @@
 
         jQuery("#grid-table").jqGrid({
             url: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/crud"; ?>',
+            postData : { status : 'IN-PROCESS' },
             datatype: "json",
             mtype: "POST",
             loadui: "disable",
@@ -339,6 +351,7 @@
                 caption: "", //Add
                 buttonicon: "simple-icon-plus",
                 onClickButton: function(){ 
+                    $('#filter-grid-ui').hide();
                     $('#grid-ui').hide();
                     $('#form-ui').slideDown( "slow" );
                     $('#form_data').trigger("reset");                    
@@ -359,6 +372,7 @@
                         return false;
                     }
 
+                    $('#filter-grid-ui').hide();
                     $('#grid-ui').hide();
                     $('#form-ui').slideDown( "slow" );
 
@@ -583,6 +597,7 @@
 
     $('#btn-cancel').on('click',function(){
         $('#form-ui').hide();
+        $('#filter-grid-ui').slideDown( "slow" );
         $('#grid-ui').slideDown( "slow" );
     });
 
@@ -735,6 +750,7 @@
                     $("#grid-table").trigger("reloadGrid");
                     swal("", data.message, "success");
                     $('#form-ui').hide();
+                    $('#filter-grid-ui').slideDown( "slow" );
                     $('#grid-ui').slideDown( "slow" );
                 }else{
                     swal("", data.message, "warning");
@@ -754,7 +770,8 @@
         jQuery("#grid-table").jqGrid('setGridParam',{
             url: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/read"; ?>',
             postData: {
-                i_search : $('#search-data').val()
+                i_search : $('#search-data').val(),
+                status : $('#status').val()
             }
         });
         
@@ -768,12 +785,26 @@
         jQuery("#grid-table").jqGrid('setGridParam',{
             url: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/read"; ?>',
             postData: {
-                i_search : ''
+                i_search : '',
+                status : $('#status').val()
             }
         });
         
         $("#grid-table").trigger("reloadGrid");
     }
+
+    $('#status').on('change', function(){
+        jQuery("#grid-table").jqGrid('setGridParam',{
+            url: '<?php echo WS_JQGRID."transaction.goods_recieve_nt_controller/read"; ?>',
+            postData: {
+                i_search : $('#search-data').val(),
+                status : $('#status').val()
+            }
+        });
+        
+        $("#grid-table").trigger("reloadGrid");
+        responsive_jqgrid('#grid-table', '#grid-pager');
+    });
 
 
      $('.datepicker').datepicker({
@@ -842,6 +873,7 @@
                                 swal("", data.message, "success");
                                 $('#form-ui').hide();
                                 $('#grid-ui').slideDown( "slow" );
+                                $('#filter-grid-ui').slideDown( "slow" );
                             }else{
                                 swal("", data.message, "warning");
                             }

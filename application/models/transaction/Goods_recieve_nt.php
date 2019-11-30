@@ -13,7 +13,7 @@ class Goods_recieve_nt extends Abstract_model {
     public $fields          = array(
                                 'goods_recieve_nt_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'ID'),
                                 'purchase_order_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Kode Pembelian'),
-                                'status'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Status'),
+                                'status'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Status'),
                                 'amount'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Total'),
                                 'code'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Kode Pengecekan'),
                                 'due_date_payment'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Tgl. Jatuh Tempo'),
