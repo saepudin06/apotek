@@ -33,9 +33,9 @@
                 <li class="nav-item w-30 text-center">
                     <a class="nav-link" id="tab-2" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Detail Produk</strong></a>
                 </li>
-                <li class="nav-item w-30 text-center">
+                <!-- <li class="nav-item w-30 text-center">
                     <a class="nav-link" id="tab-3" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false"><strong>Tarif</strong></a>
-                </li>
+                </li> -->
             </ul>
             
             <div class="separator mb-2"></div>
