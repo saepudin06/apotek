@@ -55,23 +55,13 @@
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 
                             <div class="form-row">
-                                <label class="form-group has-float-label col-md-4">
+                                <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="purchase_order_id" name="purchase_order_id" placeholder="" autocomplete="off" readonly="" />
                                     <span>ID *</span>
                                 </label>
                                 
-                                <label class="form-group has-float-label col-md-3">
-                                    <input class="form-control" id="sup_name" name="sup_name" placeholder="" autocomplete="off" autofocus="" readonly="" />
-                                    <span>Supplier *</span>
-                                </label>
 
-                                <div class="col-md-1">
-                                    <button class="btn btn-primary default" type="button" onclick="search_supplier('supplier_id', 'sup_name')">Cari <i class="simple-icon-question"></i></button>
-                                </div>
-
-                                <input class="form-control" type="hidden" id="supplier_id" name="supplier_id" placeholder="" autocomplete="off" readonly="" />
-
-                                <label class="form-group has-float-label col-md-3">
+                                <label class="form-group has-float-label col-md-5">
                                     <input class="form-control" id="pr_code" name="pr_code" placeholder="" autocomplete="off" autofocus="" readonly="" />
                                     <span>Rencana Pembelian *</span>
                                 </label>
@@ -100,13 +90,9 @@
     </div>
 </div>
 
-<?php $this->load->view('lov/lov_supplier'); ?>
 <?php $this->load->view('lov/lov_purchase_request'); ?>
 
 <script type="text/javascript">
-    function search_supplier(id, code){
-        modal_lov_supplier_show(id, code);
-    }
 
     function search_pr(id, code){
        modal_lov_purchase_request_show(id, code);
@@ -126,12 +112,10 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'purchase_order_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Supplier Id', name: 'supplier_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Status GRN', name: 'status_grn', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Unit Bisnis', name: 'bu_name', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'PO Date', name: 'po_date', width: 100, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Kode Pembelian', name: 'code', width: 200, align: "left", editable: false, search:false, sortable:false},
-                {label: 'Supplier', name: 'sup_name', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Purchase Request ID', name: 'purchase_request_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden:true},
                 {label: 'Rencana Pembelian', name: 'pr_code', width: 200, align: "left", editable: false, search:false, sortable:false},                
                 {label: 'Total', name: 'amount', width: 150, align: "right", editable: false, search:false, sortable:false, formatter: 'currency', formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."}},
@@ -474,6 +458,13 @@
                     formatter: 'currency', 
                     formatoptions : {decimalSeparator: ",", decimalPlaces:0, thousandsSeparator:"."},
                 },
+                {label: 'Supplier', name: 'supplier_name', width: 150, align: "left", editable: true, search:false, sortable:false,
+                    edittype: 'select', 
+                    editoptions: {
+                        style: "width: 130px", 
+                        dataUrl: '<?php echo WS_JQGRID."store.supplier_controller/combo"; ?>'                        
+                    }                     
+                },
             ],
             // width: "100%",
             autowidth: true,
@@ -558,18 +549,14 @@
     function setData(rowid){
         
         var po_date = $('#grid-table').jqGrid('getCell', rowid, 'po_date');
-        var pr_code  = $('#grid-table').jqGrid('getCell', rowid, 'pr_code');        
-        var supplier_id  = $('#grid-table').jqGrid('getCell', rowid, 'supplier_id');
-        var sup_name  = $('#grid-table').jqGrid('getCell', rowid, 'sup_name');
+        var pr_code  = $('#grid-table').jqGrid('getCell', rowid, 'pr_code');                
         var purchase_request  = $('#grid-table').jqGrid('getCell', rowid, 'purchase_request');
         var purchase_request_id  = $('#grid-table').jqGrid('getCell', rowid, 'purchase_request_id');
         
         
         $('#purchase_order_id').val(rowid);
         $('#po_date').val(po_date);
-        $('#pr_code').val(pr_code);                      
-        $('#supplier_id').val(supplier_id);        
-        $('#sup_name').val(sup_name);        
+        $('#pr_code').val(pr_code);        
         $('#purchase_request').val(purchase_request);        
         $('#purchase_request_id').val(purchase_request_id);        
         
@@ -595,7 +582,7 @@
             swal('','Data tidak ditemukan','info');
             return false;
         }
-        
+
         var var_url = '<?php echo WS_JQGRID."transaction.purchase_order_det_controller/crudAll"; ?>';
 
         swal({

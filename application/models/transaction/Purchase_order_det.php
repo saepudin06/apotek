@@ -17,6 +17,7 @@ class Purchase_order_det extends Abstract_model {
                                 'qty'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Jumlah'),
                                 'basic_price'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Harga Awal'),
                                 'amount'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Total'),
+                                'supplier_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Supplier'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),

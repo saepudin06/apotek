@@ -134,7 +134,7 @@ class Purchase_order_det_controller {
 
                 $status = $items[$i]['status'];
                 $key_id = $items[$i]['purchase_order_det_id'];
-
+                
                 if($status == 'Tidak'){
                     $action = 'D';
                     $items[$i]['purchase_request_id'] = null;
@@ -142,6 +142,7 @@ class Purchase_order_det_controller {
                     $items[$i]['qty'] = null;
                     $items[$i]['basic_price'] = null;
                     $items[$i]['purchase_req_det_id'] = null;
+                    $items[$i]['supplier_id'] = null;
                 }else{ //status == Ya
                     if(empty($key_id)){
                         $action = 'I';
@@ -150,6 +151,11 @@ class Purchase_order_det_controller {
                     }
                 }
 
+                $supplier_id = $items[$i]['supplier_name'];
+                if(!empty($supplier_id)){
+                    $supp = explode(" - ", $supplier_id);
+                    $sup_id = $supp[0];
+                }
                 
                  $sql = "BEGIN "
                     . " P_CRUD_PURCHASE_ORDER_DT ("
@@ -163,6 +169,7 @@ class Purchase_order_det_controller {
                     . " :i_amount,"
                     . " :i_purchase_req_det_id,"
                     . " :i_purchase_order_det_id,"
+                    . " :i_supplier_id,"
                     . " :o_msg_code,"
                     . " :o_msg"
                     . "); END;";
@@ -182,6 +189,7 @@ class Purchase_order_det_controller {
                 oci_bind_by_name($stmt, ':i_amount', $amount);
                 oci_bind_by_name($stmt, ':i_purchase_req_det_id', $items[$i]['purchase_req_det_id']);
                 oci_bind_by_name($stmt, ':i_purchase_order_det_id', $items[$i]['purchase_order_det_id']);
+                oci_bind_by_name($stmt, ':i_supplier_id', $sup_id);
 
                 // Bind the output parameter
                 oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
@@ -250,6 +258,7 @@ class Purchase_order_det_controller {
                     . " :i_amount,"
                     . " :i_purchase_req_det_id,"
                     . " :i_purchase_order_det_id,"
+                    . " :i_supplier_id,"
                     . " :o_msg_code,"
                     . " :o_msg"
                     . "); END;";
@@ -267,6 +276,7 @@ class Purchase_order_det_controller {
             oci_bind_by_name($stmt, ':i_amount', $items['amount']);
             oci_bind_by_name($stmt, ':i_purchase_req_det_id', $items['purchase_req_det_id']);
             oci_bind_by_name($stmt, ':i_purchase_order_det_id', $items['purchase_order_det_id']);
+            oci_bind_by_name($stmt, ':i_supplier_id', $items['supplier_id']);
 
             // Bind the output parameter
             oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
@@ -325,6 +335,7 @@ class Purchase_order_det_controller {
                     . " :i_amount,"
                     . " :i_purchase_req_det_id,"
                     . " :i_purchase_order_det_id,"
+                    . " :i_supplier_id,"
                     . " :o_msg_code,"
                     . " :o_msg"
                     . "); END;";
@@ -342,6 +353,7 @@ class Purchase_order_det_controller {
             oci_bind_by_name($stmt, ':i_amount', $items['amount']);
             oci_bind_by_name($stmt, ':i_purchase_req_det_id', $items['purchase_req_det_id']);
             oci_bind_by_name($stmt, ':i_purchase_order_det_id', $items['purchase_order_det_id']);
+            oci_bind_by_name($stmt, ':i_supplier_id', $items['supplier_id']);
 
             // Bind the output parameter
             oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);
@@ -399,6 +411,7 @@ class Purchase_order_det_controller {
                     . " :i_amount,"
                     . " :i_purchase_req_det_id,"
                     . " :i_purchase_order_det_id,"
+                    . " :i_supplier_id,"
                     . " :o_msg_code,"
                     . " :o_msg"
                     . "); END;";
@@ -416,6 +429,7 @@ class Purchase_order_det_controller {
             oci_bind_by_name($stmt, ':i_amount', $null);
             oci_bind_by_name($stmt, ':i_purchase_req_det_id', $null);
             oci_bind_by_name($stmt, ':i_purchase_order_det_id', $items);
+            oci_bind_by_name($stmt, ':i_supplier_id', $null);
 
             // Bind the output parameter
             oci_bind_by_name($stmt, ':o_msg_code', $o_msg_code, 2000000);

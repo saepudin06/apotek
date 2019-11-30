@@ -43,9 +43,8 @@ class Purchase_order_controller {
             $table->setCriteria("bu_id=".$userdata['bu_id']);
 
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(invoice_num_ref) like upper('%".$i_search."%') OR
-                                       upper(purchase_request) like upper('%".$i_search."%') OR
-                                       upper(supplier_name) like upper('%".$i_search."%') 
+                $table->setCriteria("( upper(code) like upper('%".$i_search."%') OR
+                                       upper(pr_code) like upper('%".$i_search."%')
                                      )");
             }
 
@@ -134,7 +133,6 @@ class Purchase_order_controller {
                     . " P_CRUD_PURCHASE_ORDER("
                     . " :i_action, "
                     . " :i_purchase_request_id,"
-                    . " :i_supplier_id,"
                     . " :i_bu_id,"
                     . " :i_user,"
                     . " :i_purchase_order_id,"
@@ -147,7 +145,6 @@ class Purchase_order_controller {
             //  Bind the input parameter
             oci_bind_by_name($stmt, ':i_action', $action);
             oci_bind_by_name($stmt, ':i_purchase_request_id', $items['purchase_request_id']);
-            oci_bind_by_name($stmt, ':i_supplier_id', $items['supplier_id']);
             oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);            
             oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
             oci_bind_by_name($stmt, ':i_purchase_order_id', $items['purchase_order_id']);
@@ -204,7 +201,6 @@ class Purchase_order_controller {
                     . " P_CRUD_PURCHASE_ORDER("
                     . " :i_action, "
                     . " :i_purchase_request_id,"
-                    . " :i_supplier_id,"
                     . " :i_bu_id,"
                     . " :i_user,"
                     . " :i_purchase_order_id,"
@@ -217,7 +213,6 @@ class Purchase_order_controller {
             //  Bind the input parameter
             oci_bind_by_name($stmt, ':i_action', $action);
             oci_bind_by_name($stmt, ':i_purchase_request_id', $items['purchase_request_id']);
-            oci_bind_by_name($stmt, ':i_supplier_id', $items['supplier_id']);
             oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);            
             oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
             oci_bind_by_name($stmt, ':i_purchase_order_id', $items['purchase_order_id']);
@@ -270,7 +265,6 @@ class Purchase_order_controller {
                     . " P_CRUD_PURCHASE_ORDER("
                     . " :i_action, "
                     . " :i_purchase_request_id,"
-                    . " :i_supplier_id,"
                     . " :i_bu_id,"
                     . " :i_user,"
                     . " :i_purchase_order_id,"
@@ -283,7 +277,6 @@ class Purchase_order_controller {
             //  Bind the input parameter
             oci_bind_by_name($stmt, ':i_action', $action);
             oci_bind_by_name($stmt, ':i_purchase_request_id', $null);
-            oci_bind_by_name($stmt, ':i_supplier_id', $null);
             oci_bind_by_name($stmt, ':i_bu_id', $null);            
             oci_bind_by_name($stmt, ':i_user', $null);
             oci_bind_by_name($stmt, ':i_purchase_order_id', $items);

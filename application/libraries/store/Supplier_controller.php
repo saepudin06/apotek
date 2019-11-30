@@ -299,6 +299,21 @@ class Supplier_controller {
         return $data;
     }
 
+    function combo(){
+        //$code = getVarClean('code', 'str', '');
+        $ci = & get_instance();
+        $ci->load->model('store/supplier');
+        $table = $ci->supplier;
+        $items = $table->getAll(0, -1);
+
+        echo '<select>';
+        foreach($items  as $item){
+            echo '<option value="'.$item['supplier_id'].'">'.$item['supplier_id'].' - '.$item['name'].'</option>';
+        }
+        echo '</select>';
+        exit;
+    }
+
 }
 
 /* End of file Supplier_controller.php */

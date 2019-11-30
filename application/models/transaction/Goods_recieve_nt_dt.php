@@ -17,6 +17,7 @@ class Goods_recieve_nt_dt extends Abstract_model {
                                 'status'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Status'),
                                 'exp_date'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Tgl. Kedaluwarsa'),
                                 'note'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Catatan'),
+                                'supplier_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Supplier'),
                                 'store_info_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Info Penyimpanan'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
@@ -40,7 +41,9 @@ class Goods_recieve_nt_dt extends Abstract_model {
                                qty,
                                basic_price,
                                amount,
-                               store_info_id";
+                               store_info_id,
+                               supplier_id,
+                               supplier_name";
                                
     public $fromClause      = "vw_list_grn_dt";
 

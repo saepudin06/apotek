@@ -442,8 +442,10 @@
                 },
                 {label: 'Goods Recieve Note ID', name: 'goods_recieve_nt_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Store Info', name: 'store_info_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
+                {label: 'Supplier', name: 'supplier_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Invoice Num', name: 'invoice_num_ref', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},
                 {label: 'Produk', name: 'product_name', width: 150, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Supplier', name: 'supplier_name', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Info Penyimpanan', name: 'store_info', width: 150, align: "left", editable: true, search:false, sortable:false,
                     edittype: 'select', 
                     editoptions: {

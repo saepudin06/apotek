@@ -13,7 +13,6 @@ class Purchase_order extends Abstract_model {
     public $fields          = array(
                                 'purchase_order_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Purchase Order ID'),
                                 'purchase_request_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Rencana Pembelian'),
-                                'supplier_id'    => array('nullable' => false, 'type' => 'int', 'unique' => false, 'display' => 'Supplier'),
                                 'code'    => array('nullable' => true, 'type' => 'int', 'unique' => false, 'display' => 'Kode PO'),
                                 'po_date'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Tanggal Pembelian'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
@@ -25,10 +24,8 @@ class Purchase_order extends Abstract_model {
 
     public $selectClause    = "purchase_order_id,
                                purchase_request_id,
-                               supplier_id,
                                code,
                                pr_code,
-                               sup_name,
                                bu_name,
                                TO_CHAR (po_date, 'dd/mm/yyyy') po_date,
                                TO_CHAR (created_date, 'dd/mm/yyyy') created_date, 
