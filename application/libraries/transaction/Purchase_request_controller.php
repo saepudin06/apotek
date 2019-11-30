@@ -10,11 +10,12 @@ class Purchase_request_controller {
 
         $page = getVarClean('page','int',1);
         $limit = getVarClean('rows','int',5);
-        $sidx = getVarClean('sidx','str','pr_date');
+        $sidx = getVarClean('sidx','str','purchase_request_id');
         $sord = getVarClean('sord','str','desc');
 
         $data = array('rows' => array(), 'page' => 1, 'records' => 0, 'total' => 1, 'success' => false, 'message' => '');
 
+        $status = getVarClean('status','str','');        
         $i_search = getVarClean('i_search','str','');        
 
         try {
@@ -42,6 +43,11 @@ class Purchase_request_controller {
             $req_param['where'] = array();
 
             $table->setCriteria("bu_id=".$userdata['bu_id']);
+
+            if(!empty($status)) {
+                $table->setCriteria("( upper(status) like upper('%".$status."%')
+                                     )");
+            }
 
             if(!empty($i_search)) {
                 $table->setCriteria("( upper(pr_date) like upper('%".$i_search."%') OR
