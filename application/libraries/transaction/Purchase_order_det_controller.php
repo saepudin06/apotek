@@ -533,6 +533,36 @@ class Purchase_order_det_controller {
         return $data;
     }
 
+    function cekSuratPesanan(){
+        $data = array('success' => false, 'message' => '');
+
+        $purchase_order_id = getVarClean('purchase_order_id','int',0);
+        $supplier_id = getVarClean('supplier_id','int',0);
+
+        $ci = & get_instance();
+        $ci->load->model('transaction/purchase_order_det');
+        $table = $ci->purchase_order_det;
+
+        $sql = "SELECT * FROM purchase_order_det 
+                WHERE purchase_order_id = ? and supplier_id =?";
+
+        $result = $table->db->query($sql, array($purchase_order_id, $supplier_id));
+        $rows = $result->num_rows();
+
+        if($rows > 0){
+            $data['success'] = true;
+            $data['message'] = 'sukses';    
+        }else{
+            $data['success'] = false;
+            $data['message'] = 'data tidak ditemukan';    
+        }
+        
+      
+        echo json_encode($data);
+        exit;
+
+    }
+
 }
 
 /* End of file Purchase_order_det_controller.php */

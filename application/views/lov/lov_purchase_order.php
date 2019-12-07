@@ -85,6 +85,7 @@
 
         jQuery("#grid-table-lov_purchase_order").jqGrid({
             url: '<?php echo WS_JQGRID."transaction.purchase_order_controller/crud"; ?>',
+            postData : { status : 'N' },
             datatype: "json",
             mtype: "POST",
             loadui: "disable",
@@ -277,7 +278,8 @@
             jQuery("#grid-table-lov_purchase_order").jqGrid('setGridParam',{
                 url: '<?php echo WS_JQGRID."transaction.purchase_order_controller/read"; ?>',
                 postData: {
-                    i_search : i_search_lov_purchase_order
+                    i_search : i_search_lov_purchase_order,
+                    status : 'N'
                 }
             });
             $("#grid-table-lov_purchase_order").trigger("reloadGrid");
@@ -290,7 +292,8 @@
         jQuery("#grid-table-lov_purchase_order").jqGrid('setGridParam',{
                 url: '<?php echo WS_JQGRID."transaction.purchase_order_controller/read"; ?>',
                 postData: {
-                    i_search : i_search_lov_purchase_order
+                    i_search : i_search_lov_purchase_order,
+                    status : 'N'
                 }
             });
             $("#grid-table-lov_purchase_order").trigger("reloadGrid");
