@@ -40,8 +40,7 @@ class Producttype_controller {
             // Filter Table
             $req_param['where'] = array();
             if(!empty($i_search)) {
-                $table->setCriteria("( upper(name) like upper('%".$i_search."%') OR
-                                       upper(product_type_det_name) like upper('%".$i_search."%')
+                $table->setCriteria("( upper(name) like upper('%".$i_search."%') 
                                      )");
             }
 

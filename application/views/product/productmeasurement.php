@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item">
                     <a href="javascript:;">Produk</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Jenis Ukuran</li>
+                <li class="breadcrumb-item active" aria-current="page">Jenis Satuan</li>
             </ol>
         </nav>
         
@@ -28,7 +28,7 @@
             <!-- <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1 col-md-4" role="tablist">
                 <li class="nav-item w-50 text-center">
                     <a class="nav-link active" id="tab-1" data-toggle="tab" href="javascript:;" role="tab"
-                        aria-selected="true"><strong>Jenis Ukuran</strong></a>
+                        aria-selected="true"><strong>Jenis Satuan</strong></a>
                 </li>
             </ul> -->
             <div class="separator mb-2"></div>
@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Jenis Ukuran</h5>
+                        <h5 class="mb-4">Form Jenis Satuan</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -54,7 +54,7 @@
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="name" name="name" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Jenis Ukuran *</span>
+                                    <span>Jenis Satuan *</span>
                                 </label>
                             </div>
 
@@ -85,8 +85,11 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'measure_type_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Jenis Ukuran', name: 'name', width: 200, align: "left", editable: false, search:false, sortable:false},
-                
+                {label: 'Jenis Satuan', name: 'name', width: 200, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Create Date', name: 'created_date', width: 300, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Create By', name: 'created_by', width: 200, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Update Date', name: 'update_date', width: 300, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Update By', name: 'update_by', width: 200, align: "left", editable: false, search:false, sortable:false}
             ],
             // height: '100%',
             height: 250,
@@ -123,7 +126,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."product.productmeasurement_controller/crud"; ?>',
-            caption: "Jenis Ukuran"
+            caption: "Jenis Satuan"
 
         });
 

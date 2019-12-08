@@ -23,7 +23,7 @@ class Products extends Abstract_model {
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
                                 'update_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Updated Date'),
                                 'update_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Updated By'),
-
+                                'description'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Description')
                             );
 
     public $selectClause    = "*";

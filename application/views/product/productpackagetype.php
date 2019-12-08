@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item">
                     <a href="javascript:;">Produk</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Jenis Satuan</li>
+                <li class="breadcrumb-item active" aria-current="page">Jenis Kemasan</li>
             </ol>
         </nav>
         
@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="col-md-12" id="form-ui" style="display: none;">    
-                        <h5 class="mb-4">Form Jenis Satuan</h5>
+                        <h5 class="mb-4">Form Jenis Kemasan</h5>
 
                         <form method="post" id="form_data">
                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -54,7 +54,7 @@
 
                                 <label class="form-group has-float-label col-md-6">
                                     <input class="form-control" id="name" name="name" placeholder="" autocomplete="off" autofocus="" />
-                                    <span>Jenis Satuan *</span>
+                                    <span>Jenis Kemasan *</span>
                                 </label>
                             </div>
 
@@ -85,8 +85,11 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'package_type_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Jenis Satuan', name: 'name', width: 200, align: "left", editable: false, search:false, sortable:false},
-                
+                {label: 'Jenis Kemasan', name: 'name', width: 200, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Create Date', name: 'created_date', width: 300, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Create By', name: 'created_by', width: 200, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Update Date', name: 'update_date', width: 300, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Update By', name: 'update_by', width: 200, align: "left", editable: false, search:false, sortable:false}
             ],
             // height: '100%',
             height: 250,
@@ -123,7 +126,7 @@
             },
             //memanggil controller jqgrid yang ada di controller crud
             editurl: '<?php echo WS_JQGRID."product.productpackagetype_controller/crud"; ?>',
-            caption: "Jenis Satuan"
+            caption: "Jenis Kemasan"
 
         });
 

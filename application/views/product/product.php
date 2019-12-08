@@ -158,6 +158,13 @@
                                     <input class="form-control" onkeypress="return isNumberKey(event)" id="initial_stock" name="initial_stock" placeholder="" autocomplete="off" autofocus="" />
                                     <span>Stok Awal *</span>
                                 </label>
+
+                                <label class="form-group has-float-label col-md-12">
+                                        <teXtarea rows="4" cols="50" id="description" name="description" placeholder="" autocomplete="off" autofocus=""></teXtarea> 
+                                    <!-- <input class="form-control"  id="description" name="description" placeholder="" autocomplete="off" autofocus="" /> -->
+                                    <span>Description</span>
+                                </label>
+
                             </div>
 
                             <button class="btn btn-success" type="submit" id="btn-submit">OK</button>
@@ -218,6 +225,7 @@
                 {label: 'Satuan', name: 'package_type_name', width: 150, align: "left", editable: false, search:false, sortable:false},
                 {label: 'Min. Stok', name: 'stock_min', width: 100, align: "right", editable: false, search:false, sortable:false, hidden: false},
                 {label: 'Stok Awal', name: 'initial_stock', width: 100, align: "right", editable: false, search:false, sortable:false, hidden: false},
+                {label: 'Description', name: 'description', width: 250, align: "left", editable: false, search:false, sortable:false, hidden: false},
                 
             ],
             // height: '100%',
@@ -468,12 +476,14 @@
         // var package_val = $('#grid-table').jqGrid('getCell', rowid, 'package_val');
         var stock_min  = $('#grid-table').jqGrid('getCell', rowid, 'stock_min');
         var initial_stock  = $('#grid-table').jqGrid('getCell', rowid, 'initial_stock');
+        var description  = $('#grid-table').jqGrid('getCell', rowid, 'description');
         
         $('#product_id').val(rowid);
         $('#product_type_id').val(product_type_id);
         $('#bu_id').val(bu_id);
         $('#measure_type_id').val(measure_type_id);
         $('#package_type_id').val(package_type_id);
+        $('#description').val(description);
         $('#product_type_id').trigger('change');
         $('#bu_id').trigger('change');
         $('#measure_type_id').trigger('change');

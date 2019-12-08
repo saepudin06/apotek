@@ -11,8 +11,7 @@ class Producttype extends Abstract_model {
     public $alias           = "";
 
     public $fields          = array(
-                                'product_type_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Product Type ID'),                                
-                                'product_type_det_id'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Product Type Detail ID'),
+                                'product_type_id'       => array('pkey' => true, 'type' => 'int', 'nullable' => true, 'unique' => true, 'display' => 'Product Type ID'), 
                                 'name'    => array('nullable' => false, 'type' => 'str', 'unique' => false, 'display' => 'Jenis Produk'),
                                 'created_date'  => array('nullable' => true, 'type' => 'date', 'unique' => false, 'display' => 'Created Date'),
                                 'created_by'    => array('nullable' => true, 'type' => 'str', 'unique' => false, 'display' => 'Created By'),
@@ -22,8 +21,7 @@ class Producttype extends Abstract_model {
                             );
 
     public $selectClause    = "*";
-    public $fromClause      = "(select a.*, b.name product_type_det_name from producttype a 
-                                left join producttypedetails b on a.product_type_det_id=b.product_type_det_id)";
+    public $fromClause      = "vw_producttype";
 
     public $refs            = array();
 

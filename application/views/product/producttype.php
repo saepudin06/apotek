@@ -56,25 +56,6 @@
                                     <span>ID *</span>
                                 </label>
 
-                                <label class="form-group has-float-label col-md-6">
-                                    <select class="form-control select2-single" id="product_type_det_id">
-                                        <!-- <option label="&nbsp;">&nbsp;</option> -->
-                                        <?php
-                                            $ci = & get_instance();
-                                            $ci->load->model('product/producttypedetails');
-                                            $table = $ci->producttypedetails;
-
-                                            $items = $table->getAll(0,-1,'product_type_det_id','asc');
-
-                                        ?>
-                                        <option value=""> -- Pilih Jenis Produk Detail -- </option>
-                                        <?php foreach($items as $item):?>
-                                            <option value="<?php echo $item['product_type_det_id'];?>"> <?php echo $item['name'];?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                    <span>Jenis Produk Detail *</span>
-                                </label>
-                                
                             </div>
 
                             <div class="form-row">
@@ -111,10 +92,11 @@
             loadui: "disable",
             colModel: [
                 {label: 'ID', name: 'product_type_id', key: true, width: 5, sorttype: 'number', editable: true, hidden: true},
-                {label: 'Product Type Detail ID', name: 'product_type_det_id', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: true},                
-                {label: 'Jenis Produk Detail', name: 'product_type_det_name', width: 100, align: "left", editable: false, search:false, sortable:false, hidden: false},
-                {label: 'Jenis Produk', name: 'name', width: 100, align: "left", editable: false, search:false, sortable:false},
-                
+                {label: 'Jenis Produk', name: 'name', width: 300, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Create Date', name: 'created_date', width: 300, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Create By', name: 'created_by', width: 200, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Update Date', name: 'update_date', width: 300, align: "left", editable: false, search:false, sortable:false},
+                {label: 'Update By', name: 'update_by', width: 200, align: "left", editable: false, search:false, sortable:false}
             ],
             // height: '100%',
             height: 200,

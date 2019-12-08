@@ -54,12 +54,12 @@
                             <form name="login_form" action="<?php echo $login_url;?>" method="post">
                                 <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                                 <label class="form-group has-float-label mb-4">
-                                    <input class="form-control" autocomplete="off" name="username" />
+                                    <input class="form-control" autocomplete="off" name="username" placeholder="Masukan Username" />
                                     <span>Username</span>
                                 </label>
 
                                 <label class="form-group has-float-label mb-4">
-                                    <input class="form-control" type="password" autocomplete="off" name="password" placeholder="" />
+                                    <input class="form-control" type="password" autocomplete="off" name="password" placeholder="Masukan Password" />
                                     <span>Password</span>
                                 </label>
                                 <div class="d-flex justify-content-between align-items-center">

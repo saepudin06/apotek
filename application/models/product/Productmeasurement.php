@@ -21,7 +21,7 @@ class Productmeasurement extends Abstract_model {
                             );
 
     public $selectClause    = "*";
-    public $fromClause      = "productmeasurement";
+    public $fromClause      = "vw_productmeasurement";
 
     public $refs            = array();
 

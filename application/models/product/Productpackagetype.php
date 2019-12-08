@@ -21,7 +21,7 @@ class Productpackagetype extends Abstract_model {
                             );
 
     public $selectClause    = "*";
-    public $fromClause      = "productpackagetype";
+    public $fromClause      = "vw_package_type";
 
     public $refs            = array();
 

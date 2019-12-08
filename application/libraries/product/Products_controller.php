@@ -142,6 +142,7 @@ class Products_controller {
                     . " :i_initial_stock,"
                     . " :i_name,"
                     . " :i_bu_id,"
+                    . " :i_description,"
                     . " :i_user,"
                     . " :o_msg_code,"
                     . " :o_msg"
@@ -160,6 +161,7 @@ class Products_controller {
             oci_bind_by_name($stmt, ':i_initial_stock', $items['initial_stock']);
             oci_bind_by_name($stmt, ':i_name', $items['name']);
             oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);            
+            oci_bind_by_name($stmt, ':i_description', $items['description']);            
             oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
 
             // Bind the output parameter
@@ -223,6 +225,7 @@ class Products_controller {
                     . " :i_initial_stock,"
                     . " :i_name,"
                     . " :i_bu_id,"
+                    . " :i_description,"
                     . " :i_user,"
                     . " :o_msg_code,"
                     . " :o_msg"
@@ -239,7 +242,8 @@ class Products_controller {
             oci_bind_by_name($stmt, ':i_stock_min', $items['stock_min']);
             oci_bind_by_name($stmt, ':i_initial_stock', $items['initial_stock']);
             oci_bind_by_name($stmt, ':i_name', $items['name']);
-            oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']);            
+            oci_bind_by_name($stmt, ':i_bu_id', $userdata['bu_id']); 
+            oci_bind_by_name($stmt, ':i_description', $items['description']);             
             oci_bind_by_name($stmt, ':i_user', $userdata['user_name']);
 
             // Bind the output parameter
